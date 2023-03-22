@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.fragments.settings.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/fragment_horizontal_margin"
+        android:paddingTop="@dimen/fragment_vertical_margin"
+        android:paddingRight="@dimen/fragment_horizontal_margin"
+        android:paddingBottom="@dimen/fragment_vertical_margin"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:backgroundTint="#FFFFFF"
+                app:icon="@drawable/ic_default_arrow_back"
+                app:iconPadding="0dp"
+                app:iconTint="#000000"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:gravity="center"
+                android:text="@string/str_settings"/>
+
+        </LinearLayout>
+
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/firstNameEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="96dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_first_name"
+            android:inputType="text" />
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/lastNameEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_last_name"
+            android:inputType="text" />
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/emailEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_email"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/passwordEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/confirmPasswordEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_confirm_password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
+
+        <Button
+            style="@style/AppTheme.Button"
+            android:id="@+id/loginButton"
+            android:layout_gravity="center"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginBottom="16dp"
+            android:enabled="true"
+            android:text="@string/str_save" />
+
+    </LinearLayout>
+
+</layout>

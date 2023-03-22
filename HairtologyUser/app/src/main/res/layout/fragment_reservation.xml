@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<!--    <data>-->
+<!--        <import type="android.view.View" />-->
+
+<!--        <variable-->
+<!--            name="viewModel"-->
+<!--            type="com.project.myapplication.views.fragments.reservation.ReservationViewModel" />-->
+
+<!--        <variable-->
+<!--            name="fragment"-->
+<!--            type="com.project.myapplication.views.fragments.reservation.ReservationFragment" />-->
+<!--    </data>-->
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/fragment_horizontal_margin"
+        android:paddingTop="@dimen/fragment_vertical_margin"
+        android:paddingRight="@dimen/fragment_horizontal_margin"
+        android:paddingBottom="@dimen/fragment_vertical_margin"
+        android:orientation="vertical"
+        tools:context="com.project.myapplication.views.fragments.reservation.ReservationFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="@string/str_shops"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/shopAutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/dateEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_date"
+            android:inputType="text"
+            android:focusable="false"
+            tools:ignore="TextFields" />
+
+        <EditText
+            style="@style/AppTheme.FormField.Outlined"
+            android:id="@+id/timeEditText"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:hint="@string/str_time"
+            android:inputType="text"
+            android:focusable="false"
+            tools:ignore="TextFields" />
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
+
+        <Button
+            style="@style/AppTheme.Button"
+            android:id="@+id/registerButton"
+            android:layout_gravity="center"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="64dp"
+            android:enabled="true"
+            android:text="@string/str_reserve" />
+
+    </LinearLayout>
+
+</layout>

@@ -7,30 +7,48 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.project.hairtologyuser.components.client.FirebaseClient;
+import com.project.hairtologyuser.components.client.RestServiceClient;
+import com.project.hairtologyuser.models.UserModel;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginViewModel extends ViewModel {
 
-    private Context mContext;
+    public interface onLoginListener {
+        void onLoginSuccess(UserModel user);
+        void onLoginFailed(Throwable throwable);
+    }
+
     private FirebaseClient mFirebaseClient;
 
     public void setViewModel(@NonNull Application application) {
-        mContext = application.getApplicationContext();
+        Context mContext = application.getApplicationContext();
         mFirebaseClient = new FirebaseClient(mContext);
     }
 
-    public void login(String email, String password) {
+    public void login(String email, String password, onLoginListener listener) {
         mFirebaseClient.getAuth().signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser user = mFirebaseClient.getAuth().getCurrentUser();
                     if (user != null) {
-                        Log.e(getClass().getSimpleName(), "Email: " + user.getEmail());
+                        mFirebaseClient.getDatabaseReference()
+                            .child(mFirebaseClient.apiUser(user.getUid()))
+                            .get()
+                            .addOnSuccessListener(dataSnapshot -> {
+                                UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                                listener.onLoginSuccess(userModel);
+                            })
+                            .addOnFailureListener(listener::onLoginFailed);
                     }
                 })
-                .addOnFailureListener(e -> {
-                    Log.e(getClass().getSimpleName(), "Encountered a problem signing your account");
-                });
+                .addOnFailureListener(listener::onLoginFailed);
     }
 
 }

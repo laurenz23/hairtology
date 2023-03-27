@@ -2,11 +2,21 @@ package com.project.hairtologyuser.models;
 
 public class UserModel {
 
+    private String uuid;
+
     private String firstName;
 
     private String lastName;
 
     private String email;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getFirstName() {
         return firstName;

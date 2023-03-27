@@ -20,6 +20,7 @@ import com.project.hairtologyuser.BuildConfig;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.databinding.FragmentLoginBinding;
+import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
@@ -77,10 +78,17 @@ public class LoginFragment extends BaseFragment {
         String email = String.valueOf(mEmailEditText.getText());
         String password = String.valueOf(mPasswordEditText.getText());
         if (validateFields(email, password)) {
-            mViewModel.login(email, password);
-        } else {
-            mErrorTextView.setText("Encountered a problem validating your credentials");
-            mErrorTextView.setVisibility(View.VISIBLE);
+            mViewModel.login(email, password, new LoginViewModel.onLoginListener() {
+                @Override
+                public void onLoginSuccess(UserModel user) {
+
+                }
+
+                @Override
+                public void onLoginFailed(Throwable throwable) {
+
+                }
+            });
         }
     }
 

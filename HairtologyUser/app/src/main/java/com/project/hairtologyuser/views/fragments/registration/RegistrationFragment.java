@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.databinding.FragmentRegistrationBinding;
+import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.login.LoginFragment;
@@ -87,7 +88,7 @@ public class RegistrationFragment extends BaseFragment {
             mViewModel.register(firstName, lastName, email, password,
                     new RegistrationViewModel.onRegisterListener() {
                 @Override
-                public void onRegisterSuccess() {
+                public void onRegisterSuccess(UserModel user) {
                     if (getActivity() == null) {
                         Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
                                 ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
@@ -102,8 +103,8 @@ public class RegistrationFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onRegisterFailed() {
-
+                public void onRegisterFailed(Throwable throwable) {
+                    Log.e(getClass().getSimpleName(), throwable.getMessage());
                 }
             });
         }

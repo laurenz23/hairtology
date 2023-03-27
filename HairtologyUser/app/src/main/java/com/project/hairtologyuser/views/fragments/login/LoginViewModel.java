@@ -39,7 +39,7 @@ public class LoginViewModel extends ViewModel {
                     FirebaseUser user = mFirebaseClient.getAuth().getCurrentUser();
                     if (user != null) {
                         mFirebaseClient.getDatabaseReference()
-                            .child(mFirebaseClient.apiUser(user.getUid()))
+                            .child(mFirebaseClient.apiInfo(user.getUid()))
                             .get()
                             .addOnSuccessListener(dataSnapshot -> {
                                 UserModel userModel = dataSnapshot.getValue(UserModel.class);

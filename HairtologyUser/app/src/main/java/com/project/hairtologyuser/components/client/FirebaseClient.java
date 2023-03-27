@@ -27,8 +27,12 @@ public class FirebaseClient {
         return databaseReference;
     }
 
-    public String apiUser(String uuid) {
+    public String apiInfo(String uuid) {
         return "users/" + uuid + "/info";
+    }
+
+    public String apiReservation(String uuid) {
+        return "users/" + uuid + "/reservation";
     }
 
 }

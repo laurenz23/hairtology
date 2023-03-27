@@ -21,6 +21,7 @@ import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.databinding.FragmentLoginBinding;
 import com.project.hairtologyuser.models.UserModel;
+import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
@@ -81,12 +82,20 @@ public class LoginFragment extends BaseFragment {
             mViewModel.login(email, password, new LoginViewModel.onLoginListener() {
                 @Override
                 public void onLoginSuccess(UserModel user) {
+                    if (getActivity() == null) {
+                        Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                                ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                                MainActivity.class
+                        ));
+                        return;
+                    }
 
+                    ((OnBoardingActivity) getActivity()).switchActivity(getContext(), MainActivity.class);
                 }
 
                 @Override
                 public void onLoginFailed(Throwable throwable) {
-
+                    Log.e(getClass().getSimpleName(), throwable.getMessage());
                 }
             });
         }

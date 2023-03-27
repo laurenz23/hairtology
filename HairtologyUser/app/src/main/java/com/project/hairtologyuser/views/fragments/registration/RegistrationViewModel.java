@@ -47,7 +47,7 @@ public class RegistrationViewModel extends ViewModel {
                         userModel.setEmail(email);
 
                         mFirebaseClient.getDatabaseReference()
-                                .child(mFirebaseClient.apiUser(user.getUid()))
+                                .child(mFirebaseClient.apiInfo(user.getUid()))
                                 .setValue(userModel)
                                 .addOnSuccessListener(unused -> {
                                     listener.onRegisterSuccess(userModel);

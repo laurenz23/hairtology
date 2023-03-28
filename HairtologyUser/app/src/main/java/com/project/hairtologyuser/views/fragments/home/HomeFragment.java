@@ -42,17 +42,14 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mViewModel;
 
     private View mView;
-
     private int mYear;
-
     private int mMonth;
-
     private int mDay;
-
     private int mHour;
-
     private int mMinute;
-
+    private String mDate = null;
+    private String mTime = null;
+    private String mNote = null;
     private TextView mReservationTextView;
     private Button mDateButton;
     private Button mTimeButton;
@@ -73,7 +70,9 @@ public class HomeFragment extends Fragment {
         mReservationTextView = mView.findViewById(R.id.reservationTextView);
         mDateButton = mView.findViewById(R.id.dateButton);
         mTimeButton = mView.findViewById(R.id.timeButton);
-        mNoteEditText = mView.findViewById(R.id.reservationNoteTextView);
+        mReserveButton = mView.findViewById(R.id.reserveButton);
+        mLogoutButton = mView.findViewById(R.id.logoutButton);
+        mNoteEditText = mView.findViewById(R.id.noteEditText);
 
         mDateButton.setOnClickListener(v -> {
             onDateTap();
@@ -84,7 +83,7 @@ public class HomeFragment extends Fragment {
         });
 
         mReserveButton.setOnClickListener(v -> {
-            onReserveTap();
+            onReserveTap(mDate, mTime, String.valueOf(mNoteEditText.getText()));
         });
 
         mLogoutButton.setOnClickListener(v -> {
@@ -132,16 +131,14 @@ public class HomeFragment extends Fragment {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                 new DatePickerDialog.OnDateSetListener() {
-
                     @Override
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
-
-                        mDateButton.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
+                        String date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        mDate = date;
+                        mDateButton.setText(date);
                     }
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
@@ -152,21 +149,20 @@ public class HomeFragment extends Fragment {
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
-                        mTimeButton.setText(hourOfDay + ":" + minute);
+                        String time = hourOfDay + ":" + minute;
+                        mTime = time;
+                        mTimeButton.setText(time);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
 
-    public void onReserveTap() {
-        String date = "";
-        String time = "";
-        String note = String.valueOf(mNoteEditText.getText());
+    public void onReserveTap(String date, String time, String note) {
         mViewModel.reserve(date, time, note, new HomeViewModel.onReserveListener() {
             @Override
             public void onReserveSuccess() {

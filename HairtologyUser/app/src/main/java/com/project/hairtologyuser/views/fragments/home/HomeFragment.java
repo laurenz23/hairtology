@@ -3,6 +3,8 @@ package com.project.hairtologyuser.views.fragments.home;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.google.firebase.database.DatabaseError;
 import com.project.hairtologyuser.BuildConfig;
@@ -28,6 +32,7 @@ import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.login.LoginFragment;
 import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -37,6 +42,16 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mViewModel;
 
     private View mView;
+
+    private int mYear;
+
+    private int mMonth;
+
+    private int mDay;
+
+    private int mHour;
+
+    private int mMinute;
 
     private TextView mReservationTextView;
     private Button mDateButton;
@@ -61,11 +76,11 @@ public class HomeFragment extends Fragment {
         mNoteEditText = mView.findViewById(R.id.reservationNoteTextView);
 
         mDateButton.setOnClickListener(v -> {
-
+            onDateTap();
         });
 
         mTimeButton.setOnClickListener(v -> {
-
+            onTimeTap();
         });
 
         mReserveButton.setOnClickListener(v -> {
@@ -112,11 +127,40 @@ public class HomeFragment extends Fragment {
     }
 
     public void onDateTap() {
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        mDateButton.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
     }
 
     public void onTimeTap() {
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
 
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(),
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        mTimeButton.setText(hourOfDay + ":" + minute);
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
     }
 
     public void onReserveTap() {

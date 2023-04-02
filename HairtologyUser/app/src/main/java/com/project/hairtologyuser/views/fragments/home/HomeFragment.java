@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.firebase.database.DatabaseError;
+import com.google.gson.GsonBuilder;
 import com.project.hairtologyuser.BuildConfig;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
@@ -132,14 +133,10 @@ public class HomeFragment extends Fragment {
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        String date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                        mDate = date;
-                        mDateButton.setText(date);
-                    }
+                (view, year, monthOfYear, dayOfMonth) -> {
+                    String date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                    mDate = date;
+                    mDateButton.setText(date);
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
@@ -150,14 +147,10 @@ public class HomeFragment extends Fragment {
         mMinute = c.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay,
-                                          int minute) {
-                        String time = hourOfDay + ":" + minute;
-                        mTime = time;
-                        mTimeButton.setText(time);
-                    }
+                (view, hourOfDay, minute) -> {
+                    String time = hourOfDay + ":" + minute;
+                    mTime = time;
+                    mTimeButton.setText(time);
                 }, mHour, mMinute, false);
         timePickerDialog.show();
     }
@@ -165,33 +158,18 @@ public class HomeFragment extends Fragment {
     public void onReserveTap(String date, String time, String note) {
         mViewModel.reserve(date, time, note, new HomeViewModel.onReserveListener() {
             @Override
-            public void onReserveSuccess() {
-                mViewModel.getReservationData(new HomeViewModel.onReservationListener() {
-                    @Override
-                    public void onReservationSuccess(List<ReservationModel> reservationList) {
-                        if (reservationList.isEmpty()) {
-                            mReservationTextView.setText("You don't have reservation yet");
-                        } else {
-                            StringBuilder strReservation = new StringBuilder("Reservations");
-                            for (ReservationModel reservation : reservationList) {
-                                strReservation.append("\n")
-                                        .append(reservation.getDate()).append("     ")
-                                        .append(reservation.getTime()).append("     ")
-                                        .append(reservation.getNote());
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onReservationFailed(DatabaseError error) {
-
-                    }
-                });
+            public void onReserveSuccess(ReservationModel reservation) {
+                Log.e(getClass().getSimpleName(), new GsonBuilder().create().toJson(reservation));
             }
 
             @Override
-            public void onReserveFailed() {
+            public void onReserveFailed(Throwable throwable) {
+                Log.e(getClass().getSimpleName(), String.valueOf(throwable));
+            }
 
+            @Override
+            public void onReserveFailed(DatabaseError error) {
+                Log.e(getClass().getSimpleName(), String.valueOf(error));
             }
         });
     }

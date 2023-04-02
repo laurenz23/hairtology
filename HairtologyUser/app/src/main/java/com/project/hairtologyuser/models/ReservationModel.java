@@ -8,6 +8,14 @@ public class ReservationModel {
 
     private String note;
 
+    public ReservationModel() {}
+
+    public ReservationModel(String date, String time, String note) {
+        this.date = date;
+        this.time = time;
+        this.note = note;
+    }
+
     public String getDate() {
         return date;
     }

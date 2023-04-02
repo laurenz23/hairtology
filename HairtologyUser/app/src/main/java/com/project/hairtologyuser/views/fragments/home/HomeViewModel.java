@@ -4,22 +4,17 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.models.UserModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HomeViewModel extends ViewModel {
@@ -44,18 +39,17 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void getReservationData(onReservationListener listener) {
-        String uuid = mSession.getCurrentUser();
+        UserModel currentUser = mSession.getCurrentUser();
         mFirebaseClient.getDatabaseReference()
-                .child(mFirebaseClient.apiReservation(uuid))
+                .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<ReservationModel> reservationList = new ArrayList<>();
-                        for (DataSnapshot data : snapshot.getChildren()) {
-//                            Log.d(getClass().getSimpleName(), "" + new Gson().toJson(data));
-//                            ReservationModel reservation = data.getValue(ReservationModel.class);
-//                            reservationList.add(reservation);
-                        }
+                        ReservationModel reservation = snapshot.getValue(ReservationModel.class);
+                        Log.e(getClass().getSimpleName(), reservation.getDate());
+                        Log.e(getClass().getSimpleName(), reservation.getTime());
+                        Log.e(getClass().getSimpleName(), reservation.getNote());
                         listener.onReservationSuccess(reservationList);
                     }
 
@@ -67,13 +61,13 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void reserve(String date, String time, String notes, onReserveListener listener) {
-        String uuid = mSession.getCurrentUser();
+        UserModel currentUser = mSession.getCurrentUser();
         ReservationModel reservation = new ReservationModel();
         reservation.setDate(date);
         reservation.setTime(time);
         reservation.setNote(notes);
         mFirebaseClient.getDatabaseReference()
-                .child(mFirebaseClient.apiReservation(uuid))
+                .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
                 .setValue(reservation)
                 .addOnSuccessListener(unused -> {
                     listener.onReserveSuccess();

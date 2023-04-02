@@ -2,23 +2,14 @@ package com.project.hairtologyuser.views.fragments.login;
 
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.project.hairtologyuser.components.client.FirebaseClient;
-import com.project.hairtologyuser.components.client.RestServiceClient;
 import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.UserModel;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginViewModel extends ViewModel {
 
@@ -46,7 +37,7 @@ public class LoginViewModel extends ViewModel {
                             .get()
                             .addOnSuccessListener(dataSnapshot -> {
                                 UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                                mSession.setCurrentUser(userModel.getUuid());
+                                mSession.setCurrentUser(userModel);
                                 listener.onLoginSuccess(userModel);
                             })
                             .addOnFailureListener(listener::onLoginFailed);

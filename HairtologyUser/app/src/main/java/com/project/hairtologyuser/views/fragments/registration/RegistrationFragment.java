@@ -60,6 +60,20 @@ public class RegistrationFragment extends BaseFragment {
             onSaveTap();
         });
 
+        mBinding.backButton.setOnClickListener(v -> {
+            if (getActivity() == null) {
+                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        RegistrationFragment.class
+                ));
+                return;
+            }
+
+            ((OnBoardingActivity) getActivity()).replaceFragment(
+                    new LoginFragment(),
+                    OnBoardingActivity.containerViewId);
+        });
+
         return mView;
     }
 

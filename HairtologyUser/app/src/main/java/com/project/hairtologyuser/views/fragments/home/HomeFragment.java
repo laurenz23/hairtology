@@ -174,16 +174,4 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    public void onLogoutTap() {
-        if (getActivity() == null) {
-            Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
-                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-                    HomeFragment.class
-            ));
-            return;
-        }
-
-        ((MainActivity) getActivity()).switchActivity(getContext(), OnBoardingActivity.class);
-    }
-
 }

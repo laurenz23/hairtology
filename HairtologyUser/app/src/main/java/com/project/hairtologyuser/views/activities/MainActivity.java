@@ -6,9 +6,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.IdRes;
+import androidx.fragment.app.Fragment;
 
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.views.fragments.home.HomeFragment;
+import com.project.hairtologyuser.views.fragments.login.LoginFragment;
+import com.project.hairtologyuser.views.fragments.profile.ProfileFragment;
+import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -27,7 +32,9 @@ public class MainActivity extends BaseActivity {
         ImageView accountImageView = findViewById(R.id.accountImageView);
 
         homeImageView.setOnClickListener(view -> {
-            Log.e(getClass().getSimpleName(), "Home");
+            replaceFragment(
+                new HomeFragment(),
+                containerViewId);
         });
 
         reservationImageView.setOnClickListener(view -> {
@@ -39,7 +46,9 @@ public class MainActivity extends BaseActivity {
         });
 
         accountImageView.setOnClickListener(view -> {
-            Log.e(getClass().getSimpleName(), "Account");
+            replaceFragment(
+                new ProfileFragment(),
+                containerViewId);
         });
 
     }

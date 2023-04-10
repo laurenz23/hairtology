@@ -40,4 +40,8 @@ public class Session {
         return new GsonBuilder().create().fromJson(currentUser, UserModel.class);
     }
 
+    public void endSession() {
+        setCurrentUser(null);
+    }
+
 }

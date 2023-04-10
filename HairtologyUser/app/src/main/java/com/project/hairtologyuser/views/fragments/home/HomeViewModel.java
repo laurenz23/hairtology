@@ -58,17 +58,17 @@ public class HomeViewModel extends ViewModel {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<ReservationModel> reservationList = new ArrayList<>();
 
-                        if (snapshot.exists()) {
-                            Log.e(getClass().getSimpleName(), "Existing");
-                        } else {
-                            Log.e(getClass().getSimpleName(), "Don't exist: " + snapshot.getValue());
-                        }
-
-                        int x = 0;
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            Log.e(getClass().getSimpleName(), "Working : " + x);
-                            reservationList.add(data.getValue(ReservationModel.class));
-                        }
+//                        if (snapshot.exists()) {
+//                            Log.e(getClass().getSimpleName(), "Existing");
+//                        } else {
+//                            Log.e(getClass().getSimpleName(), "Don't exist: " + snapshot.getValue());
+//                        }
+//
+//                        int x = 0;
+//                        for (DataSnapshot data : snapshot.getChildren()) {
+//                            Log.e(getClass().getSimpleName(), "Working : " + x);
+//                            reservationList.add(data.getValue(ReservationModel.class));
+//                        }
 
                         listener.onReservationSuccess(reservationList);
                     }

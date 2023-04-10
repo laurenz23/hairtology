@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.R;
@@ -34,6 +35,7 @@ public class RegistrationFragment extends BaseFragment {
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
     private TextView mErrorTextView;
+    private LinearLayout mErrorLinearLayout;
 
     public static RegistrationFragment newInstance() {
         return new RegistrationFragment();
@@ -52,6 +54,7 @@ public class RegistrationFragment extends BaseFragment {
         mPasswordEditText = mBinding.passwordEditText;
         mConfirmPasswordEditText = mBinding.confirmPasswordEditText;
         mErrorTextView = mBinding.errorTextView;
+        mErrorLinearLayout = mBinding.errorLinearLayout;
 
         mBinding.saveButton.setOnClickListener(v -> {
             onSaveTap();
@@ -144,10 +147,10 @@ public class RegistrationFragment extends BaseFragment {
 
         if (!isValidationPass) {
             mErrorTextView.setText(errorMessage);
-            mErrorTextView.setVisibility(View.VISIBLE);
+            mErrorLinearLayout.setVisibility(View.VISIBLE);
             return false;
         } else {
-            mErrorTextView.setVisibility(View.GONE);
+            mErrorLinearLayout.setVisibility(View.GONE);
             return true;
         }
     }

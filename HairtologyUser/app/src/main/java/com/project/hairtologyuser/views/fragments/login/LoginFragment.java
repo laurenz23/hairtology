@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.BuildConfig;
@@ -36,6 +37,7 @@ public class LoginFragment extends BaseFragment {
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private TextView mErrorTextView;
+    private LinearLayout mErrorLinearLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -47,6 +49,7 @@ public class LoginFragment extends BaseFragment {
         mEmailEditText = mBinding.emailEditText;
         mPasswordEditText = mBinding.passwordEditText;
         mErrorTextView = mBinding.errorTextView;
+        mErrorLinearLayout = mBinding.errorLinearLayout;
 
         mBinding.loginButton.setOnClickListener(v -> {
             onLoginTap();
@@ -130,11 +133,11 @@ public class LoginFragment extends BaseFragment {
         }
 
         if (isValidatePass) {
-            mErrorTextView.setVisibility(View.GONE);
+            mErrorLinearLayout.setVisibility(View.GONE);
             return true;
         } else {
             mErrorTextView.setText(errorMessage);
-            mErrorTextView.setVisibility(View.VISIBLE);
+            mErrorLinearLayout.setVisibility(View.VISIBLE);
             return false;
         }
     }

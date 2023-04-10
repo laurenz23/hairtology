@@ -66,30 +66,30 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
-        mReservationTextView = mView.findViewById(R.id.reservationTextView);
-
-        mReservationTextView = mView.findViewById(R.id.reservationTextView);
-        mDateButton = mView.findViewById(R.id.dateButton);
-        mTimeButton = mView.findViewById(R.id.timeButton);
-        mReserveButton = mView.findViewById(R.id.reserveButton);
-        mLogoutButton = mView.findViewById(R.id.logoutButton);
-        mNoteEditText = mView.findViewById(R.id.noteEditText);
-
-        mDateButton.setOnClickListener(v -> {
-            onDateTap();
-        });
-
-        mTimeButton.setOnClickListener(v -> {
-            onTimeTap();
-        });
-
-        mReserveButton.setOnClickListener(v -> {
-            onReserveTap(mDate, mTime, String.valueOf(mNoteEditText.getText()));
-        });
-
-        mLogoutButton.setOnClickListener(v -> {
-            onLogoutTap();
-        });
+//        mReservationTextView = mView.findViewById(R.id.reservationTextView);
+//
+//        mReservationTextView = mView.findViewById(R.id.reservationTextView);
+//        mDateButton = mView.findViewById(R.id.dateButton);
+//        mTimeButton = mView.findViewById(R.id.timeButton);
+//        mReserveButton = mView.findViewById(R.id.reserveButton);
+//        mLogoutButton = mView.findViewById(R.id.logoutButton);
+//        mNoteEditText = mView.findViewById(R.id.noteEditText);
+//
+//        mDateButton.setOnClickListener(v -> {
+//            onDateTap();
+//        });
+//
+//        mTimeButton.setOnClickListener(v -> {
+//            onTimeTap();
+//        });
+//
+//        mReserveButton.setOnClickListener(v -> {
+//            onReserveTap(mDate, mTime, String.valueOf(mNoteEditText.getText()));
+//        });
+//
+//        mLogoutButton.setOnClickListener(v -> {
+//            onLogoutTap();
+//        });
 
         return mView;
     }
@@ -103,27 +103,27 @@ public class HomeFragment extends Fragment {
             return;
 
         mViewModel.setViewModel(getActivity().getApplication());
-        mViewModel.getReservationData(new HomeViewModel.onReservationListener() {
-            @Override
-            public void onReservationSuccess(List<ReservationModel> reservationList) {
-                if (reservationList.isEmpty()) {
-                    mReservationTextView.setText("You don't have reservation yet");
-                } else {
-                    StringBuilder strReservation = new StringBuilder("Reservations");
-                    for (ReservationModel reservation : reservationList) {
-                        strReservation.append("\n")
-                                .append(reservation.getDate()).append("     ")
-                                .append(reservation.getTime()).append("     ")
-                                .append(reservation.getNote());
-                    }
-                }
-            }
-
-            @Override
-            public void onReservationFailed(DatabaseError error) {
-
-            }
-        });
+//        mViewModel.getReservationData(new HomeViewModel.onReservationListener() {
+//            @Override
+//            public void onReservationSuccess(List<ReservationModel> reservationList) {
+//                if (reservationList.isEmpty()) {
+//                    mReservationTextView.setText("You don't have reservation yet");
+//                } else {
+//                    StringBuilder strReservation = new StringBuilder("Reservations");
+//                    for (ReservationModel reservation : reservationList) {
+//                        strReservation.append("\n")
+//                                .append(reservation.getDate()).append("     ")
+//                                .append(reservation.getTime()).append("     ")
+//                                .append(reservation.getNote());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onReservationFailed(DatabaseError error) {
+//
+//            }
+//        });
     }
 
     public void onDateTap() {

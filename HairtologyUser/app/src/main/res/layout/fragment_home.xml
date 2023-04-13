@@ -35,8 +35,8 @@
                 android:id="@+id/stylingButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/ic_stylish"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
                 <ImageView
@@ -44,8 +44,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:foregroundGravity="center"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_stylish" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                 android:id="@+id/treatmentButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -71,8 +71,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:foregroundGravity="center"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_treatment" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:id="@+id/coloringButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -98,8 +98,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:foregroundGravity="center"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_brush" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                 android:id="@+id/relaxingButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -125,8 +125,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:foregroundGravity="center"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_relaxing" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -151,7 +151,7 @@
                 android:id="@+id/haircutButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -160,8 +160,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:foregroundGravity="center"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_scissors" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -178,7 +178,7 @@
                 android:id="@+id/blowDryButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -188,7 +188,7 @@
                     android:layout_weight="1"
                     android:foregroundGravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:src="@drawable/ic_hairdryer" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -205,7 +205,7 @@
                 android:id="@+id/beardCutButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -215,7 +215,7 @@
                     android:layout_weight="1"
                     android:foregroundGravity="center"
                     android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:src="@drawable/ic_beard" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -232,7 +232,7 @@
                 android:id="@+id/specialButton"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:layout_margin="10dp"
+                android:layout_margin="2dp"
                 android:background="@drawable/button_secondary"
                 android:orientation="vertical">
 
@@ -241,8 +241,8 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:foregroundGravity="center"
-                    android:padding="5dp"
-                    android:src="@drawable/ic_home_24" />
+                    android:padding="10dp"
+                    android:src="@drawable/ic_special" />
 
                 <TextView
                     android:layout_width="match_parent"

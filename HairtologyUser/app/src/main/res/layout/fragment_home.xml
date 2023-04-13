@@ -8,6 +8,7 @@
     tools:context=".views.fragments.home.HomeFragment">
 
     <ScrollView
+        android:id="@+id/homeScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/box_secondary_bottom_rounded">

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class HomeFragment extends Fragment {
     public static final String FRAGMENT_TAG = BuildConfig.APPLICATION_ID + ".HOME_FRAGMENT";
     private HomeViewModel mViewModel;
     private View mView;
+    private ScrollView mHomeScrollView;
     private LinearLayout mSchedLinearLayout;
     private LinearLayout mSlotLinearLayout;
     private LinearLayout mSuccessfulReservedLinearLayout;
@@ -59,6 +61,7 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
 
+        mHomeScrollView = mView.findViewById(R.id.homeScrollView);
         mSchedLinearLayout = mView.findViewById(R.id.scheduleLinearLayout);
         mSlotLinearLayout = mView.findViewById(R.id.slotsLinearLayout);
         mSuccessfulReservedLinearLayout = mView.findViewById(R.id.successfulReservedLinearLayout);
@@ -201,6 +204,8 @@ public class HomeFragment extends Fragment {
                     Log.e(getClass().getSimpleName(), "special");
                     break;
             }
+
+            mHomeScrollView.post(() -> mHomeScrollView.fullScroll(View.FOCUS_DOWN));
         });
     }
 
@@ -236,6 +241,8 @@ public class HomeFragment extends Fragment {
                     mBell5ImageView.setVisibility(View.VISIBLE);
                     break;
             }
+
+            mHomeScrollView.post(() -> mHomeScrollView.fullScroll(View.FOCUS_DOWN));
         });
     }
 
@@ -250,6 +257,8 @@ public class HomeFragment extends Fragment {
                 mNoteEditText.setVisibility(View.VISIBLE);
                 mReserveNowButton.setVisibility(View.VISIBLE);
             }
+
+            mHomeScrollView.post(() -> mHomeScrollView.fullScroll(View.FOCUS_DOWN));
         });
     }
 
@@ -263,11 +272,14 @@ public class HomeFragment extends Fragment {
                 mReserveNowButton.setVisibility(View.GONE);
                 mSuccessfulReservedLinearLayout.setVisibility(View.VISIBLE);
 
-                Log.e(getClass().getSimpleName(), new GsonBuilder().create().toJson(reservation));
+                mBell1ImageView.setVisibility(View.GONE);
+                mBell2ImageView.setVisibility(View.GONE);
+                mBell3ImageView.setVisibility(View.GONE);
+                mBell4ImageView.setVisibility(View.GONE);
+                mBell5ImageView.setVisibility(View.GONE);
 
-                new Handler().postDelayed((Runnable) () -> {
-                    mSuccessfulReservedLinearLayout.setVisibility(View.GONE);
-                }, 3000);
+                Log.e(getClass().getSimpleName(), new GsonBuilder().create().toJson(reservation));
+                new Handler().postDelayed(() -> mSuccessfulReservedLinearLayout.setVisibility(View.GONE), 3000);
             }
 
             @Override

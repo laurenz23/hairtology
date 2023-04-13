@@ -14,6 +14,7 @@ import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ServiceType;
 import com.project.hairtologyuser.models.UserModel;
 
 import java.util.ArrayList;
@@ -35,19 +36,53 @@ public class HomeViewModel extends ViewModel {
     }
 
     private FirebaseClient mFirebaseClient;
-
     private Session mSession;
-
     private MutableLiveData<UserModel> mCurrentUser;
+    private MutableLiveData<ServiceType> mSelectedServiceType;
+    private MutableLiveData<String> mSelectedTime;
+    private MutableLiveData<String> mSelectedDay;
+    private MutableLiveData<String> mSelectedMonth;
 
     public void setViewModel(@NonNull Application application) {
         mFirebaseClient = new FirebaseClient(application);
         mSession = new Session(application.getApplicationContext());
         mCurrentUser = new MutableLiveData<>(mSession.getCurrentUser());
+        mSelectedServiceType = new MutableLiveData<>(null);
+        mSelectedTime = new MutableLiveData<>("");
+        mSelectedDay = new MutableLiveData<>("");
+        mSelectedMonth = new MutableLiveData<>("");
     }
 
     public MutableLiveData<UserModel> getCurrentUser() {
         return mCurrentUser;
+    }
+
+    public void setSelectedServiceType(ServiceType type) {
+        mSelectedServiceType.setValue(type);
+    }
+    public MutableLiveData<ServiceType> getSelectedServiceType() {
+        return mSelectedServiceType;
+    }
+
+    public void setSelectedTime(String time) {
+        mSelectedTime.setValue(time);
+    }
+    public MutableLiveData<String> getSelectedTime() {
+        return mSelectedTime;
+    }
+
+    public void setSelectedDay(String day) {
+        mSelectedDay.setValue(day);
+    }
+    public MutableLiveData<String> getSelectedDay() {
+        return mSelectedDay;
+    }
+
+    public void setSelectedMonth(String month) {
+        mSelectedMonth.setValue(month);
+    }
+    public MutableLiveData<String> getSelectedMonth() {
+        return mSelectedMonth;
     }
 
     public void getReservationData(onReservationListener listener) {
@@ -80,9 +115,24 @@ public class HomeViewModel extends ViewModel {
                 });
     }
 
-    public void reserve(String date, String time, String note, onReserveListener listener) {
+    public void reserve(String note, onReserveListener listener) {
+        if (getCurrentUser().getValue() == null)
+            return;
+
+        if (getSelectedServiceType().getValue() == null)
+            return;
+
+        if (Objects.requireNonNull(getSelectedTime().getValue()).isEmpty())
+            return;
+
+        if (Objects.requireNonNull(getSelectedDay().getValue()).isEmpty())
+            return;
+
+        if (Objects.requireNonNull(getSelectedMonth().getValue()).isEmpty())
+            return;
+
         mFirebaseClient.getDatabaseReference()
-            .child(mFirebaseClient.apiReservation(Objects.requireNonNull(mCurrentUser.getValue()).getUuid()))
+            .child(mFirebaseClient.apiReservation(getCurrentUser().getValue().getUuid()))
             .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -92,12 +142,15 @@ public class HomeViewModel extends ViewModel {
                         childCount = snapshot.getChildrenCount();
                     }
 
-                    ReservationModel reservation = new ReservationModel(date, time, note);
-
+                    ReservationModel reservation = new ReservationModel(
+                            getSelectedServiceType().getValue(),
+                            getSelectedTime().getValue(),
+                            getSelectedDay().getValue(),
+                            getSelectedMonth().getValue(), note);
                     mFirebaseClient.getDatabaseReference()
                         .child(mFirebaseClient.apiReservation(Objects.requireNonNull(mCurrentUser.getValue()).getUuid()))
                         .child(String.valueOf(childCount))
-                        .setValue(new ReservationModel(date, time, note))
+                        .setValue(reservation)
                         .addOnSuccessListener(data -> {
                             listener.onReserveSuccess(reservation);
                         }).addOnFailureListener(listener::onReserveFailed);

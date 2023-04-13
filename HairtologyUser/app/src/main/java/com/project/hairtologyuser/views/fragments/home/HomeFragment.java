@@ -1,64 +1,112 @@
 package com.project.hairtologyuser.views.fragments.home;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TimePicker;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.database.DatabaseError;
 import com.google.gson.GsonBuilder;
 import com.project.hairtologyuser.BuildConfig;
 import com.project.hairtologyuser.R;
-import com.project.hairtologyuser.components.utils.ErrorUtil;
-import com.project.hairtologyuser.databinding.FragmentHomeBinding;
 import com.project.hairtologyuser.models.ReservationModel;
-import com.project.hairtologyuser.views.activities.MainActivity;
-import com.project.hairtologyuser.views.activities.OnBoardingActivity;
-import com.project.hairtologyuser.views.fragments.login.LoginFragment;
-import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
-
-import java.util.Calendar;
-import java.util.List;
+import com.project.hairtologyuser.models.ServiceType;
 
 public class HomeFragment extends Fragment {
 
     public static final String FRAGMENT_TAG = BuildConfig.APPLICATION_ID + ".HOME_FRAGMENT";
-
     private HomeViewModel mViewModel;
-
     private View mView;
+    private TextView mSched1TextView;
+    private TextView mSched2TextView;
+    private TextView mSched3TextView;
+    private TextView mSched4TextView;
+    private TextView mSched5TextView;
+    private ImageView mBell1ImageView;
+    private ImageView mBell2ImageView;
+    private ImageView mBell3ImageView;
+    private ImageView mBell4ImageView;
+    private ImageView mBell5ImageView;
+    private Button mSlotAMButton;
+    private Button mSlotPMButton;
+    private Button mSlot1Button;
+    private Button mSlot2Button;
+    private Button mSlot3Button;
+    private Button mSlot4Button;
+    private Button mSlot5Button;
+    private Button mSlot6Button;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        onButtonTap(R.id.stylingButton);
-        onButtonTap(R.id.treatmentButton);
-        onButtonTap(R.id.coloringButton);
-        onButtonTap(R.id.relaxingButton);
-        onButtonTap(R.id.haircutButton);
-        onButtonTap(R.id.blowDryButton);
-        onButtonTap(R.id.beardCutButton);
-        onButtonTap(R.id.specialButton);
+        mSched1TextView = mView.findViewById(R.id.sched1TextView);
+        mSched2TextView = mView.findViewById(R.id.sched2TextView);
+        mSched3TextView = mView.findViewById(R.id.sched3TextView);
+        mSched4TextView = mView.findViewById(R.id.sched4TextView);
+        mSched5TextView = mView.findViewById(R.id.sched5TextView);
+
+        mBell1ImageView = mView.findViewById(R.id.sched1Bell);
+        mBell2ImageView = mView.findViewById(R.id.sched2Bell);
+        mBell3ImageView = mView.findViewById(R.id.sched3Bell);
+        mBell4ImageView = mView.findViewById(R.id.sched4Bell);
+        mBell5ImageView = mView.findViewById(R.id.sched5Bell);
+
+        mSlotAMButton = mView.findViewById(R.id.slotAMButton);
+        mSlotPMButton = mView.findViewById(R.id.slotPMButton);
+        mSlot1Button = mView.findViewById(R.id.slot1Button);
+        mSlot2Button = mView.findViewById(R.id.slot2Button);
+        mSlot3Button = mView.findViewById(R.id.slot3Button);
+        mSlot4Button = mView.findViewById(R.id.slot4Button);
+        mSlot5Button = mView.findViewById(R.id.slot5Button);
+        mSlot6Button = mView.findViewById(R.id.slot6Button);
+
+        Button reserveNowButton = mView.findViewById(R.id.reserveNowButton);
+
+        onServiceTap(R.id.stylingButton);
+        onServiceTap(R.id.treatmentButton);
+        onServiceTap(R.id.coloringButton);
+        onServiceTap(R.id.relaxingButton);
+        onServiceTap(R.id.haircutButton);
+        onServiceTap(R.id.blowDryButton);
+        onServiceTap(R.id.beardCutButton);
+        onServiceTap(R.id.specialButton);
+
+        onSchedTap(R.id.sched1Button);
+        onSchedTap(R.id.sched2Button);
+        onSchedTap(R.id.sched3Button);
+        onSchedTap(R.id.sched4Button);
+        onSchedTap(R.id.sched5Button);
+
+        onSlotTap(mSlotAMButton);
+        onSlotTap(mSlotPMButton);
+        onSlotTap(mSlot1Button);
+        onSlotTap(mSlot2Button);
+        onSlotTap(mSlot3Button);
+        onSlotTap(mSlot4Button);
+        onSlotTap(mSlot5Button);
+        onSlotTap(mSlot6Button);
+
+        reserveNowButton.setOnClickListener(view -> {
+            onReserveTap("Sample note");
+        });
+
+        mSched1TextView.setText("10");
+        mSched2TextView.setText("11");
+        mSched3TextView.setText("12");
+        mSched4TextView.setText("13");
+        mSched5TextView.setText("14");
 
         return mView;
     }
@@ -72,6 +120,7 @@ public class HomeFragment extends Fragment {
             return;
 
         mViewModel.setViewModel(getActivity().getApplication());
+        mViewModel.setSelectedMonth("April 2023");
 //        mViewModel.getReservationData(new HomeViewModel.onReservationListener() {
 //            @Override
 //            public void onReservationSuccess(List<ReservationModel> reservationList) {
@@ -96,39 +145,91 @@ public class HomeFragment extends Fragment {
     }
 
     @SuppressLint("NonConstantResourceId")
-    public void onButtonTap(int id) {
+    public void onServiceTap(int id) {
         mView.findViewById(id).setOnClickListener(view -> {
             switch (id) {
                 case R.id.stylingButton:
+                    mViewModel.setSelectedServiceType(ServiceType.STYLING);
                     Log.e(getClass().getSimpleName(), "Styling");
                     break;
                 case R.id.treatmentButton:
+                    mViewModel.setSelectedServiceType(ServiceType.TREATMENT);
                     Log.e(getClass().getSimpleName(), "Treatment");
                     break;
                 case R.id.coloringButton:
+                    mViewModel.setSelectedServiceType(ServiceType.COLORING);
                     Log.e(getClass().getSimpleName(), "Coloring");
                     break;
                 case R.id.relaxingButton:
+                    mViewModel.setSelectedServiceType(ServiceType.RELAXING);
                     Log.e(getClass().getSimpleName(), "Relaxing");
                     break;
                 case R.id.haircutButton:
+                    mViewModel.setSelectedServiceType(ServiceType.HAIRCUT);
                     Log.e(getClass().getSimpleName(), "Haircut");
                     break;
                 case R.id.blowDryButton:
+                    mViewModel.setSelectedServiceType(ServiceType.BLOW_DRY);
                     Log.e(getClass().getSimpleName(), "Blow dry");
                     break;
                 case R.id.beardCutButton:
+                    mViewModel.setSelectedServiceType(ServiceType.BEARD_CUT);
                     Log.e(getClass().getSimpleName(), "beard cut");
                     break;
                 case R.id.specialButton:
+                    mViewModel.setSelectedServiceType(ServiceType.SPECIAL);
                     Log.e(getClass().getSimpleName(), "special");
                     break;
             }
         });
     }
 
-    public void onReserveTap(String date, String time, String note) {
-        mViewModel.reserve(date, time, note, new HomeViewModel.onReserveListener() {
+    @SuppressLint("NonConstantResourceId")
+    public void onSchedTap(int id) {
+        mBell1ImageView.setVisibility(View.GONE);
+        mBell2ImageView.setVisibility(View.GONE);
+        mBell3ImageView.setVisibility(View.GONE);
+        mBell4ImageView.setVisibility(View.GONE);
+        mBell5ImageView.setVisibility(View.GONE);
+
+        mView.findViewById(id).setOnClickListener(view -> {
+            switch (id) {
+                case R.id.sched1Button:
+                    mViewModel.setSelectedDay(String.valueOf(mSched1TextView.getText()));
+                    mBell1ImageView.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.sched2Button:
+                    mViewModel.setSelectedDay(String.valueOf(mSched2TextView.getText()));
+                    mBell2ImageView.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.sched3Button:
+                    mViewModel.setSelectedDay(String.valueOf(mSched3TextView.getText()));
+                    mBell3ImageView.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.sched4Button:
+                    mViewModel.setSelectedDay(String.valueOf(mSched4TextView.getText()));
+                    mBell4ImageView.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.sched5Button:
+                    mViewModel.setSelectedDay(String.valueOf(mSched5TextView.getText()));
+                    mBell5ImageView.setVisibility(View.VISIBLE);
+                    break;
+            }
+        });
+    }
+
+    public void onSlotTap(Button button) {
+        if (button == mSlotAMButton) {
+            setAMSlot();
+        } else if (button == mSlotPMButton) {
+            setPMSlot();
+        } else {
+            mViewModel.setSelectedTime(String.valueOf(button.getText()));
+        }
+    }
+
+    public void onReserveTap(String note) {
+        mViewModel.reserve(note, new HomeViewModel.onReserveListener() {
             @Override
             public void onReserveSuccess(ReservationModel reservation) {
                 Log.e(getClass().getSimpleName(), new GsonBuilder().create().toJson(reservation));
@@ -144,6 +245,24 @@ public class HomeFragment extends Fragment {
                 Log.e(getClass().getSimpleName(), String.valueOf(error));
             }
         });
+    }
+
+    public void setAMSlot() {
+        mSlot1Button.setText(getString(R.string.str_time_6_7));
+        mSlot2Button.setText(getString(R.string.str_time_7_8));
+        mSlot3Button.setText(getString(R.string.str_time_8_9));
+        mSlot4Button.setText(getString(R.string.str_time_9_10));
+        mSlot5Button.setText(getString(R.string.str_time_10_11));
+        mSlot6Button.setText(getString(R.string.str_time_11_12));
+    }
+
+    public void setPMSlot() {
+        mSlot1Button.setText(getString(R.string.str_time_12_1));
+        mSlot2Button.setText(getString(R.string.str_time_1_2));
+        mSlot3Button.setText(getString(R.string.str_time_2_3));
+        mSlot4Button.setText(getString(R.string.str_time_3_4));
+        mSlot5Button.setText(getString(R.string.str_time_4_5));
+        mSlot6Button.setText(getString(R.string.str_time_5_6));
     }
 
 }

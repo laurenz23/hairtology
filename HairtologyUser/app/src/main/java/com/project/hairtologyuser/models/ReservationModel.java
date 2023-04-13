@@ -2,26 +2,28 @@ package com.project.hairtologyuser.models;
 
 public class ReservationModel {
 
-    private String date;
-
+    private ServiceType serviceType;
     private String time;
-
+    private String day;
+    private String month;
     private String note;
 
     public ReservationModel() {}
 
-    public ReservationModel(String date, String time, String note) {
-        this.date = date;
+    public ReservationModel(ServiceType type, String time, String day, String month, String note) {
+        this.serviceType = type;
         this.time = time;
+        this.day = day;
+        this.month = month;
         this.note = note;
     }
 
-    public String getDate() {
-        return date;
+    public ServiceType getServiceType() {
+        return serviceType;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setServiceType(ServiceType serviceType) {
+        this.serviceType = serviceType;
     }
 
     public String getTime() {
@@ -30,6 +32,22 @@ public class ReservationModel {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     public String getNote() {

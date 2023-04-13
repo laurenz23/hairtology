@@ -14,6 +14,7 @@ import com.project.hairtologyuser.views.fragments.home.HomeFragment;
 import com.project.hairtologyuser.views.fragments.login.LoginFragment;
 import com.project.hairtologyuser.views.fragments.profile.ProfileFragment;
 import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
+import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -38,7 +39,9 @@ public class MainActivity extends BaseActivity {
         });
 
         reservationImageView.setOnClickListener(view -> {
-            Log.e(getClass().getSimpleName(), "Reservation");
+            replaceFragment(
+                new ReserveFragment(),
+                containerViewId);
         });
 
         messageImageView.setOnClickListener(view -> {

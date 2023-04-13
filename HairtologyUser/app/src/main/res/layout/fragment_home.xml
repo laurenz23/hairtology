@@ -295,6 +295,7 @@
                         tools:ignore="RtlHardcoded" />
 
                     <TextView
+                        android:id="@+id/schedMonthTextView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -311,6 +312,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/sched1Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -321,6 +323,7 @@
                         android:background="@drawable/button_secondary">
 
                         <TextView
+                            android:id="@+id/sched1TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_place_holder_day_num"
@@ -336,6 +339,7 @@
                             android:textColor="@color/secondary" />
 
                         <ImageView
+                            android:id="@+id/sched1Bell"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -348,6 +352,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sched2Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -358,6 +363,7 @@
                         android:background="@drawable/button_secondary">
 
                         <TextView
+                            android:id="@+id/sched2TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_place_holder_day_num"
@@ -373,6 +379,7 @@
                             android:textColor="@color/secondary" />
 
                         <ImageView
+                            android:id="@+id/sched2Bell"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -385,6 +392,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sched3Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -395,6 +403,7 @@
                         android:background="@drawable/button_secondary">
 
                         <TextView
+                            android:id="@+id/sched3TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_place_holder_day_num"
@@ -410,6 +419,7 @@
                             android:textColor="@color/secondary" />
 
                         <ImageView
+                            android:id="@+id/sched3Bell"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -422,6 +432,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sched4Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -432,6 +443,7 @@
                         android:background="@drawable/button_secondary">
 
                         <TextView
+                            android:id="@+id/sched4TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_place_holder_day_num"
@@ -447,6 +459,7 @@
                             android:textColor="@color/secondary" />
 
                         <ImageView
+                            android:id="@+id/sched4Bell"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -459,6 +472,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sched5Button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -469,6 +483,7 @@
                         android:background="@drawable/button_secondary">
 
                         <TextView
+                            android:id="@+id/sched5TextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_place_holder_day_num"
@@ -484,6 +499,7 @@
                             android:textColor="@color/secondary" />
 
                         <ImageView
+                            android:id="@+id/sched5Bell"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"

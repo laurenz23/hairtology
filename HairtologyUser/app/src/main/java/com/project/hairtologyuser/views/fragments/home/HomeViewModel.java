@@ -131,9 +131,15 @@ public class HomeViewModel extends ViewModel {
         if (Objects.requireNonNull(getSelectedMonth().getValue()).isEmpty())
             return;
 
+        ReservationModel reservation = new ReservationModel(
+                getSelectedServiceType().getValue(),
+                getSelectedTime().getValue(),
+                getSelectedDay().getValue(),
+                getSelectedMonth().getValue(), note);
+
         mFirebaseClient.getDatabaseReference()
             .child(mFirebaseClient.apiReservation(getCurrentUser().getValue().getUuid()))
-            .addValueEventListener(new ValueEventListener() {
+            .addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     long childCount = 0;
@@ -142,11 +148,6 @@ public class HomeViewModel extends ViewModel {
                         childCount = snapshot.getChildrenCount();
                     }
 
-                    ReservationModel reservation = new ReservationModel(
-                            getSelectedServiceType().getValue(),
-                            getSelectedTime().getValue(),
-                            getSelectedDay().getValue(),
-                            getSelectedMonth().getValue(), note);
                     mFirebaseClient.getDatabaseReference()
                         .child(mFirebaseClient.apiReservation(Objects.requireNonNull(mCurrentUser.getValue()).getUuid()))
                         .child(String.valueOf(childCount))

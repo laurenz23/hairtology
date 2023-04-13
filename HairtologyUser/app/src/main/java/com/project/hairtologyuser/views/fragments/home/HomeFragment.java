@@ -2,12 +2,15 @@ package com.project.hairtologyuser.views.fragments.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,10 @@ public class HomeFragment extends Fragment {
     public static final String FRAGMENT_TAG = BuildConfig.APPLICATION_ID + ".HOME_FRAGMENT";
     private HomeViewModel mViewModel;
     private View mView;
+    private LinearLayout mSchedLinearLayout;
+    private LinearLayout mSlotLinearLayout;
+    private LinearLayout mSuccessfulReservedLinearLayout;
+    private EditText mNoteEditText;
     private TextView mSched1TextView;
     private TextView mSched2TextView;
     private TextView mSched3TextView;
@@ -45,11 +52,17 @@ public class HomeFragment extends Fragment {
     private Button mSlot4Button;
     private Button mSlot5Button;
     private Button mSlot6Button;
+    private Button mReserveNowButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mSchedLinearLayout = mView.findViewById(R.id.scheduleLinearLayout);
+        mSlotLinearLayout = mView.findViewById(R.id.slotsLinearLayout);
+        mSuccessfulReservedLinearLayout = mView.findViewById(R.id.successfulReservedLinearLayout);
+        mNoteEditText = mView.findViewById(R.id.noteEditText);
 
         mSched1TextView = mView.findViewById(R.id.sched1TextView);
         mSched2TextView = mView.findViewById(R.id.sched2TextView);
@@ -72,7 +85,7 @@ public class HomeFragment extends Fragment {
         mSlot5Button = mView.findViewById(R.id.slot5Button);
         mSlot6Button = mView.findViewById(R.id.slot6Button);
 
-        Button reserveNowButton = mView.findViewById(R.id.reserveNowButton);
+        mReserveNowButton = mView.findViewById(R.id.reserveNowButton);
 
         onServiceTap(R.id.stylingButton);
         onServiceTap(R.id.treatmentButton);
@@ -98,15 +111,21 @@ public class HomeFragment extends Fragment {
         onSlotTap(mSlot5Button);
         onSlotTap(mSlot6Button);
 
-        reserveNowButton.setOnClickListener(view -> {
-            onReserveTap("Sample note");
-        });
+        mSchedLinearLayout.setVisibility(View.GONE);
+        mSlotLinearLayout.setVisibility(View.GONE);
+        mNoteEditText.setVisibility(View.GONE);
+        mReserveNowButton.setVisibility(View.GONE);
+        mSuccessfulReservedLinearLayout.setVisibility(View.GONE);
 
         mSched1TextView.setText("10");
         mSched2TextView.setText("11");
         mSched3TextView.setText("12");
         mSched4TextView.setText("13");
         mSched5TextView.setText("14");
+
+        mReserveNowButton.setOnClickListener(view -> {
+            onReserveTap();
+        });
 
         return mView;
     }
@@ -147,6 +166,7 @@ public class HomeFragment extends Fragment {
     @SuppressLint("NonConstantResourceId")
     public void onServiceTap(int id) {
         mView.findViewById(id).setOnClickListener(view -> {
+            mSchedLinearLayout.setVisibility(View.VISIBLE);
             switch (id) {
                 case R.id.stylingButton:
                     mViewModel.setSelectedServiceType(ServiceType.STYLING);
@@ -186,13 +206,14 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("NonConstantResourceId")
     public void onSchedTap(int id) {
-        mBell1ImageView.setVisibility(View.GONE);
-        mBell2ImageView.setVisibility(View.GONE);
-        mBell3ImageView.setVisibility(View.GONE);
-        mBell4ImageView.setVisibility(View.GONE);
-        mBell5ImageView.setVisibility(View.GONE);
-
         mView.findViewById(id).setOnClickListener(view -> {
+            mSlotLinearLayout.setVisibility(View.VISIBLE);
+            mBell1ImageView.setVisibility(View.GONE);
+            mBell2ImageView.setVisibility(View.GONE);
+            mBell3ImageView.setVisibility(View.GONE);
+            mBell4ImageView.setVisibility(View.GONE);
+            mBell5ImageView.setVisibility(View.GONE);
+
             switch (id) {
                 case R.id.sched1Button:
                     mViewModel.setSelectedDay(String.valueOf(mSched1TextView.getText()));
@@ -219,20 +240,34 @@ public class HomeFragment extends Fragment {
     }
 
     public void onSlotTap(Button button) {
-        if (button == mSlotAMButton) {
-            setAMSlot();
-        } else if (button == mSlotPMButton) {
-            setPMSlot();
-        } else {
-            mViewModel.setSelectedTime(String.valueOf(button.getText()));
-        }
+        button.setOnClickListener(view -> {
+            if (button == mSlotAMButton) {
+                setAMSlot();
+            } else if (button == mSlotPMButton) {
+                setPMSlot();
+            } else {
+                mViewModel.setSelectedTime(String.valueOf(button.getText()));
+                mNoteEditText.setVisibility(View.VISIBLE);
+                mReserveNowButton.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
-    public void onReserveTap(String note) {
-        mViewModel.reserve(note, new HomeViewModel.onReserveListener() {
+    public void onReserveTap() {
+        mViewModel.reserve(String.valueOf(mNoteEditText.getText()), new HomeViewModel.onReserveListener() {
             @Override
             public void onReserveSuccess(ReservationModel reservation) {
+                mSchedLinearLayout.setVisibility(View.GONE);
+                mSlotLinearLayout.setVisibility(View.GONE);
+                mNoteEditText.setVisibility(View.GONE);
+                mReserveNowButton.setVisibility(View.GONE);
+                mSuccessfulReservedLinearLayout.setVisibility(View.VISIBLE);
+
                 Log.e(getClass().getSimpleName(), new GsonBuilder().create().toJson(reservation));
+
+                new Handler().postDelayed((Runnable) () -> {
+                    mSuccessfulReservedLinearLayout.setVisibility(View.GONE);
+                }, 3000);
             }
 
             @Override

@@ -3,6 +3,7 @@
     <string name="app_name">HairtologyUser</string>
 
     <string name="str_about_us">About us</string>
+    <string name="str_add_note">Add note</string>
     <string name="str_am">AM</string>
     <string name="str_available_slots">Available Slots</string>
     <string name="str_back_to_login">Back to login</string>
@@ -47,6 +48,7 @@
     <string name="str_shop_name">Shop name</string>
     <string name="str_slots">Slots</string>
     <string name="str_submit">Submit</string>
+    <string name="str_successfully_reserved">Successfully Reserved</string>
     <string name="str_time">Time</string>
     <string name="str_update_password">Update Password</string>
     <string name="str_update_profile">Update Profile</string>

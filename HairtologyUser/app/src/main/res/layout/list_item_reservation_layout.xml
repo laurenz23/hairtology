@@ -5,21 +5,35 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/reservationDateTextView"
+        android:id="@+id/serviceTypeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/str_date" />
 
     <TextView
-        android:id="@+id/reservationTimeTextView"
+        android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/str_time" />
 
     <TextView
-        android:id="@+id/reservationNoteTextView"
+        android:id="@+id/dayTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/str_day" />
+
+    <TextView
+        android:id="@+id/monthTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/str_month" />
+
+    <TextView
+        android:id="@+id/noteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"

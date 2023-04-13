@@ -12,6 +12,7 @@
     <string name="str_contact_number">Contact number</string>
     <string name="str_current_password">Current Password</string>
     <string name="str_date">Date</string>
+    <string name="str_day">Day</string>
     <string name="str_email">Email</string>
     <string name="str_error">Error</string>
     <string name="str_first_name">First name</string>
@@ -24,6 +25,7 @@
     <string name="str_login">Login</string>
     <string name="str_login_failed">"Login failed"</string>
     <string name="str_logout">Logout</string>
+    <string name="str_month">Month</string>
     <string name="str_new_password">New Password</string>
     <string name="str_notes">Notes</string>
     <string name="str_password">Password</string>

@@ -35,9 +35,11 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReservationModel reservation = mReservationList.get(position);
-        holder.dateTextView.setText(reservation.getDate());
-        holder.dateTextView.setText(reservation.getTime());
-        holder.dateTextView.setText(reservation.getNote());
+        holder.serviceTypeTextView.setText(reservation.getServiceType().toString());
+        holder.timeTextView.setText(reservation.getTime());
+        holder.dayTextView.setText(reservation.getDay());
+        holder.monthTextView.setText(reservation.getMonth());
+        holder.noteTextView.setText(reservation.getNote());
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -53,16 +55,20 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView dateTextView;
+        TextView serviceTypeTextView;
         TextView timeTextView;
+        TextView dayTextView;
+        TextView monthTextView;
         TextView noteTextView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            dateTextView = itemView.findViewById(R.id.reservationDateTextView);
-            timeTextView = itemView.findViewById(R.id.reservationTimeTextView);
-            noteTextView = itemView.findViewById(R.id.reservationNoteTextView);
+            serviceTypeTextView = itemView.findViewById(R.id.serviceTypeTextView);
+            timeTextView = itemView.findViewById(R.id.timeTextView);
+            dayTextView = itemView.findViewById(R.id.dayTextView);
+            monthTextView = itemView.findViewById(R.id.monthTextView);
+            noteTextView = itemView.findViewById(R.id.noteTextView);
         }
     }
 

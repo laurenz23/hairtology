@@ -3,6 +3,7 @@ package com.project.hairtologyuser.views.fragments.home;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -43,53 +45,20 @@ public class HomeFragment extends Fragment {
     private HomeViewModel mViewModel;
 
     private View mView;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-    private int mHour;
-    private int mMinute;
-    private String mDate = null;
-    private String mTime = null;
-    private String mNote = null;
-    private TextView mReservationTextView;
-    private Button mDateButton;
-    private Button mTimeButton;
-    private Button mReserveButton;
-    private Button mLogoutButton;
-    private EditText mNoteEditText;
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_home, container, false);
-//        mReservationTextView = mView.findViewById(R.id.reservationTextView);
-//
-//        mReservationTextView = mView.findViewById(R.id.reservationTextView);
-//        mDateButton = mView.findViewById(R.id.dateButton);
-//        mTimeButton = mView.findViewById(R.id.timeButton);
-//        mReserveButton = mView.findViewById(R.id.reserveButton);
-//        mLogoutButton = mView.findViewById(R.id.logoutButton);
-//        mNoteEditText = mView.findViewById(R.id.noteEditText);
-//
-//        mDateButton.setOnClickListener(v -> {
-//            onDateTap();
-//        });
-//
-//        mTimeButton.setOnClickListener(v -> {
-//            onTimeTap();
-//        });
-//
-//        mReserveButton.setOnClickListener(v -> {
-//            onReserveTap(mDate, mTime, String.valueOf(mNoteEditText.getText()));
-//        });
-//
-//        mLogoutButton.setOnClickListener(v -> {
-//            onLogoutTap();
-//        });
+
+        onButtonTap(R.id.stylingButton);
+        onButtonTap(R.id.treatmentButton);
+        onButtonTap(R.id.coloringButton);
+        onButtonTap(R.id.relaxingButton);
+        onButtonTap(R.id.haircutButton);
+        onButtonTap(R.id.blowDryButton);
+        onButtonTap(R.id.beardCutButton);
+        onButtonTap(R.id.specialButton);
 
         return mView;
     }
@@ -126,33 +95,36 @@ public class HomeFragment extends Fragment {
 //        });
     }
 
-    public void onDateTap() {
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    String date = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                    mDate = date;
-                    mDateButton.setText(date);
-                }, mYear, mMonth, mDay);
-        datePickerDialog.show();
-    }
-
-    public void onTimeTap() {
-        final Calendar c = Calendar.getInstance();
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
-                (view, hourOfDay, minute) -> {
-                    String time = hourOfDay + ":" + minute;
-                    mTime = time;
-                    mTimeButton.setText(time);
-                }, mHour, mMinute, false);
-        timePickerDialog.show();
+    @SuppressLint("NonConstantResourceId")
+    public void onButtonTap(int id) {
+        mView.findViewById(id).setOnClickListener(view -> {
+            switch (id) {
+                case R.id.stylingButton:
+                    Log.e(getClass().getSimpleName(), "Styling");
+                    break;
+                case R.id.treatmentButton:
+                    Log.e(getClass().getSimpleName(), "Treatment");
+                    break;
+                case R.id.coloringButton:
+                    Log.e(getClass().getSimpleName(), "Coloring");
+                    break;
+                case R.id.relaxingButton:
+                    Log.e(getClass().getSimpleName(), "Relaxing");
+                    break;
+                case R.id.haircutButton:
+                    Log.e(getClass().getSimpleName(), "Haircut");
+                    break;
+                case R.id.blowDryButton:
+                    Log.e(getClass().getSimpleName(), "Blow dry");
+                    break;
+                case R.id.beardCutButton:
+                    Log.e(getClass().getSimpleName(), "beard cut");
+                    break;
+                case R.id.specialButton:
+                    Log.e(getClass().getSimpleName(), "special");
+                    break;
+            }
+        });
     }
 
     public void onReserveTap(String date, String time, String note) {

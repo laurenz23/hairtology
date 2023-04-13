@@ -35,7 +35,13 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReservationModel reservation = mReservationList.get(position);
-        holder.serviceTypeTextView.setText(reservation.getServiceType().toString());
+
+        if (reservation.getServiceType() != null) {
+            holder.serviceTypeTextView.setText(reservation.getServiceType().toString());
+        } else {
+            holder.serviceTypeTextView.setText("");
+        }
+
         holder.timeTextView.setText(reservation.getTime());
         holder.dayTextView.setText(reservation.getDay());
         holder.monthTextView.setText(reservation.getMonth());
@@ -50,6 +56,9 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
     @Override
     public int getItemCount() {
+        if (mReservationList == null)
+            return 0;
+
         return mReservationList.size();
     }
 

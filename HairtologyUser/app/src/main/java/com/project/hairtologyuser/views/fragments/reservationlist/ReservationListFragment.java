@@ -2,6 +2,7 @@ package com.project.hairtologyuser.views.fragments.reservationlist;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,60 +10,71 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.components.client.FirebaseClient;
+import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.models.ServiceType;
+import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ReservationListFragment extends BaseFragment {
 
     private ReservationListViewModel mViewModel;
-
     private View mView;
-
+    private Session mSession;
+    private FirebaseClient mFirebaseClient;
     private ReservationListAdapter mReservationListAdapter;
+    private ArrayList<ReservationModel> mReservationArrayList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_reservation_list, container, false);
 
-        ReservationModel reservationModel1 = new ReservationModel();
-        reservationModel1.setServiceType(ServiceType.HAIRCUT);
-        reservationModel1.setTime("6AM - 7AM");
-        reservationModel1.setDay("13");
-        reservationModel1.setMonth("April 2023");
-        reservationModel1.setNote("Note 1");
-        ReservationModel reservationModel2 = new ReservationModel();
-        reservationModel1.setServiceType(ServiceType.BEARD_CUT);
-        reservationModel1.setTime("8AM - 9AM");
-        reservationModel1.setDay("12");
-        reservationModel1.setMonth("April 2023");
-        reservationModel1.setNote("Note 2");
-        ReservationModel reservationModel3 = new ReservationModel();
-        reservationModel1.setServiceType(ServiceType.RELAXING);
-        reservationModel1.setTime("10AM - 11AM");
-        reservationModel1.setDay("11");
-        reservationModel1.setMonth("April 2023");
-        reservationModel1.setNote("Note 3");
+        mSession = new Session(getActivity().getApplication());
+        mFirebaseClient = new FirebaseClient(getActivity().getApplication());
+        mReservationArrayList = new ArrayList<>();
 
-        ArrayList<ReservationModel> reservationList = new ArrayList<>();
-        reservationList.add(reservationModel1);
-        reservationList.add(reservationModel2);
-        reservationList.add(reservationModel3);
-
-        mReservationListAdapter = new ReservationListAdapter(getContext(), reservationList);
-
+        mReservationListAdapter = new ReservationListAdapter(getContext(), mReservationArrayList);
         RecyclerView recyclerView = mView.findViewById(R.id.reservationListItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mReservationListAdapter);
 
+        if (mSession.getCurrentUser() != null) {
+            UserModel currentUser = mSession.getCurrentUser();
+            mFirebaseClient.getDatabaseReference()
+                    .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
+                    .addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            ArrayList<ReservationModel> reservationList = new ArrayList<>();
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                ReservationModel reservation = data.getValue(ReservationModel.class);
+                                reservationList.add(reservation);
+                            }
+                            mReservationArrayList.addAll(reservationList);
+                            mReservationListAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Log.e(getClass().getSimpleName(), "" + error);
+                        }
+                    });
+        }
         return mView;
     }
 
@@ -75,7 +87,6 @@ public class ReservationListFragment extends BaseFragment {
             return;
 
         mViewModel.setViewModel(getActivity().getApplication());
-//        mViewModel.getReservation();
     }
 
 }

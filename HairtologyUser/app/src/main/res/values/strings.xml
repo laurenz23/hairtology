@@ -39,6 +39,7 @@
     <string name="str_profile">Profile</string>
     <string name="str_register">Register</string>
     <string name="str_reservation">Reservation</string>
+    <string name="str_reservations">Reservations</string>
     <string name="str_reserve">Reserve</string>
     <string name="str_reserve_now">Reserve Now</string>
     <string name="str_save">Save</string>

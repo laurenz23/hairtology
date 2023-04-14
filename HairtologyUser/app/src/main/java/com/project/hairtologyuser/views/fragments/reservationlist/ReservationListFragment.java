@@ -1,5 +1,7 @@
 package com.project.hairtologyuser.views.fragments.reservationlist;
 
+import static com.project.hairtologyuser.views.activities.MainActivity.containerViewId;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -21,10 +23,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.components.repository.Session;
+import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.models.ServiceType;
 import com.project.hairtologyuser.models.UserModel;
+import com.project.hairtologyuser.views.activities.MainActivity;
+import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
+import com.project.hairtologyuser.views.fragments.login.LoginFragment;
+import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -48,6 +55,33 @@ public class ReservationListFragment extends BaseFragment {
         mReservationArrayList = new ArrayList<>();
 
         mReservationListAdapter = new ReservationListAdapter(getContext(), mReservationArrayList);
+        mReservationListAdapter.setOnReservationClickListener(position -> {
+            mViewModel.cancelReservation(position, new ReservationListViewModel.onReservationCancellation() {
+                @Override
+                public void onSuccess(int position) {
+                    if (getActivity() == null) {
+                        Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                                ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                                ReservationListFragment.class
+                        ));
+                        return;
+                    }
+
+                    ((MainActivity) getActivity()).replaceFragment(
+                            new ReserveFragment(),
+                            containerViewId);
+
+//                    mReservationArrayList.remove(position);
+//                    mReservationListAdapter.notifyItemRemoved(position);
+                }
+
+                @Override
+                public void onFailed(Exception exception) {
+                    Log.e(getClass().getSimpleName(), "" + exception);
+                }
+            });
+        });
+
         RecyclerView recyclerView = mView.findViewById(R.id.reservationListItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mReservationListAdapter);

@@ -27,6 +27,11 @@ public class ReservationListViewModel extends ViewModel {
         void onFailed(DatabaseError error);
     }
 
+    public interface onReservationCancellation {
+        void onSuccess(int position);
+        void onFailed(Exception exception);
+    }
+
     private Session mSession;
     private FirebaseClient mFirebaseClient;
     private MutableLiveData<ArrayList<ReservationModel>> mReservationList;
@@ -66,6 +71,19 @@ public class ReservationListViewModel extends ViewModel {
                         listener.onFailed(error);
                     }
                 });
+    }
+
+    public void cancelReservation(int position, onReservationCancellation listener) {
+        UserModel currentUser = mSession.getCurrentUser();
+        if (currentUser == null)
+            return;
+
+        mFirebaseClient.getDatabaseReference()
+                .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
+                .child("" + position)
+                .removeValue()
+                .addOnSuccessListener(unused -> listener.onSuccess(position))
+                .addOnFailureListener(listener::onFailed);
     }
 
 }

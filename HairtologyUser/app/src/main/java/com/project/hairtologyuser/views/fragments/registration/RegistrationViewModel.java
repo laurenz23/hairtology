@@ -12,52 +12,49 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.hairtologyuser.components.client.FirebaseClient;
+import com.project.hairtologyuser.components.client.RestServiceClient;
 import com.project.hairtologyuser.models.UserModel;
 
 import java.util.concurrent.Executor;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class RegistrationViewModel extends ViewModel {
 
     public interface onRegisterListener {
-        void onRegisterSuccess();
-        void onRegisterFailed();
+        void onRegisterSuccess(UserModel user);
+        void onRegisterFailed(Throwable throwable);
     }
 
-    private Context mContext;
     private FirebaseClient mFirebaseClient;
 
     public void setViewModel(@NonNull Application application) {
-        mContext = application.getApplicationContext();
+        Context mContext = application.getApplicationContext();
         mFirebaseClient = new FirebaseClient(mContext);
     }
 
     public void register(String firstName, String lastName, String email, String password, onRegisterListener listener) {
-        UserModel userModel = new UserModel();
-        userModel.setFirstName(firstName);
-        userModel.setLastName(lastName);
-        userModel.setEmail(email);
-
         mFirebaseClient.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser user = mFirebaseClient.getAuth().getCurrentUser();
                     if (user != null) {
+                        UserModel userModel = new UserModel();
+                        userModel.setUuid(user.getUid());
+                        userModel.setFirstName(firstName);
+                        userModel.setLastName(lastName);
+                        userModel.setEmail(email);
+
                         mFirebaseClient.getDatabaseReference()
-                                .child("users")
-                                .child(user.getUid())
-                                .child("info")
+                                .child(mFirebaseClient.apiInfo(user.getUid()))
                                 .setValue(userModel)
                                 .addOnSuccessListener(unused -> {
-                                    listener.onRegisterSuccess();
-                                }).addOnFailureListener(e -> {
-                                    listener.onRegisterFailed();
-                                });
-                    } else {
-                        listener.onRegisterFailed();
+                                    listener.onRegisterSuccess(userModel);
+                                }).addOnFailureListener(listener::onRegisterFailed);
                     }
                 })
-                .addOnFailureListener(e -> {
-                    listener.onRegisterFailed();
-                });
+                .addOnFailureListener(listener::onRegisterFailed);
     }
 
 }

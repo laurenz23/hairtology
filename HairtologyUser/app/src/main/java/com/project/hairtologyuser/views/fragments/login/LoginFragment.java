@@ -14,12 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.BuildConfig;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.databinding.FragmentLoginBinding;
+import com.project.hairtologyuser.models.UserModel;
+import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
@@ -34,6 +37,7 @@ public class LoginFragment extends BaseFragment {
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private TextView mErrorTextView;
+    private LinearLayout mErrorLinearLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -45,6 +49,7 @@ public class LoginFragment extends BaseFragment {
         mEmailEditText = mBinding.emailEditText;
         mPasswordEditText = mBinding.passwordEditText;
         mErrorTextView = mBinding.errorTextView;
+        mErrorLinearLayout = mBinding.errorLinearLayout;
 
         mBinding.loginButton.setOnClickListener(v -> {
             onLoginTap();
@@ -77,10 +82,25 @@ public class LoginFragment extends BaseFragment {
         String email = String.valueOf(mEmailEditText.getText());
         String password = String.valueOf(mPasswordEditText.getText());
         if (validateFields(email, password)) {
-            mViewModel.login(email, password);
-        } else {
-            mErrorTextView.setText("Encountered a problem validating your credentials");
-            mErrorTextView.setVisibility(View.VISIBLE);
+            mViewModel.login(email, password, new LoginViewModel.onLoginListener() {
+                @Override
+                public void onLoginSuccess(UserModel user) {
+                    if (getActivity() == null) {
+                        Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                                ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                                MainActivity.class
+                        ));
+                        return;
+                    }
+
+                    ((OnBoardingActivity) getActivity()).switchActivity(getContext(), MainActivity.class);
+                }
+
+                @Override
+                public void onLoginFailed(Throwable throwable) {
+                    Log.e(getClass().getSimpleName(), throwable.getMessage());
+                }
+            });
         }
     }
 
@@ -113,11 +133,11 @@ public class LoginFragment extends BaseFragment {
         }
 
         if (isValidatePass) {
-            mErrorTextView.setVisibility(View.GONE);
+            mErrorLinearLayout.setVisibility(View.GONE);
             return true;
         } else {
             mErrorTextView.setText(errorMessage);
-            mErrorTextView.setVisibility(View.VISIBLE);
+            mErrorLinearLayout.setVisibility(View.VISIBLE);
             return false;
         }
     }

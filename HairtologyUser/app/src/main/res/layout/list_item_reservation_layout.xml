@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/stylingLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_stylish" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Styling"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/treatmentLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_treatment" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Treatment"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/coloringLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_brush" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Coloring"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/relaxingLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_relaxing" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Relaxing"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/haircutLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_scissors" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Haircut"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/blowDryLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_hairdryer" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Blow dry"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/beardCutLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_beard" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Beard cut"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/specialLinearLayout"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_margin="2dp"
+                android:background="@drawable/button_secondary"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:foregroundGravity="center"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_special" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Special"
+                    android:textSize="10sp"
+                    android:textColor="@color/secondary"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dayTextView"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/str_place_holder_day_num"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:background="@drawable/box_secondary2"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/timeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/str_time"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:id="@+id/monthTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/str_month" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/noteLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/box_secondary2">
+
+            <TextView
+                android:id="@+id/noteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/str_notes"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/cancelReservationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/str_cancel_reservation"
+            android:textColor="@color/secondary"
+            android:textSize="10sp"
+            android:background="@drawable/button_secondary"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

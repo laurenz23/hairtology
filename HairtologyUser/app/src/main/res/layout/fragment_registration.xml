@@ -16,66 +16,149 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/secondary">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/str_register" />
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/box_primary">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/str_register"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/secondary"/>
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/firstNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="@string/str_first_name" />
+            android:hint="@string/str_first_name"
+            android:background="@drawable/inputfield_primary" />
 
         <EditText
             android:id="@+id/lastNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="@string/str_last_name" />
+            android:hint="@string/str_last_name"
+            android:background="@drawable/inputfield_primary" />
 
         <EditText
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
             android:ems="10"
             android:inputType="textEmailAddress"
-            android:hint="@string/str_email"/>
+            android:hint="@string/str_email"
+            android:background="@drawable/inputfield_primary"/>
 
         <EditText
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:hint="@string/str_password"/>
+            android:hint="@string/str_password"
+            android:background="@drawable/inputfield_primary"/>
 
         <EditText
             android:id="@+id/confirmPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
             android:ems="10"
             android:inputType="textPassword"
-            android:hint="@string/str_confirm_password"/>
+            android:hint="@string/str_confirm_password"
+            android:background="@drawable/inputfield_primary"/>
 
-        <TextView
-            android:id="@+id/errorTextView"
+        <LinearLayout
+            android:id="@+id/errorLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/design_default_color_error"
-            android:text="@string/str_error"
-            android:visibility="gone"/>
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:background="@drawable/box_tertiary">
+
+            <TextView
+                android:id="@+id/errorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/design_default_color_error"
+                android:text="@string/str_error"/>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/str_save" />
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:text="@string/str_save"
+            android:textColor="@color/white"
+            android:background="@drawable/button_primary" />
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:text="@string/str_back_to_login"
+            android:textColor="@color/white"
+            android:background="@drawable/button_primary" />
 
     </LinearLayout>
 

@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.databinding.FragmentRegistrationBinding;
+import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.login.LoginFragment;
@@ -33,6 +35,7 @@ public class RegistrationFragment extends BaseFragment {
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
     private TextView mErrorTextView;
+    private LinearLayout mErrorLinearLayout;
 
     public static RegistrationFragment newInstance() {
         return new RegistrationFragment();
@@ -51,9 +54,24 @@ public class RegistrationFragment extends BaseFragment {
         mPasswordEditText = mBinding.passwordEditText;
         mConfirmPasswordEditText = mBinding.confirmPasswordEditText;
         mErrorTextView = mBinding.errorTextView;
+        mErrorLinearLayout = mBinding.errorLinearLayout;
 
         mBinding.saveButton.setOnClickListener(v -> {
             onSaveTap();
+        });
+
+        mBinding.backButton.setOnClickListener(v -> {
+            if (getActivity() == null) {
+                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        RegistrationFragment.class
+                ));
+                return;
+            }
+
+            ((OnBoardingActivity) getActivity()).replaceFragment(
+                    new LoginFragment(),
+                    OnBoardingActivity.containerViewId);
         });
 
         return mView;
@@ -87,7 +105,7 @@ public class RegistrationFragment extends BaseFragment {
             mViewModel.register(firstName, lastName, email, password,
                     new RegistrationViewModel.onRegisterListener() {
                 @Override
-                public void onRegisterSuccess() {
+                public void onRegisterSuccess(UserModel user) {
                     if (getActivity() == null) {
                         Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
                                 ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
@@ -102,8 +120,8 @@ public class RegistrationFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onRegisterFailed() {
-
+                public void onRegisterFailed(Throwable throwable) {
+                    Log.e(getClass().getSimpleName(), throwable.getMessage());
                 }
             });
         }
@@ -143,10 +161,10 @@ public class RegistrationFragment extends BaseFragment {
 
         if (!isValidationPass) {
             mErrorTextView.setText(errorMessage);
-            mErrorTextView.setVisibility(View.VISIBLE);
+            mErrorLinearLayout.setVisibility(View.VISIBLE);
             return false;
         } else {
-            mErrorTextView.setVisibility(View.GONE);
+            mErrorLinearLayout.setVisibility(View.GONE);
             return true;
         }
     }

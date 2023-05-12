@@ -35,4 +35,20 @@ public class FirebaseClient {
         return "users/" + uuid + "/reservation";
     }
 
+    public String apiFavorite(String uuid) {
+        return "users/" + uuid + "/info/favoriteShopId";
+    }
+
+    public String apiShop() {
+        return "shops";
+    }
+
+    public String apiShopDetail() {
+        return "detail";
+    }
+
+    public String apiService(String shopId) {
+        return "shops/" + shopId + "/service";
+    }
+
 }

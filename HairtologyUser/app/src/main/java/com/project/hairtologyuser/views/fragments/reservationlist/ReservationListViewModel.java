@@ -1,52 +1,83 @@
 package com.project.hairtologyuser.views.fragments.reservationlist;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyuser.components.client.FirebaseClient;
+import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ServiceType;
+import com.project.hairtologyuser.models.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ReservationListViewModel extends ViewModel {
 
+    public interface onReservationFetch {
+        void onSuccess(ArrayList<ReservationModel> reservationList);
+        void onFailed(DatabaseError error);
+    }
+
+    public interface onReservationCancellation {
+        void onSuccess(int position);
+        void onFailed(Exception exception);
+    }
+
+    private Session mSession;
     private FirebaseClient mFirebaseClient;
 
-    private MutableLiveData<ArrayList<ReservationModel>> mReservationList;
-
     public void setViewModel(@NonNull Application application) {
+        mSession = new Session(application.getApplicationContext());
         mFirebaseClient = new FirebaseClient(application);
-        mReservationList = new MutableLiveData<>(null);
     }
 
-    public MutableLiveData<ArrayList<ReservationModel>> getReservationList() {
-        return mReservationList;
+    public void getReservation(onReservationFetch listener) {
+        if (mSession.getCurrentUser() == null) {
+            return;
+        }
+
+        UserModel currentUser = mSession.getCurrentUser();
+        mFirebaseClient.getDatabaseReference()
+                .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<ReservationModel> reservationList = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            ReservationModel reservation = data.getValue(ReservationModel.class);
+                            reservationList.add(reservation);
+                        }
+
+                        listener.onSuccess(reservationList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onFailed(error);
+                    }
+                });
     }
 
-    public void getReservation() {
-        ReservationModel reservationModel1 = new ReservationModel();
-        reservationModel1.setDate("Wed");
-        reservationModel1.setTime("1PM");
-        reservationModel1.setNote("Cut");
-        ReservationModel reservationModel2 = new ReservationModel();
-        reservationModel1.setDate("Mon");
-        reservationModel1.setTime("2PM");
-        reservationModel1.setNote("Trim");
-        ReservationModel reservationModel3 = new ReservationModel();
-        reservationModel1.setDate("Fri");
-        reservationModel1.setTime("3PM");
-        reservationModel1.setNote("Cut");
+    public void cancelReservation(int position, onReservationCancellation listener) {
+        UserModel currentUser = mSession.getCurrentUser();
+        if (currentUser == null)
+            return;
 
-        ArrayList<ReservationModel> reservationList = new ArrayList<>();
-        reservationList.add(reservationModel1);
-        reservationList.add(reservationModel2);
-        reservationList.add(reservationModel3);
-
-        mReservationList.setValue(reservationList);
+        mFirebaseClient.getDatabaseReference()
+            .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
+            .child("" + position)
+            .removeValue()
+            .addOnSuccessListener(unused -> listener.onSuccess(position))
+            .addOnFailureListener(listener::onFailed);
     }
 
 }

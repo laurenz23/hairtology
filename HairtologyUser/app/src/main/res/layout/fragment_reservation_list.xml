@@ -6,6 +6,39 @@
     android:orientation="vertical"
     tools:context=".views.fragments.reservationlist.ReservationListFragment">
 
+    <LinearLayout
+        android:id="@+id/reservationLoadingLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_getting_your_reservations"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/reservationNoReservationYetTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/str_you_dont_have_reservation_yet"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reservationListItem"
         android:layout_width="match_parent"

@@ -1,7 +1,6 @@
 package com.project.hairtologyuser.views.fragments.profile;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -21,13 +20,10 @@ import android.widget.EditText;
 
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
-import com.project.hairtologyuser.databinding.FragmentProfileBinding;
 import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
-import com.project.hairtologyuser.views.fragments.home.HomeFragment;
-import com.project.hairtologyuser.views.fragments.login.LoginFragment;
-import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
+import com.project.hairtologyuser.views.fragments.service.ServiceFragment;
 
 public class ProfileFragment extends Fragment {
     private ProfileViewModel mViewModel;
@@ -139,7 +135,7 @@ public class ProfileFragment extends Fragment {
                 }
 
                 ((MainActivity) getActivity()).replaceFragment(
-                        new HomeFragment(),
+                        new ServiceFragment(),
                         MainActivity.containerViewId);
             }
 
@@ -160,7 +156,7 @@ public class ProfileFragment extends Fragment {
         if (getActivity() == null) {
             Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
                     ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-                    HomeFragment.class
+                    ServiceFragment.class
             ));
             return;
         }

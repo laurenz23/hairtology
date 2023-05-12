@@ -1,27 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="5dp">
 
-    <TextView
-        android:id="@+id/reservationDateTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/reservationItemLinearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/str_date" />
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/reservationTimeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/str_time" />
+        <TextView
+            android:id="@+id/shopNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="@string/str_shop_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:background="@drawable/box_secondary2"
+            tools:ignore="NestedWeights" />
 
-    <TextView
-        android:id="@+id/reservationNoteTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/str_notes" />
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/str_place_holder_price"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:background="@drawable/box_secondary2"/>
+
+            <TextView
+                android:id="@+id/dayTextView"
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:text="@string/str_place_holder_day_num"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:background="@drawable/box_secondary2"/>
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/timeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/str_time"
+                    tools:ignore="NestedWeights" />
+
+                <TextView
+                    android:id="@+id/monthTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/str_month" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detailLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/box_secondary2">
+
+            <TextView
+                android:id="@+id/detailTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/str_service_detail"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/cancelReservationButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/str_cancel_reservation"
+            android:textColor="@color/secondary"
+            android:textSize="10sp"
+            android:background="@drawable/button_secondary"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

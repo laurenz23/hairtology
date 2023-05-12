@@ -10,7 +10,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/onMainFragment"
-        android:name="com.project.hairtologyuser.views.fragments.home.HomeFragment"
+        android:name="com.project.hairtologyuser.views.fragments.shop.ShopFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavLayout"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_shop" />
 
     <LinearLayout
         android:id="@+id/bottomNavLayout"
@@ -46,13 +46,13 @@
             android:padding="10dp"
             android:src="@drawable/ic_article_24" />
 
-        <ImageView
-            android:id="@+id/messageImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:src="@drawable/ic_message_24" />
+<!--        <ImageView-->
+<!--            android:id="@+id/favoriteImageView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:padding="10dp"-->
+<!--            android:src="@drawable/ic_favorite_secondary_24" />-->
 
         <ImageView
             android:id="@+id/accountImageView"

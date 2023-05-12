@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.BuildConfig;
@@ -27,35 +28,49 @@ import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.registration.RegistrationFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LoginFragment extends BaseFragment {
+
+    private enum Action {
+        RESET,
+        LOGIN,
+        REGISTER
+    }
 
     public static final String FRAGMENT_TAG = BuildConfig.APPLICATION_ID + ".LOGIN_FRAGMENT";
 
-    private FragmentLoginBinding mBinding;
-    private View mView;
     private LoginViewModel mViewModel;
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
+    private Button mLoginButton;
+    private Button mRegisterButton;
     private TextView mErrorTextView;
     private LinearLayout mErrorLinearLayout;
+    private ProgressBar mLoginProgressBar;
+    private final List<String> mErrorMessageList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        FragmentLoginBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
-        mView = mBinding.getRoot();
+        View mView = mBinding.getRoot();
 
         mEmailEditText = mBinding.emailEditText;
         mPasswordEditText = mBinding.passwordEditText;
+        mLoginButton = mBinding.loginButton;
+        mRegisterButton = mBinding.registerButton;
         mErrorTextView = mBinding.errorTextView;
         mErrorLinearLayout = mBinding.errorLinearLayout;
+        mLoginProgressBar = mBinding.loginProgressBar;
 
-        mBinding.loginButton.setOnClickListener(v -> {
+        mLoginButton.setOnClickListener(v -> {
             onLoginTap();
         });
 
-        mBinding.registerButton.setOnClickListener(v -> {
+        mRegisterButton.setOnClickListener(v -> {
             onRegisterTap();
         });
 
@@ -75,16 +90,20 @@ public class LoginFragment extends BaseFragment {
             return;
         }
 
+        setAction(Action.RESET);
         mViewModel.setViewModel(getActivity().getApplication());
     }
 
     public void onLoginTap() {
+        setAction(Action.LOGIN);
+
         String email = String.valueOf(mEmailEditText.getText());
         String password = String.valueOf(mPasswordEditText.getText());
         if (validateFields(email, password)) {
             mViewModel.login(email, password, new LoginViewModel.onLoginListener() {
                 @Override
                 public void onLoginSuccess(UserModel user) {
+                    setAction(Action.RESET);
                     if (getActivity() == null) {
                         Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
                                 ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
@@ -98,18 +117,26 @@ public class LoginFragment extends BaseFragment {
 
                 @Override
                 public void onLoginFailed(Throwable throwable) {
-                    Log.e(getClass().getSimpleName(), throwable.getMessage());
+                    setAction(Action.RESET);
+                    setErrorMessage(throwable.getMessage());
+                    displayErrorMessage();
                 }
             });
+        } else {
+            setAction(Action.RESET);
         }
     }
 
     public void onRegisterTap() {
+        setAction(Action.REGISTER);
+
         if (getActivity() == null) {
             Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
                     ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
                     LoginFragment.class
             ));
+
+            setAction(Action.RESET);
             return;
         }
 
@@ -120,25 +147,66 @@ public class LoginFragment extends BaseFragment {
 
     private boolean validateFields(String email, String password) {
         boolean isValidatePass = true;
-        String errorMessage = "";
 
         if (email.isEmpty()) {
-            errorMessage += "\n • " + getString(R.string.str_please_enter_email);
+            setErrorMessage(getString(R.string.str_please_enter_email));
             isValidatePass = false;
         }
 
         if (password.isEmpty()) {
-            errorMessage += "\n • " + getString(R.string.str_please_enter_password);
+            setErrorMessage(getString(R.string.str_please_enter_password));
             isValidatePass = false;
         }
 
-        if (isValidatePass) {
+        displayErrorMessage();
+        return isValidatePass;
+    }
+
+    private void setErrorMessage(String errorMessage) {
+        mErrorMessageList.add(errorMessage);
+    }
+
+    private void displayErrorMessage() {
+        if (mErrorMessageList.size() == 0) {
+            mErrorTextView.setText("");
             mErrorLinearLayout.setVisibility(View.GONE);
-            return true;
+            return;
         } else {
-            mErrorTextView.setText(errorMessage);
             mErrorLinearLayout.setVisibility(View.VISIBLE);
-            return false;
+        }
+
+        int len = mErrorMessageList.size();
+        String prefix = (len > 1) ? "• " : "";
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            stringBuilder.append(prefix);
+            stringBuilder.append(mErrorMessageList.get(i));
+
+            if (len > 1 && i < len - 1) {
+                stringBuilder.append("\n");
+            }
+        }
+
+        mErrorTextView.setText(stringBuilder.toString());
+        mErrorMessageList.clear();
+    }
+
+    private void setAction(Action pageAction) {
+        if (pageAction == Action.LOGIN) {
+            mLoginProgressBar.setVisibility(View.VISIBLE);
+            mLoginButton.setVisibility(View.GONE);
+            mLoginButton.setClickable(false);
+            mRegisterButton.setClickable(false);
+        } else if (pageAction == Action.REGISTER) {
+            mLoginProgressBar.setVisibility(View.GONE);
+            mLoginButton.setVisibility(View.VISIBLE);
+            mLoginButton.setClickable(false);
+            mRegisterButton.setClickable(false);
+        } else {
+            mLoginProgressBar.setVisibility(View.GONE);
+            mLoginButton.setVisibility(View.VISIBLE);
+            mLoginButton.setClickable(true);
+            mRegisterButton.setClickable(true);
         }
     }
 

@@ -2,26 +2,54 @@ package com.project.hairtologyuser.models;
 
 public class ReservationModel {
 
-    private String date;
-
+    private int shopId;
+    private String shopName;
+    private String serviceDetail;
     private String time;
-
-    private String note;
+    private String minute;
+    private String meridian;
+    private String day;
+    private String month;
+    private String year;
+    private String price;
 
     public ReservationModel() {}
 
-    public ReservationModel(String date, String time, String note) {
-        this.date = date;
+    public ReservationModel(int shopId, String shopName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price) {
+        this.shopId = shopId;
+        this.shopName = shopName;
+        this.serviceDetail = serviceDetail;
         this.time = time;
-        this.note = note;
+        this.minute = minute;
+        this.meridian = meridian;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.price = price;
     }
 
-    public String getDate() {
-        return date;
+    public int getShopId() {
+        return shopId;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getServiceDetail() {
+        return serviceDetail;
+    }
+
+    public void setServiceDetail(String serviceDetail) {
+        this.serviceDetail = serviceDetail;
     }
 
     public String getTime() {
@@ -32,11 +60,52 @@ public class ReservationModel {
         this.time = time;
     }
 
-    public String getNote() {
-        return note;
+    public String getMinute() {
+        return minute;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setMinute(String minute) {
+        this.minute = minute;
     }
+
+    public String getMeridian() {
+        return meridian;
+    }
+
+    public void setMeridian(String meridian) {
+        this.meridian = meridian;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public String getYear() {
+        return this.year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
 }

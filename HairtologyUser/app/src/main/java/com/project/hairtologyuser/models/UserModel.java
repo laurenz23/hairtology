@@ -1,5 +1,7 @@
 package com.project.hairtologyuser.models;
 
+import java.util.List;
+
 public class UserModel {
 
     private String uuid;
@@ -9,6 +11,7 @@ public class UserModel {
     private String lastName;
 
     private String email;
+    private List<Integer> favoriteShopList;
 
     public String getUuid() {
         return uuid;
@@ -40,6 +43,14 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Integer> getFavoriteShopId() {
+        return favoriteShopList;
+    }
+
+    public void setFavoriteShopId(List<Integer> favoriteShopList) {
+        this.favoriteShopList = favoriteShopList;
     }
 
 }

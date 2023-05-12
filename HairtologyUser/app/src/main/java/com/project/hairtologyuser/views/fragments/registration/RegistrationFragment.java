@@ -12,8 +12,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.R;
@@ -24,35 +26,46 @@ import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.login.LoginFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RegistrationFragment extends BaseFragment {
 
-    private FragmentRegistrationBinding mBinding;
+    private enum Action {
+        RESET,
+        REGISTER,
+        BACK
+    }
+
     private RegistrationViewModel mViewModel;
-    private View mView;
     private EditText mFirstNameEditText;
     private EditText mLastNameEditText;
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
     private EditText mConfirmPasswordEditText;
     private TextView mErrorTextView;
+    private Button mSaveButton;
+    private Button mBackButton;
+    private ProgressBar mRegistrationProgressBar;
     private LinearLayout mErrorLinearLayout;
 
-    public static RegistrationFragment newInstance() {
-        return new RegistrationFragment();
-    }
+    private final List<String> mErrorMessageList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false);
+        FragmentRegistrationBinding mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_registration, container, false);
         mBinding.setLifecycleOwner(getViewLifecycleOwner());
-        mView = mBinding.getRoot();
+        View mView = mBinding.getRoot();
 
         mFirstNameEditText = mBinding.firstNameEditText;
         mLastNameEditText = mBinding.lastNameEditText;
         mEmailEditText = mBinding.emailEditText;
         mPasswordEditText = mBinding.passwordEditText;
         mConfirmPasswordEditText = mBinding.confirmPasswordEditText;
+        mSaveButton = mBinding.saveButton;
+        mBackButton = mBinding.backButton;
+        mRegistrationProgressBar = mBinding.saveProgressBar;
         mErrorTextView = mBinding.errorTextView;
         mErrorLinearLayout = mBinding.errorLinearLayout;
 
@@ -94,6 +107,8 @@ public class RegistrationFragment extends BaseFragment {
     }
 
     private void onSaveTap() {
+        setAction(Action.REGISTER);
+
         String firstName = String.valueOf(mFirstNameEditText.getText());
         String lastName = String.valueOf(mLastNameEditText.getText());
         String email = String.valueOf(mEmailEditText.getText());
@@ -106,6 +121,8 @@ public class RegistrationFragment extends BaseFragment {
                     new RegistrationViewModel.onRegisterListener() {
                 @Override
                 public void onRegisterSuccess(UserModel user) {
+                    setAction(Action.RESET);
+
                     if (getActivity() == null) {
                         Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
                                 ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
@@ -121,51 +138,96 @@ public class RegistrationFragment extends BaseFragment {
 
                 @Override
                 public void onRegisterFailed(Throwable throwable) {
-                    Log.e(getClass().getSimpleName(), throwable.getMessage());
+                    setAction(Action.RESET);
+                    setErrorMessage(throwable.getMessage());
+                    displayErrorMessage();
                 }
             });
+        } else {
+            setAction(Action.RESET);
         }
     }
 
     private boolean validateFields(String firstName, String lastName, String email, String password, String confirmPassword) {
         boolean isValidationPass = true;
-        String errorMessage = "";
 
         if (firstName.isEmpty()) {
-            errorMessage += "\n • " + getString(R.string.str_please_enter_first_name);
+            setErrorMessage(getString(R.string.str_please_enter_first_name));
             isValidationPass = false;
         }
 
         if (lastName.isEmpty()) {
-            errorMessage += "\n • " + getString(R.string.str_please_enter_last_name);
+            setErrorMessage(getString(R.string.str_please_enter_last_name));
             isValidationPass = false;
         }
 
         if (email.isEmpty()) {
-            errorMessage += "\n • " + getString(R.string.str_please_enter_email);
+            setErrorMessage(getString(R.string.str_please_enter_email));
             isValidationPass = false;
         }
 
         if (password.isEmpty()) {
-            errorMessage += "\n • " + getString(R.string.str_please_enter_password);
+            setErrorMessage(getString(R.string.str_please_enter_password));
             isValidationPass = false;
         } else {
             if (confirmPassword.isEmpty()) {
-                errorMessage += "\n • " + getString(R.string.str_please_confirm_password);
+                setErrorMessage(getString(R.string.str_please_confirm_password));
                 isValidationPass = false;
             } else if (!password.equals(confirmPassword)) {
-                errorMessage += "\n • " + getString(R.string.str_password_did_not_match);
+                setErrorMessage(getString(R.string.str_password_did_not_match));
                 isValidationPass = false;
             }
         }
 
-        if (!isValidationPass) {
-            mErrorTextView.setText(errorMessage);
-            mErrorLinearLayout.setVisibility(View.VISIBLE);
-            return false;
-        } else {
+        displayErrorMessage();
+        return isValidationPass;
+    }
+
+    private void setErrorMessage(String errorMessage) {
+        mErrorMessageList.add(errorMessage);
+    }
+
+    private void displayErrorMessage() {
+        if (mErrorMessageList.size() == 0) {
+            mErrorTextView.setText("");
             mErrorLinearLayout.setVisibility(View.GONE);
-            return true;
+            return;
+        } else {
+            mErrorLinearLayout.setVisibility(View.VISIBLE);
+        }
+
+        int len = mErrorMessageList.size();
+        String prefix = (len > 1) ? "• " : "";
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            stringBuilder.append(prefix);
+            stringBuilder.append(mErrorMessageList.get(i));
+
+            if (len > 1 && i < len - 1) {
+                stringBuilder.append("\n");
+            }
+        }
+
+        mErrorTextView.setText(stringBuilder.toString());
+        mErrorMessageList.clear();
+    }
+
+    private void setAction(Action pageAction) {
+        if (pageAction == Action.REGISTER) {
+            mRegistrationProgressBar.setVisibility(View.VISIBLE);
+            mSaveButton.setVisibility(View.GONE);
+            mSaveButton.setClickable(false);
+            mBackButton.setClickable(false);
+        } else if (pageAction == Action.BACK) {
+            mRegistrationProgressBar.setVisibility(View.GONE);
+            mSaveButton.setVisibility(View.VISIBLE);
+            mSaveButton.setClickable(false);
+            mBackButton.setClickable(false);
+        } else {
+            mRegistrationProgressBar.setVisibility(View.GONE);
+            mSaveButton.setVisibility(View.VISIBLE);
+            mSaveButton.setClickable(true);
+            mBackButton.setClickable(true);
         }
     }
 

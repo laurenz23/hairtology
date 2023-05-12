@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.google.firebase.FirebaseApp;
 import com.project.hairtologyuser.R;
 
 @SuppressLint("CustomSplashScreen")
@@ -16,6 +17,8 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        FirebaseApp.initializeApp(getApplicationContext());
 
         int delayTime = 3000;
         new Handler().postDelayed(() -> {

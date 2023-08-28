@@ -12,10 +12,11 @@ public class ReservationModel {
     private String month;
     private String year;
     private String price;
+    private boolean cancelled;
 
     public ReservationModel() {}
 
-    public ReservationModel(int shopId, String shopName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price) {
+    public ReservationModel(int shopId, String shopName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price, boolean cancelled) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.serviceDetail = serviceDetail;
@@ -26,6 +27,7 @@ public class ReservationModel {
         this.month = month;
         this.year = year;
         this.price = price;
+        this.cancelled = cancelled;
     }
 
     public int getShopId() {
@@ -106,6 +108,14 @@ public class ReservationModel {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public boolean getCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
 }

@@ -34,23 +34,26 @@ import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.reservation.ReservationFragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class ReservationListFragment extends BaseFragment {
 
     private ReservationListViewModel mViewModel;
     private LinearLayout mReservationLoadingLinearLayout;
+    private RecyclerView mReservationRecyclerView;
     private ReservationListAdapter mReservationListAdapter;
     private ArrayList<ReservationModel> mReservationArrayList;
     private TextView mNoReservationYetTextView;
 
+    @SuppressLint("CutPasteId")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reservation_list, container, false);
 
         mNoReservationYetTextView = view.findViewById(R.id.reservationNoReservationYetTextView);
-
+        mReservationRecyclerView = view.findViewById(R.id.reservationListItem);
         mReservationLoadingLinearLayout = view.findViewById(R.id.reservationLoadingLinearLayout);
         mReservationArrayList = new ArrayList<>();
 
@@ -63,7 +66,8 @@ public class ReservationListFragment extends BaseFragment {
 
             @Override
             public void onReservationCancel(int position) {
-                mViewModel.cancelReservation(position, new ReservationListViewModel.onReservationCancellation() {
+                ReservationModel reservation = mReservationArrayList.get(position);
+                mViewModel.cancelReservation(position, reservation, new ReservationListViewModel.onReservationCancellation() {
                     @Override
                     public void onSuccess(int position) {
                         if (getActivity() == null) {
@@ -115,6 +119,10 @@ public class ReservationListFragment extends BaseFragment {
                 mReservationArrayList.addAll(reservationList);
                 mReservationListAdapter.notifyDataSetChanged();
                 mReservationLoadingLinearLayout.setVisibility(View.GONE);
+
+                if (Objects.requireNonNull(mReservationRecyclerView.getAdapter()).getItemCount() > 1) {
+                    mReservationRecyclerView.smoothScrollToPosition(mReservationRecyclerView.getAdapter().getItemCount()-1);
+                }
             }
 
             @Override

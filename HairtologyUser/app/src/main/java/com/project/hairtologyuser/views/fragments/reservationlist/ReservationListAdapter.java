@@ -72,6 +72,14 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         int hour = Integer.parseInt(reservation.getTime());
         int minute = Integer.parseInt(reservation.getMinute());
 
+        if (reservation.getCancelled()) {
+            holder.cancelledTextView.setVisibility(View.VISIBLE);
+            holder.cancelReservation.setVisibility(View.GONE);
+        } else {
+            holder.cancelledTextView.setVisibility(View.GONE);
+            holder.cancelReservation.setVisibility(View.VISIBLE);
+        }
+
         holder.shopNameTextView.setText(reservation.getShopName());
         holder.dayTextView.setText(reservation.getDay());
         holder.timeTextView.setText(StringFormat.time(new Time(hour, minute, 0)));
@@ -98,6 +106,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
         LinearLayout reservationLinearLayout;
         LinearLayout detailLinearLayout;
+        TextView cancelledTextView;
         TextView shopNameTextView;
         TextView timeTextView;
         TextView dayTextView;
@@ -111,6 +120,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
             reservationLinearLayout = itemView.findViewById(R.id.reservationItemLinearLayout);
             detailLinearLayout = itemView.findViewById(R.id.detailLinearLayout);
+            cancelledTextView = itemView.findViewById(R.id.shopCancelledTextView);
             shopNameTextView = itemView.findViewById(R.id.shopNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             dayTextView = itemView.findViewById(R.id.dayTextView);

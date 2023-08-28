@@ -67,17 +67,27 @@ public class ReservationListViewModel extends ViewModel {
                 });
     }
 
-    public void cancelReservation(int position, onReservationCancellation listener) {
+    public void cancelReservation(int position, ReservationModel reservation, onReservationCancellation listener) {
         UserModel currentUser = mSession.getCurrentUser();
         if (currentUser == null)
             return;
 
+        reservation.setCancelled(true);
+
         mFirebaseClient.getDatabaseReference()
             .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
-            .child("" + position)
+            .child(String.valueOf(position))
             .removeValue()
-            .addOnSuccessListener(unused -> listener.onSuccess(position))
-            .addOnFailureListener(listener::onFailed);
+            .addOnSuccessListener(s -> {
+                mFirebaseClient.getDatabaseReference()
+                    .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
+                    .child(String.valueOf(position))
+                    .setValue(reservation)
+                    .addOnSuccessListener(success -> {
+                        listener.onSuccess(position);
+                    }).addOnFailureListener(listener::onFailed);
+            }).addOnFailureListener(listener::onFailed);
+
     }
 
 }

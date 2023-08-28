@@ -70,6 +70,7 @@
     <string name="str_update_profile">Update Profile</string>
     <string name="str_welcome">"Welcome!"</string>
     <string name="str_welcome_to_hairtology">Welcome to Hairtology!</string>
+    <string name="str_you_cancelled_the_reservation">You cancelled this reservation</string>
     <string name="str_you_dont_have_reservation_yet">You don\'t have reservation yet</string>
     <string name="str_your_go_to_app">Your go-to app for all things hair.</string>
 

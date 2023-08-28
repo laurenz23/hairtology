@@ -113,7 +113,8 @@ public class ReserveViewModel extends ViewModel {
             day,
             month,
             year,
-            String.valueOf(getService().getPrice())
+            String.valueOf(getService().getPrice()),
+            false
         );
 
         mFirebaseClient.getDatabaseReference()

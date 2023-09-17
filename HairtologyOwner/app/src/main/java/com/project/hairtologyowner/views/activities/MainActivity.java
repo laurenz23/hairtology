@@ -3,9 +3,11 @@ package com.project.hairtologyowner.views.activities;
 import androidx.annotation.IdRes;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.views.fragments.useraccount.UserAccountFragment;
 import com.project.hairtologyowner.views.fragments.userreservation.UserReservationFragment;
 
 public class MainActivity extends BaseActivity {
@@ -26,19 +28,19 @@ public class MainActivity extends BaseActivity {
         ImageView profileImageView = findViewById(R.id.mainProfileImageView);
 
         shopsImageView.setOnClickListener(v -> {
-
+            Log.e(MainActivity.class.getSimpleName(), "Shops");
         });
 
         userReservationImageView.setOnClickListener(v -> {
-
+            replaceFragment(new UserReservationFragment(), containerViewId);
         });
 
         usersImageView.setOnClickListener(v -> {
-
+            replaceFragment(new UserAccountFragment(), containerViewId);
         });
 
         profileImageView.setOnClickListener(v -> {
-
+            Log.e(MainActivity.class.getSimpleName(), "Profile");
         });
 
     }

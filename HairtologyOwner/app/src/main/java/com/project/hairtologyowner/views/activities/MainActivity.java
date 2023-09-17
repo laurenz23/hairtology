@@ -1,14 +1,15 @@
 package com.project.hairtologyowner.views.activities;
 
-import androidx.annotation.IdRes;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.annotation.IdRes;
+
 import com.project.hairtologyowner.R;
-import com.project.hairtologyowner.views.fragments.useraccount.UserAccountFragment;
-import com.project.hairtologyowner.views.fragments.userreservation.UserReservationFragment;
+import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
+import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
+import com.project.hairtologyowner.views.fragments.userreservationlist.UserReservationListFragment;
 
 public class MainActivity extends BaseActivity {
 
@@ -20,7 +21,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addFragment(containerViewId, new UserReservationFragment(), UserReservationFragment.FRAGMENT_TAG);
+        addFragment(containerViewId, new ShopListFragment(), "SHOP_LIST_FRAGMENT");
 
         ImageView shopsImageView = findViewById(R.id.mainShopsImageView);
         ImageView userReservationImageView = findViewById(R.id.mainUserReservationImageView);
@@ -28,15 +29,15 @@ public class MainActivity extends BaseActivity {
         ImageView profileImageView = findViewById(R.id.mainProfileImageView);
 
         shopsImageView.setOnClickListener(v -> {
-            Log.e(MainActivity.class.getSimpleName(), "Shops");
+            replaceFragment(new ShopListFragment(), containerViewId);
         });
 
         userReservationImageView.setOnClickListener(v -> {
-            replaceFragment(new UserReservationFragment(), containerViewId);
+            replaceFragment(new UserReservationListFragment(), containerViewId);
         });
 
         usersImageView.setOnClickListener(v -> {
-            replaceFragment(new UserAccountFragment(), containerViewId);
+            replaceFragment(new UserAccountListFragment(), containerViewId);
         });
 
         profileImageView.setOnClickListener(v -> {

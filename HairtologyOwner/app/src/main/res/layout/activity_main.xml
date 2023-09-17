@@ -8,14 +8,14 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/onMainFragment"
-        android:name="com.project.hairtologyowner.views.fragments.userreservation.UserReservationFragment"
+        android:name="com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_user_reservation"/>
+        tools:layout="@layout/fragment_shop_list"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"

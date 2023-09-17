@@ -1,4 +1,4 @@
-package com.project.hairtologyowner.views.fragments.useraccountlist;
+package com.project.hairtologyowner.views.fragments.shoplist;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -15,29 +15,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ToastMessage;
-import com.project.hairtologyowner.models.UserModel;
+import com.project.hairtologyowner.models.ShopModel;
 
 import java.util.ArrayList;
 
-public class UserAccountListFragment extends Fragment {
+public class ShopListFragment extends Fragment {
 
-    private UserAccountListViewModel mViewModel;
-    private UserAccountListAdapter mUserAccountListAdapter;
-    private ArrayList<UserModel> mUserAccountArrayList = new ArrayList<>();
+    private ShopListViewModel mViewModel;
+    private ShopListAdapter mShopListAdapter;
+    private ArrayList<ShopModel> mShopArrayList = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_account_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_shop_list, container, false);
 
-        mViewModel = new ViewModelProvider(this).get(UserAccountListViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ShopListViewModel.class);
         mViewModel.viewModel(requireActivity().getApplication());
 
-        mUserAccountListAdapter = new UserAccountListAdapter(getContext(), mUserAccountArrayList);
+        mShopListAdapter = new ShopListAdapter(getContext(), mShopArrayList);
 
-        RecyclerView recyclerView = view.findViewById(R.id.userAccountRecyclerView);
+        RecyclerView recyclerView = view.findViewById(R.id.shopRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(mUserAccountListAdapter);
+        recyclerView.setAdapter(mShopListAdapter);
 
         return view;
     }
@@ -46,11 +46,11 @@ public class UserAccountListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel.getUserAccountList(new UserAccountListViewModel.OnUserAccountDataListener() {
+        mViewModel.getShopList(new ShopListViewModel.OnShopDataListener() {
             @Override
-            public void onSuccess(ArrayList<UserModel> user) {
-                mUserAccountArrayList.addAll(user);
-                mUserAccountListAdapter.notifyDataSetChanged();
+            public void onSuccess(ArrayList<ShopModel> shop) {
+                mShopArrayList.addAll(shop);
+                mShopListAdapter.notifyDataSetChanged();
             }
 
             @Override

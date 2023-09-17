@@ -1,4 +1,4 @@
-package com.project.hairtologyowner.views.fragments.useraccountlist;
+package com.project.hairtologyowner.views.fragments.shoplist;
 
 import android.app.Application;
 import android.util.Log;
@@ -10,15 +10,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyowner.components.client.FirebaseClient;
-import com.project.hairtologyowner.models.UserModel;
+import com.project.hairtologyowner.models.ShopModel;
+import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListViewModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class UserAccountListViewModel extends ViewModel {
+public class ShopListViewModel extends ViewModel {
 
-    public interface OnUserAccountDataListener {
-        void onSuccess(ArrayList<UserModel> user);
+    public interface OnShopDataListener {
+        void onSuccess(ArrayList<ShopModel> shop);
         void onFailed(String errorMessage);
     }
 
@@ -28,26 +29,23 @@ public class UserAccountListViewModel extends ViewModel {
         mFirebaseClient = new FirebaseClient(application);
     }
 
-    public void getUserAccountList(UserAccountListViewModel.OnUserAccountDataListener listener) {
+    public void getShopList(ShopListViewModel.OnShopDataListener listener) {
         mFirebaseClient.getDatabaseReference()
-                .child(mFirebaseClient.apiUsers())
+                .child(mFirebaseClient.apiShop())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<UserModel> userArrayList = new ArrayList<>();
-                        for (DataSnapshot userList : snapshot.getChildren()) {
+                        ArrayList<ShopModel> shopList = new ArrayList<>();
 
-                            for (DataSnapshot userData : userList.getChildren()) {
-                                if (Objects.equals(userData.getKey(), "info")) {
-                                    UserModel userInfo = userData.getValue(UserModel.class);
-                                    if (userInfo != null) {
-                                        userArrayList.add(userInfo);
-                                    }
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            for (DataSnapshot d : data.getChildren()) {
+                                if (Objects.equals(d.getKey(), mFirebaseClient.apiShopDetail())) {
+                                    shopList.add(d.getValue(ShopModel.class));
                                 }
                             }
                         }
 
-                        listener.onSuccess(userArrayList);
+                        listener.onSuccess(shopList);
                     }
 
                     @Override

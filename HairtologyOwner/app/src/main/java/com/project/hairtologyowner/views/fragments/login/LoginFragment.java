@@ -72,10 +72,18 @@ public class LoginFragment extends Fragment {
     }
 
     private void onLoginTap() {
-        pageAction(ActionType.LOGIN);
-
         String email = String.valueOf(mEmailTextView.getText());
         String password = String.valueOf(mPasswordTextView.getText());
+
+        if (email.isEmpty()) {
+            return;
+        }
+
+        if (password.isEmpty()) {
+            return;
+        }
+
+        pageAction(ActionType.LOGIN);
 
         mViewModel.login(email, password, new LoginViewModel.OnLoginListener() {
             @Override

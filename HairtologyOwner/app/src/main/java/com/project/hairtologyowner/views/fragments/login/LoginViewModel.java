@@ -41,10 +41,10 @@ public class LoginViewModel extends ViewModel {
                             mSession.setCurrentUser(ownerModel);
                             listener.onSuccess(ownerModel);
                         })
-                        .addOnFailureListener(e -> listener.onFailed(Objects.requireNonNull(e.getCause()).toString()));
+                        .addOnFailureListener(e -> listener.onFailed(e.getMessage()));
                 }
             })
-            .addOnFailureListener(e -> listener.onFailed(Objects.requireNonNull(e.getCause()).toString()));
+            .addOnFailureListener(e -> listener.onFailed(e.getMessage()));
     }
 
 }

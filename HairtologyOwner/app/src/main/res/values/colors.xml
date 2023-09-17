@@ -16,4 +16,5 @@
     <color name="button_color_secondary">@color/secondary</color>
     <color name="bg_color_primary">#F9F4F4</color>
     <color name="bg_color_secondary">#FFFFFF</color>
+    <color name="error">#FF4848</color>
 </resources>

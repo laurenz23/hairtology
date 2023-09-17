@@ -20,16 +20,16 @@ public class MainActivity extends BaseActivity {
 
         addFragment(containerViewId, new UserReservationFragment(), UserReservationFragment.FRAGMENT_TAG);
 
-        ImageView userReservationImageView = findViewById(R.id.mainUserReservationImageView);
         ImageView shopsImageView = findViewById(R.id.mainShopsImageView);
+        ImageView userReservationImageView = findViewById(R.id.mainUserReservationImageView);
         ImageView usersImageView = findViewById(R.id.mainUsersImageView);
         ImageView profileImageView = findViewById(R.id.mainProfileImageView);
 
-        userReservationImageView.setOnClickListener(v -> {
+        shopsImageView.setOnClickListener(v -> {
 
         });
 
-        shopsImageView.setOnClickListener(v -> {
+        userReservationImageView.setOnClickListener(v -> {
 
         });
 

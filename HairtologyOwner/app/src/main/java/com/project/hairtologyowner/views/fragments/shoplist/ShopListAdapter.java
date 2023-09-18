@@ -44,6 +44,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ShopListAdapter.ViewHolder holder, int position) {
         ShopModel shop = mShopArrayList.get(position);
+        holder.shop = shop;
         holder.name.setText(shop.getName());
         holder.address.setText(shop.getAddress());
         holder.schedules.setText(shop.getHour());

@@ -1,6 +1,7 @@
 package com.project.hairtologyowner.views.fragments.shoplist;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ShopModel;
+import com.project.hairtologyowner.views.activities.BaseActivity;
+import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.fragments.shopinfo.ShopInfoFragment;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ShopListFragment extends Fragment {
 
@@ -34,6 +39,8 @@ public class ShopListFragment extends Fragment {
         mViewModel.viewModel(requireActivity().getApplication());
 
         mShopListAdapter = new ShopListAdapter(getContext(), mShopArrayList);
+        mShopListAdapter.setOnServiceListener((position, shop) ->
+                ((BaseActivity) requireActivity()).replaceFragment(ShopInfoFragment.newInstance(shop), MainActivity.containerViewId));
 
         RecyclerView recyclerView = view.findViewById(R.id.shopRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

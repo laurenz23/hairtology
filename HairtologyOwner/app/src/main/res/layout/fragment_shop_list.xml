@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".views.fragments.shoplist.ShopListFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shopListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/list_item_shop_layout" />
 
 </FrameLayout>

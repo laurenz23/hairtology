@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ShopInfo;
 import com.project.hairtologyowner.models.ShopModel;
 
@@ -36,6 +37,9 @@ public class ShopListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop_list, container, false);
 
+        mViewModel = new ViewModelProvider(this).get(ShopListViewModel.class);
+        mViewModel.viewModel(requireActivity().getApplication());
+
         mShopListAdapter = new ShopListAdapter(getContext(), mShopArrayList);
 
         RecyclerView recyclerView = view.findViewById(R.id.shopListRecyclerView);
@@ -50,34 +54,18 @@ public class ShopListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ShopListViewModel.class);
+        mViewModel.getShopList(new ShopListViewModel.OnShopListDataListener() {
+            @Override
+            public void onSuccess(ArrayList<ShopModel> shop) {
+                mShopArrayList.addAll(shop);
+                mShopListAdapter.notifyDataSetChanged();
+            }
 
-        ShopInfo shopInfo1 = new ShopInfo();
-        shopInfo1.setName("Shop 1");
-        shopInfo1.setAddress("Address 1");
-        shopInfo1.setDescription("Description 1");
-        shopInfo1.setHour("Hour 1");
-        shopInfo1.setId(1);
-        shopInfo1.setPrice("Price 1");
-
-        ShopModel shopModel1 = new ShopModel();
-        shopModel1.setShopInfo(shopInfo1);
-
-        ShopInfo shopInfo2 = new ShopInfo();
-        shopInfo2.setName("Shop 2");
-        shopInfo2.setAddress("Address 2");
-        shopInfo2.setDescription("Description 2");
-        shopInfo2.setHour("Hour 2");
-        shopInfo2.setId(2);
-        shopInfo2.setPrice("Price 2");
-
-        ShopModel shopModel2 = new ShopModel();
-        shopModel2.setShopInfo(shopInfo2);
-
-        mShopArrayList.add(shopModel1);
-        mShopArrayList.add(shopModel2);
-
-        mShopListAdapter.notifyDataSetChanged();
+            @Override
+            public void onFailed(String errorMessage) {
+                ToastMessage.display(getContext(), errorMessage);
+            }
+        });
     }
 
 }

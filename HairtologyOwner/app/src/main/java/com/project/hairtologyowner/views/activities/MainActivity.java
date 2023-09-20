@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import androidx.annotation.IdRes;
 
 import com.project.hairtologyowner.R;
-import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
 import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
 import com.project.hairtologyowner.views.fragments.userreservationlist.UserReservationListFragment;
 
@@ -21,7 +20,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addFragment(containerViewId, new ShopListFragment(), "SHOP_LIST_FRAGMENT");
+        addFragment(containerViewId, new UserReservationListFragment(), UserReservationListFragment.class.getSimpleName());
 
         ImageView shopsImageView = findViewById(R.id.mainShopsImageView);
         ImageView userReservationImageView = findViewById(R.id.mainUserReservationImageView);
@@ -29,7 +28,7 @@ public class MainActivity extends BaseActivity {
         ImageView profileImageView = findViewById(R.id.mainProfileImageView);
 
         shopsImageView.setOnClickListener(v -> {
-            replaceFragment(new ShopListFragment(), containerViewId);
+
         });
 
         userReservationImageView.setOnClickListener(v -> {

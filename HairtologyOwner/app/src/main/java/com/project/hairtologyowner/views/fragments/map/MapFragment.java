@@ -17,6 +17,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.models.ShopInfo;
 import com.project.hairtologyowner.models.ShopModel;
 
 import org.json.JSONException;
@@ -29,7 +30,7 @@ public class MapFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        ShopModel shop;
+        ShopInfo shop;
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -37,7 +38,7 @@ public class MapFragment extends Fragment {
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
-                shop = new ShopModel();
+                shop = new ShopInfo();
                 shop.setId(jsonObject.getInt("id"));
                 shop.setName(jsonObject.getString("name"));
                 shop.setDescription(jsonObject.getString("description"));

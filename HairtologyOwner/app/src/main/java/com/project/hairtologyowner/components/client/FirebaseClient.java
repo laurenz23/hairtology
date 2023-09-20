@@ -46,6 +46,9 @@ public class FirebaseClient {
     public String apiShopDetail() {
         return "detail";
     }
+    public String apiShopService() {
+        return "service";
+    }
 
     public String apiService(String shopId) {
         return "shops/" + shopId + "/service";

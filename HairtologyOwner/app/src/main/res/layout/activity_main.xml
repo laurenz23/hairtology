@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/onMainFragment"
-        android:name="com.project.hairtologyowner.views.fragments.userreservationlist.UserReservationListFragment"
+        android:name="com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"

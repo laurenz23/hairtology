@@ -46,6 +46,7 @@ public class UserAccountListAdapter extends RecyclerView.Adapter<UserAccountList
     @Override
     public void onBindViewHolder(@NonNull UserAccountListAdapter.ViewHolder holder, int position) {
         UserModel user = mUserArrayList.get(position);
+        holder.user = user;
         holder.name.setText(user.getFirstName() + " " + user.getLastName());
         holder.email.setText(user.getEmail());
     }

@@ -1,6 +1,7 @@
 package com.project.hairtologyowner.views.fragments.shoplist;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,11 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
             price = itemView.findViewById(R.id.itemShopPrice);
 
             shopLinearLayout.setOnClickListener(v -> {
+                if (shop == null) {
+                    Log.e(ShopListAdapter.class.getSimpleName(), "Shop is null");
+                } else {
+                    Log.e(ShopListAdapter.class.getSimpleName(), "Shop is not null");
+                }
                 listener.onTap(getAdapterPosition(), shop);
             });
         }

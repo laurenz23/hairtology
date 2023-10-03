@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class UserReservationListFragment extends Fragment {
         mViewModel.viewModel(requireActivity().getApplication());
 
         mUserReservationAdapter = new UserReservationListAdapter(getContext(), mUserReservationArrayList);
+        mUserReservationAdapter.setOnServiceListener((position, userReservation) -> {
+            Log.e(UserReservationListFragment.class.getSimpleName(), userReservation.getUserFirstName());
+        });
 
         RecyclerView recyclerView = view.findViewById(R.id.userReservationRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

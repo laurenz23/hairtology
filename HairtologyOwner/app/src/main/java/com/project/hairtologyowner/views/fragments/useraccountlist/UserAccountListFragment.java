@@ -2,6 +2,7 @@ package com.project.hairtologyowner.views.fragments.useraccountlist;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.UserModel;
+import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.activities.OnBoardingActivity;
+import com.project.hairtologyowner.views.fragments.login.LoginFragment;
+import com.project.hairtologyowner.views.fragments.register.RegisterFragment;
+import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
 
 import java.util.ArrayList;
 
@@ -34,6 +41,19 @@ public class UserAccountListFragment extends Fragment {
         mViewModel.viewModel(requireActivity().getApplication());
 
         mUserAccountListAdapter = new UserAccountListAdapter(getContext(), mUserAccountArrayList);
+        mUserAccountListAdapter.setOnServiceListener((position, user) -> {
+            if (getActivity() == null) {
+                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        UserAccountListFragment.class
+                ));
+                return;
+            }
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    UserAccountInfoFragment.newInstance(user),
+                    MainActivity.containerViewId);
+        });
 
         RecyclerView recyclerView = view.findViewById(R.id.userAccountRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

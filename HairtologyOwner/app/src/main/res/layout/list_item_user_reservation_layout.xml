@@ -22,8 +22,7 @@
             android:textSize="20sp"
             android:textColor="@color/primary"
             android:textStyle="bold"
-            android:text="@string/str_user_name"
-            tools:ignore="RtlSymmetry" />
+            android:text="@string/str_user_name" />
 
         <TextView
             android:id="@+id/itemUserReservationShopName"

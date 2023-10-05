@@ -73,6 +73,7 @@
     <string name="str_you_cancelled_the_reservation">You cancelled this reservation</string>
     <string name="str_you_dont_have_reservation_yet">You don\'t have reservation yet</string>
     <string name="str_your_go_to_app">Your go-to app for all things hair.</string>
+    <string name="str_your_account_is_disabled">Your account is temporarily disabled</string>
 
     <!-- LIST -->
     <string name="str_time_6_7">6AM - 7AM</string>

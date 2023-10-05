@@ -104,15 +104,21 @@ public class LoginFragment extends BaseFragment {
                 @Override
                 public void onLoginSuccess(UserModel user) {
                     setAction(Action.RESET);
-                    if (getActivity() == null) {
-                        Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
-                                ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-                                MainActivity.class
-                        ));
-                        return;
-                    }
 
-                    ((OnBoardingActivity) getActivity()).switchActivity(getContext(), MainActivity.class);
+                    if (user.getAccountDisabled()) {
+                        setErrorMessage(getString(R.string.str_your_account_is_disabled));
+                        displayErrorMessage();
+                    } else {
+                        if (getActivity() == null) {
+                            Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                                    MainActivity.class
+                            ));
+                            return;
+                        }
+
+                        ((OnBoardingActivity) getActivity()).switchActivity(getContext(), MainActivity.class);
+                    }
                 }
 
                 @Override

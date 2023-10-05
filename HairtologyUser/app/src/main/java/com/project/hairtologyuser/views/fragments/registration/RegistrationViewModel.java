@@ -45,6 +45,7 @@ public class RegistrationViewModel extends ViewModel {
                         userModel.setFirstName(firstName);
                         userModel.setLastName(lastName);
                         userModel.setEmail(email);
+                        userModel.setAccountDisabled(false);
 
                         mFirebaseClient.getDatabaseReference()
                                 .child(mFirebaseClient.apiInfo(user.getUid()))

@@ -5,12 +5,10 @@ import java.util.List;
 public class UserModel {
 
     private String uuid;
-
     private String firstName;
-
     private String lastName;
-
     private String email;
+    private Boolean isAccountDisabled;
     private List<Integer> favoriteShopList;
 
     public String getUuid() {
@@ -43,6 +41,14 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getAccountDisabled() {
+        return isAccountDisabled;
+    }
+
+    public void setAccountDisabled(Boolean accountDisabled) {
+        isAccountDisabled = accountDisabled;
     }
 
     public List<Integer> getFavoriteShopId() {

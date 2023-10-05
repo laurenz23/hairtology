@@ -15,6 +15,9 @@
     <string name="str_date">Date</string>
     <string name="str_day">Day</string>
     <string name="str_description">Description</string>
+    <string name="str_disable">Disable</string>
+    <string name="str_encountered_an_error_disabling_user">Encountered an error while disabling user</string>
+    <string name="str_enable">Enable</string>
     <string name="str_email">Email</string>
     <string name="str_error">Error</string>
     <string name="str_first_name">First name</string>
@@ -68,6 +71,8 @@
     <string name="str_shop_name">Shop name</string>
     <string name="str_slots">Slots</string>
     <string name="str_submit">Submit</string>
+    <string name="str_successfully_disabled_user">Successfully disabled user</string>
+    <string name="str_successfully_enabled_user">Successfully enabled user</string>
     <string name="str_successfully_reserved">Successfully Reserved</string>
     <string name="str_time">Time</string>
     <string name="str_update_password">Update Password</string>

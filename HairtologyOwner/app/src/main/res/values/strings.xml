@@ -70,10 +70,11 @@
     <string name="str_submit">Submit</string>
     <string name="str_successfully_reserved">Successfully Reserved</string>
     <string name="str_time">Time</string>
-    <string name="str_uuid">UUID</string>
     <string name="str_update_password">Update Password</string>
     <string name="str_update_profile">Update Profile</string>
+    <string name="str_user_accounts">User Accounts</string>
     <string name="str_user_name">User name</string>
+    <string name="str_uuid">UUID</string>
     <string name="str_welcome">"Welcome!"</string>
     <string name="str_welcome_to_hairtology">Welcome to Hairtology!</string>
     <string name="str_you_dont_have_reservation_yet">You don\'t have reservation yet</string>

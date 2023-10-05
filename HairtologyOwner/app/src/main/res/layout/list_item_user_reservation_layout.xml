@@ -13,95 +13,110 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/itemUserReservationName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:text="@string/str_user_name" />
-
-        <TextView
-            android:id="@+id/itemUserReservationShopName"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="@color/primary"
-            android:text="@string/str_shop_name" />
-
-        <TextView
-            android:id="@+id/itemUserReservationDetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primary"
-            android:text="@string/str_reservation_detail" />
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/itemUserReservationName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:text="@string/str_user_name" />
+
+            <TextView
+                android:id="@+id/itemUserReservationShopName"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/primary"
+                android:text="@string/str_shop_name" />
+
+            <TextView
+                android:id="@+id/itemUserReservationDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary"
+                android:text="@string/str_reservation_detail" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:paddingTop="5dp">
+                android:orientation="horizontal">
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_hour_24" />
+                    android:layout_marginEnd="50dp"
+                    android:paddingTop="5dp">
 
-                <TextView
-                    android:id="@+id/itemUserReservationDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="bottom"
-                    android:layout_marginEnd="5dp"
-                    android:textColor="@color/primary"
-                    android:text="@string/str_date" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/ic_hour_24" />
 
-                <TextView
-                    android:id="@+id/itemUserReservationTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/primary"
-                    android:text="@string/str_time" />
+                    <TextView
+                        android:id="@+id/itemUserReservationDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_marginEnd="5dp"
+                        android:textColor="@color/primary"
+                        android:text="@string/str_date" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/itemUserReservationTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/primary"
+                        android:text="@string/str_time" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp">
+                </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/primary"
-                    android:text="@string/str_symbol_peso" />
+                    android:paddingTop="5dp">
 
-                <TextView
-                    android:id="@+id/itemUserReservationPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/primary"
-                    android:text="@string/str_place_holder_price" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:text="@string/str_symbol_peso" />
+
+                    <TextView
+                        android:id="@+id/itemUserReservationPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/primary"
+                        android:text="@string/str_place_holder_price" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_next_30_opacity_100" />
 
     </LinearLayout>
 

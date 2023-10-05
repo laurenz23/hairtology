@@ -18,6 +18,7 @@ import com.project.hairtologyowner.models.ReservationModel;
 import com.project.hairtologyowner.models.UserReservationModel;
 
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -70,7 +71,7 @@ public class UserReservationListAdapter extends RecyclerView.Adapter<UserReserva
             Time time = new Time(hour, minute, 0);
 
             holder.date.setText(StringFormat.date(date));
-            holder.time.setText(StringFormat.date(time));
+            holder.time.setText(StringFormat.time(time));
         }
     }
 

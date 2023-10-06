@@ -71,6 +71,7 @@
     <string name="str_shop_name">Shop name</string>
     <string name="str_slots">Slots</string>
     <string name="str_submit">Submit</string>
+    <string name="str_successfully_cancelled_reservation">Successfully cancelled a reservation</string>
     <string name="str_successfully_disabled_user">Successfully disabled user</string>
     <string name="str_successfully_enabled_user">Successfully enabled user</string>
     <string name="str_successfully_reserved">Successfully Reserved</string>

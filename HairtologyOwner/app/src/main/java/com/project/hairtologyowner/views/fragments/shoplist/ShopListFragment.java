@@ -11,14 +11,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ShopInfo;
 import com.project.hairtologyowner.models.ShopModel;
+import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.fragments.shopinfo.ShopInfoFragment;
+import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
+import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
 
 import java.util.ArrayList;
 
@@ -26,6 +34,7 @@ public class ShopListFragment extends Fragment {
 
     private ShopListViewModel mViewModel;
     private ShopListAdapter mShopListAdapter;
+    private ImageView mAddShopImageView;
     private ArrayList<ShopModel> mShopArrayList = new ArrayList<>();
 
     public static ShopListFragment newInstance() {
@@ -37,14 +46,33 @@ public class ShopListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop_list, container, false);
 
+        mAddShopImageView = view.findViewById(R.id.addShopListFragment);
+
         mViewModel = new ViewModelProvider(this).get(ShopListViewModel.class);
         mViewModel.viewModel(requireActivity().getApplication());
 
         mShopListAdapter = new ShopListAdapter(getContext(), mShopArrayList);
+        mShopListAdapter.setOnShopItemListener((position, shop) -> {
+            if (getActivity() == null) {
+                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        ShopListFragment.class
+                ));
+                return;
+            }
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    ShopInfoFragment.newInstance(shop),
+                    MainActivity.containerViewId);
+        });
 
         RecyclerView recyclerView = view.findViewById(R.id.shopListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mShopListAdapter);
+
+        mAddShopImageView.setOnClickListener(addShopView -> {
+            Toast.makeText(getContext(), "Adding of shop is currently in development", Toast.LENGTH_LONG).show();
+        });
 
         return view;
     }

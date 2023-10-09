@@ -51,6 +51,7 @@
     <string name="str_profile">Profile</string>
     <string name="str_register">Register</string>
     <string name="str_reservation">Reservation</string>
+    <string name="str_reservation_cancelled">Reservation Cancelled</string>
     <string name="str_reservation_detail">Reservation detail</string>
     <string name="str_reservations">Reservations</string>
     <string name="str_reserve">Reserve</string>

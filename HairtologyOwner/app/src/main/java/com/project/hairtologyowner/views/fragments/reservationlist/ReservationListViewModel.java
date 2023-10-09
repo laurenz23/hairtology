@@ -35,31 +35,26 @@ public class ReservationListViewModel extends ViewModel {
         mFirebaseClient = new FirebaseClient(application);
     }
 
-    public void getReservation(onReservationFetch listener) {
-//        if (mSession.getCurrentUser() == null) {
-//            return;
-//        }
-//
-//        UserModel currentUser = mSession.getCurrentUser();
-//        mFirebaseClient.getDatabaseReference()
-//                .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
-//                .addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        ArrayList<ReservationModel> reservationList = new ArrayList<>();
-//                        for (DataSnapshot data : snapshot.getChildren()) {
-//                            ReservationModel reservation = data.getValue(ReservationModel.class);
-//                            reservationList.add(reservation);
-//                        }
-//
-//                        listener.onSuccess(reservationList);
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        listener.onFailed(error);
-//                    }
-//                });
+    public void getReservation(String userUuid, onReservationFetch listener) {
+        mFirebaseClient.getDatabaseReference()
+                .child(mFirebaseClient.apiReservation(userUuid))
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<ReservationModel> reservationList = new ArrayList<>();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            ReservationModel reservation = data.getValue(ReservationModel.class);
+                            reservationList.add(reservation);
+                        }
+
+                        listener.onSuccess(reservationList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        listener.onFailed(error);
+                    }
+                });
     }
 
     public void cancelReservation(int position, ReservationModel reservation, onReservationCancellation listener) {

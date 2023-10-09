@@ -22,7 +22,7 @@
             android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:gravity="center"
-            android:text="@string/str_you_cancelled_the_reservation"
+            android:text="@string/str_reservation_cancelled"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone"

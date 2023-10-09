@@ -1,5 +1,6 @@
 package com.project.hairtologyowner.views.fragments.userreservationinfo;
 
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -23,11 +24,15 @@ import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.UserModel;
 import com.project.hairtologyowner.models.UserReservationModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.fragments.reservationlist.ReservationListFragment;
 import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
 import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
 
+import java.util.Objects;
+
 public class UserReservationInfoFragment extends Fragment {
 
+    private final int mContainerViewId = R.id.onUserReservationInfoFragment;
     private static UserReservationModel mUserReservation;
     private UserReservationInfoViewModel mViewModel;
     private View mView;
@@ -86,13 +91,19 @@ public class UserReservationInfoFragment extends Fragment {
         return mView;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "CommitTransaction"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(UserReservationInfoViewModel.class);
         mViewModel.setViewModel(getContext());
+
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(mContainerViewId, ReservationListFragment.newInstance(mUserReservation.getUserUuid()))
+                    .commit();
+        }
 
         mNameTextView.setText(mUserReservation.getUserFirstName() + " " + mUserReservation.getUserLastName());
     }

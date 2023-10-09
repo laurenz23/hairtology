@@ -20,18 +20,25 @@ import com.google.firebase.database.DatabaseError;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ReservationModel;
+import com.project.hairtologyowner.models.UserModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ReservationListFragment extends Fragment {
 
+    private static String mUserUuid;
     private ReservationListViewModel mViewModel;
     private LinearLayout mReservationLoadingLinearLayout;
     private RecyclerView mReservationRecyclerView;
     private ReservationListAdapter mReservationListAdapter;
     private ArrayList<ReservationModel> mReservationArrayList;
     private TextView mNoReservationYetTextView;
+
+    public static ReservationListFragment newInstance(String userUuid) {
+        mUserUuid = userUuid;
+        return new ReservationListFragment();
+    }
 
     @SuppressLint("CutPasteId")
     @Nullable
@@ -83,7 +90,7 @@ public class ReservationListFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(ReservationListViewModel.class);
         mViewModel.setViewModel(requireActivity().getApplication());
-        mViewModel.getReservation(new ReservationListViewModel.onReservationFetch() {
+        mViewModel.getReservation(mUserUuid, new ReservationListViewModel.onReservationFetch() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(ArrayList<ReservationModel> reservationList) {

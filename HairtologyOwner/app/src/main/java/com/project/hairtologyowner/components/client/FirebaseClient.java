@@ -62,4 +62,8 @@ public class FirebaseClient {
         return "owners/" + uuid + "/info";
     }
 
+    public String apiMessage() {
+        return "messages";
+    }
+
 }

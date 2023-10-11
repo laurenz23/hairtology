@@ -1,6 +1,7 @@
 package com.project.hairtologyowner.views.fragments.userreservationinfo;
 
 import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -27,6 +28,7 @@ import com.project.hairtologyowner.views.activities.MainActivity;
 import com.project.hairtologyowner.views.fragments.reservationlist.ReservationListFragment;
 import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
 import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
+import com.project.hairtologyowner.views.fragments.userchat.UserChatFragment;
 
 import java.util.Objects;
 
@@ -57,11 +59,24 @@ public class UserReservationInfoFragment extends Fragment {
         mUserInfoImageView = mView.findViewById(R.id.infoUserReservationInfo);
 
         mReservationImageView.setOnClickListener(view -> {
-
+            getActivity().getSupportFragmentManager().popBackStack();
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(mContainerViewId, ReservationListFragment.newInstance(mUserReservation.getUserUuid()))
+                        .commit();
+            }
         });
 
         mMessageImageView.setOnClickListener(view -> {
-
+            getActivity().getSupportFragmentManager().popBackStack();
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(mContainerViewId, UserChatFragment.newInstance(
+                                mUserReservation.getUserUuid(),
+                                mUserReservation.getUserFirstName(),
+                                mUserReservation.getUserLastName()))
+                        .commit();
+            }
         });
 
         mUserInfoImageView.setOnClickListener(view -> {
@@ -100,6 +115,7 @@ public class UserReservationInfoFragment extends Fragment {
         mViewModel.setViewModel(getContext());
 
         if (getActivity() != null) {
+            getActivity().getSupportFragmentManager().popBackStack();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(mContainerViewId, ReservationListFragment.newInstance(mUserReservation.getUserUuid()))
                     .commit();

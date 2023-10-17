@@ -24,6 +24,7 @@ import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ShopInfo;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.fragments.addshop.AddShopFragment;
 import com.project.hairtologyowner.views.fragments.shopinfo.ShopInfoFragment;
 import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
 import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
@@ -71,7 +72,17 @@ public class ShopListFragment extends Fragment {
         recyclerView.setAdapter(mShopListAdapter);
 
         mAddShopImageView.setOnClickListener(addShopView -> {
-            Toast.makeText(getContext(), "Adding of shop is currently in development", Toast.LENGTH_LONG).show();
+            if (getActivity() == null) {
+                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        ShopListFragment.class
+                ));
+                return;
+            }
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    new AddShopFragment(),
+                    MainActivity.containerViewId);
         });
 
         return view;

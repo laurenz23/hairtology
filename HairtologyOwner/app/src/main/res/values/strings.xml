@@ -6,6 +6,7 @@
     <string name="str_add_note">Add note</string>
     <string name="str_address">Address</string>
     <string name="str_am">AM</string>
+    <string name="str_add_shop">Add Shop</string>
     <string name="str_available_slots">Available Slots</string>
     <string name="str_back_to_login">Back to login</string>
     <string name="str_cancel_reservation">Cancel Reservation</string>
@@ -37,8 +38,11 @@
     <string name="str_month">Month</string>
     <string name="str_name">Name</string>
     <string name="str_new_password">New Password</string>
+    <string name="str_next">Next</string>
+    <string name="str_next_page">Next Page</string>
     <string name="str_notes">Notes</string>
     <string name="str_owner">Owner</string>
+    <string name="str_open_hours">Open Hours</string>
     <string name="str_password">Password</string>
     <string name="str_password_did_not_match">Password did not match</string>
     <string name="str_please_enter_first_name">Please enter your first name</string>
@@ -47,7 +51,9 @@
     <string name="str_please_enter_password">Please enter your password</string>
     <string name="str_please_confirm_password">Please confirm your password</string>
     <string name="str_pm">PM</string>
+    <string name="str_previous">Previous</string>
     <string name="str_price">Price</string>
+    <string name="str_price_range">Price range. Ex: 100.00 – 200.00</string>
     <string name="str_profile">Profile</string>
     <string name="str_register">Register</string>
     <string name="str_reservation">Reservation</string>
@@ -117,5 +123,17 @@
 
     <!-- STRING SYMBOLS -->
     <string name="str_symbol_peso">₱</string>
+
+    <!-- NUMBERS -->
+    <string name="str_1">1</string>
+    <string name="str_2">2</string>
+    <string name="str_3">3</string>
+    <string name="str_4">4</string>
+    <string name="str_5">5</string>
+    <string name="str_6">6</string>
+    <string name="str_7">7</string>
+    <string name="str_8">8</string>
+    <string name="str_9">9</string>
+    <string name="str_10">10</string>
 
 </resources>

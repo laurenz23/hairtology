@@ -2,37 +2,57 @@ package com.project.hairtologyowner.views.fragments.addshop;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.models.ShopInfo;
+import com.project.hairtologyowner.models.ShopModel;
+import com.project.hairtologyowner.models.ShopService;
+
+import java.util.ArrayList;
 
 public class AddShopFragment extends Fragment {
 
     private AddShopViewModel mViewModel;
     private View mView;
-    private LinearLayout[] mPageLinearLayoutArray = new LinearLayout[3];
-    private EditText mNameEditText;
-    private EditText mDescriptionEditText;
-    private EditText mAddressEditText;
-    private EditText mOpenHoursEditText;
-    private EditText mPriceRangeEditText;
+    private LinearLayout[] mPageLinearLayoutArray = new LinearLayout[4];
+    private EditText mShopNameEditText;
+    private EditText mShopDescriptionEditText;
+    private EditText mShopAddressEditText;
+    private EditText mShopOpenHoursEditText;
+    private EditText mShopPriceRangeEditText;
+    private EditText mServiceNameEditText;
+    private EditText mServiceDescriptionEditText;
+    private EditText mServicePriceEditText;
     private Button mNextPage1Button;
     private Button mNextPage2Button;
     private Button mPreviousPage2Button;
-    private Button mSubmitButton;
 
+    private Button mNextPage3Button;
+    private Button mPreviousPage3Button;
+    private Button mAddServiceButton;
+    private Button mSubmitButton;
+    private ShopModel mShopModel;
+    private ShopInfo mShopInfo;
+    private ArrayList<ShopService> mServiceArrayList;
+    private AddServiceListAdapter mAddServiceListAdapter;
+
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -41,23 +61,76 @@ public class AddShopFragment extends Fragment {
         mPageLinearLayoutArray[0] = mView.findViewById(R.id.page1AddShop);
         mPageLinearLayoutArray[1] = mView.findViewById(R.id.page2AddShop);
         mPageLinearLayoutArray[2] = mView.findViewById(R.id.page3AddShop);
+        mPageLinearLayoutArray[3] = mView.findViewById(R.id.page4AddShop);
 
         mNextPage1Button = mView.findViewById(R.id.nextPage1AddShop);
         mNextPage2Button = mView.findViewById(R.id.nextPage2AddShop);
         mPreviousPage2Button = mView.findViewById(R.id.previousPage2AddShop);
-        mSubmitButton = mView.findViewById(R.id.submitPage3AddShop);
+        mNextPage3Button = mView.findViewById(R.id.nextPage3AddShop);
+        mPreviousPage3Button = mView.findViewById(R.id.previousPage3AddShop);
+        mAddServiceButton = mView.findViewById(R.id.addServicePage3AddShop);
+        mSubmitButton = mView.findViewById(R.id.submitPage4AddShop);
 
-        mNameEditText = mView.findViewById(R.id.nameAddShop);
-        mDescriptionEditText = mView.findViewById(R.id.descriptionAddShop);
-        mAddressEditText = mView.findViewById(R.id.addressAddShop);
-        mOpenHoursEditText = mView.findViewById(R.id.openHoursAddShop);
-        mPriceRangeEditText = mView.findViewById(R.id.priceRangeAddShop);
+        mShopNameEditText = mView.findViewById(R.id.nameAddShop);
+        mShopDescriptionEditText = mView.findViewById(R.id.descriptionAddShop);
+        mShopAddressEditText = mView.findViewById(R.id.addressAddShop);
+        mShopOpenHoursEditText = mView.findViewById(R.id.openHoursAddShop);
+        mShopPriceRangeEditText = mView.findViewById(R.id.priceRangeAddShop);
+
+        mServiceNameEditText = mView.findViewById(R.id.serviceNameAddShop);
+        mServiceDescriptionEditText = mView.findViewById(R.id.serviceDescriptionAddShop);
+        mServicePriceEditText = mView.findViewById(R.id.servicePriceAddShop);
+
+        mAddServiceListAdapter = new AddServiceListAdapter(getContext(), mServiceArrayList);
+
+        RecyclerView recyclerView = mView.findViewById(R.id.serviceListRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(mAddServiceListAdapter);
 
         mNextPage1Button.setOnClickListener(view -> {
+            String shopName = String.valueOf(mShopNameEditText.getText());
+            String shopDescription = String.valueOf(mShopDescriptionEditText.getText());
+
+            if (shopName.equals("")) {
+                Toast.makeText(getContext(), "Please provide the shop name", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (shopDescription.equals("")) {
+                Toast.makeText(getContext(), "Please provide a short description", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            mShopInfo.setName(shopName);
+            mShopInfo.setDescription(shopDescription);
+
             setPage(2);
         });
 
         mNextPage2Button.setOnClickListener(view -> {
+            String shopAddress = String.valueOf(mShopAddressEditText.getText());
+            String shopOpenHours = String.valueOf(mShopOpenHoursEditText.getText());
+            String shopPriceRange = String.valueOf(mShopPriceRangeEditText.getText());
+
+            if (shopAddress.equals("")) {
+                Toast.makeText(getContext(), "Please provide shop address for user to locate the shop", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (shopOpenHours.equals("")) {
+                Toast.makeText(getContext(), "Please provide the expected the shops start to open and close", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (shopPriceRange.equals("")) {
+                Toast.makeText(getContext(), "Please provide the price range of your services from min to max", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            mShopInfo.setAddress(shopAddress);
+            mShopInfo.setHour(shopOpenHours);
+            mShopInfo.setPrice(shopPriceRange);
+
             setPage(3);
         });
 
@@ -65,23 +138,51 @@ public class AddShopFragment extends Fragment {
             setPage(1);
         });
 
-        mPreviousPage2Button.setOnClickListener(view -> {
-            String name = String.valueOf(mNameEditText.getText());
-            String description = String.valueOf(mDescriptionEditText.getText());;
-            String address = String.valueOf(mAddressEditText.getText());;
-            String openHours = String.valueOf(mOpenHoursEditText.getText());;
-            String priceRange = String.valueOf(mPriceRangeEditText.getText());;
-
-            if (isPage1Validated(name, description) && isPage2Validated(address, openHours, priceRange)) {
-                Log.e(AddShopFragment.class.getSimpleName(), name);
-                Log.e(AddShopFragment.class.getSimpleName(), description);
-                Log.e(AddShopFragment.class.getSimpleName(), address);
-                Log.e(AddShopFragment.class.getSimpleName(), openHours);
-                Log.e(AddShopFragment.class.getSimpleName(), priceRange);
-                Log.e(AddShopFragment.class.getSimpleName(), "SUCCESS");
-            } else {
-                Log.e(AddShopFragment.class.getSimpleName(), "ERROR");
+        mNextPage3Button.setOnClickListener(view -> {
+            if (mAddServiceListAdapter.getItemCount() <= 0) {
+                Toast.makeText(getContext(), "Please add at least 1 service to your shop", Toast.LENGTH_LONG);
+                return;
             }
+
+            setPage(4);
+        });
+
+        mPreviousPage3Button.setOnClickListener(view -> {
+            setPage(2);
+        });
+
+        mAddServiceButton.setOnClickListener(view -> {
+            String serviceName = String.valueOf(mServiceNameEditText.getText());
+            String serviceDescription = String.valueOf(mServiceDescriptionEditText.getText());
+            String servicePrice = String.valueOf(mServicePriceEditText.getText());
+
+            if (serviceName.equals("")) {
+                Toast.makeText(getContext(), "Please provide the service name", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (serviceDescription.equals("")) {
+                Toast.makeText(getContext(), "Please provide a short service description", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            if (servicePrice.equals("")) {
+                Toast.makeText(getContext(), "Please provide the price of this service", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            ShopService serviceData = new ShopService();
+            serviceData.setName(serviceName);
+            serviceData.setDescription(serviceDescription);
+            serviceData.setPrice(servicePrice);
+
+            mServiceArrayList.add(serviceData);
+            mAddServiceListAdapter.notifyDataSetChanged();
+        });
+
+        mSubmitButton.setOnClickListener(view -> {
+            mShopModel.setShopInfo(mShopInfo);
+            mShopModel.setShopServiceArrayList(mServiceArrayList);
         });
 
         return mView;
@@ -90,7 +191,10 @@ public class AddShopFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mViewModel = new ViewModelProvider(this).get(AddShopViewModel.class);
+        mShopInfo = new ShopInfo();
+        mShopModel = new ShopModel();
 
         setPage(1);
     }

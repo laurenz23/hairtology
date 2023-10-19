@@ -49,7 +49,7 @@ public class AddShopFragment extends Fragment {
     private Button mSubmitButton;
     private ShopModel mShopModel;
     private ShopInfo mShopInfo;
-    private ArrayList<ShopService> mServiceArrayList;
+    private ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
     private AddServiceListAdapter mAddServiceListAdapter;
 
     @SuppressLint("NotifyDataSetChanged")
@@ -140,7 +140,7 @@ public class AddShopFragment extends Fragment {
 
         mNextPage3Button.setOnClickListener(view -> {
             if (mAddServiceListAdapter.getItemCount() <= 0) {
-                Toast.makeText(getContext(), "Please add at least 1 service to your shop", Toast.LENGTH_LONG);
+                Toast.makeText(getContext(), "Please add at least 1 service to your shop", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -176,6 +176,10 @@ public class AddShopFragment extends Fragment {
             serviceData.setDescription(serviceDescription);
             serviceData.setPrice(servicePrice);
 
+            mServiceNameEditText.setText("");
+            mServiceDescriptionEditText.setText("");
+            mServicePriceEditText.setText("");
+
             mServiceArrayList.add(serviceData);
             mAddServiceListAdapter.notifyDataSetChanged();
         });
@@ -207,29 +211,6 @@ public class AddShopFragment extends Fragment {
         }
 
         mPageLinearLayoutArray[pageNum].setVisibility(View.VISIBLE);
-    }
-
-    private boolean isPage1Validated(String name, String description) {
-        if (name.isEmpty())
-            return false;
-
-        if (description.isEmpty())
-            return false;
-
-        return true;
-    }
-
-    private boolean isPage2Validated(String address, String openHours, String priceRange) {
-        if (address.isEmpty())
-            return false;
-
-        if (openHours.isEmpty())
-            return false;
-
-        if (priceRange.isEmpty())
-            return false;
-
-        return true;
     }
 
 }

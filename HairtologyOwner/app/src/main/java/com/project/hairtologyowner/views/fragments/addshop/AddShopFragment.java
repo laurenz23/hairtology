@@ -73,6 +73,11 @@ public class AddShopFragment extends Fragment {
             String priceRange = String.valueOf(mPriceRangeEditText.getText());;
 
             if (isPage1Validated(name, description) && isPage2Validated(address, openHours, priceRange)) {
+                Log.e(AddShopFragment.class.getSimpleName(), name);
+                Log.e(AddShopFragment.class.getSimpleName(), description);
+                Log.e(AddShopFragment.class.getSimpleName(), address);
+                Log.e(AddShopFragment.class.getSimpleName(), openHours);
+                Log.e(AddShopFragment.class.getSimpleName(), priceRange);
                 Log.e(AddShopFragment.class.getSimpleName(), "SUCCESS");
             } else {
                 Log.e(AddShopFragment.class.getSimpleName(), "ERROR");

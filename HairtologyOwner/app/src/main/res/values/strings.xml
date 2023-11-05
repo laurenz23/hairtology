@@ -16,6 +16,7 @@
     <string name="str_current_password">Current Password</string>
     <string name="str_date">Date</string>
     <string name="str_day">Day</string>
+    <string name="str_delete">Delete</string>
     <string name="str_description">Description</string>
     <string name="str_disable">Disable</string>
     <string name="str_encountered_an_error_disabling_user">Encountered an error while disabling user</string>

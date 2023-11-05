@@ -17,6 +17,11 @@ import java.util.ArrayList;
 
 public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAdapter.ViewHolder> {
 
+    private interface OnServiceItemListener {
+        void addImage();
+        void removedItem();
+    }
+
     private Context mContext;
     private ArrayList<ShopService> mServiceArrayList;
 

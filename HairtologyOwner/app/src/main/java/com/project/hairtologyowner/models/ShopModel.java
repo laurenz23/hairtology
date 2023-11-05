@@ -17,11 +17,11 @@ public class ShopModel {
         this.detail = shopDetail;
     }
 
-    public ArrayList<ShopService> getShopServiceArrayList() {
+    public ArrayList<ShopService> getShopService() {
         return service;
     }
 
-    public void setShopServiceArrayList(ArrayList<ShopService> shopServiceArrayList) {
+    public void setShopService(ArrayList<ShopService> shopServiceArrayList) {
         this.service = shopServiceArrayList;
     }
 

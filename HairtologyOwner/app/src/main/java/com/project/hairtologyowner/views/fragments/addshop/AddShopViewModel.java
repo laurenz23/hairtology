@@ -37,7 +37,7 @@ public class AddShopViewModel extends ViewModel {
     public void addShop(OnAddShopListener listener) {
         ShopModel shopModel = new ShopModel();
         shopModel.setShopDetail(detail);
-        shopModel.setShopServiceArrayList(service);
+        shopModel.setShopService(service);
 
         mFirebaseClient.getDatabaseReference().child(mFirebaseClient.apiShop() + shopModel.getShopDetail().getUuid())
                 .setValue(shopModel).addOnSuccessListener(unused -> {

@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.project.hairtologyowner.components.app.AppConfig;
 
 public class FirebaseClient {
@@ -14,6 +16,7 @@ public class FirebaseClient {
     private Context mContext;
     private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(AppConfig.Api.BASE_URL);
+    private final StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
     public FirebaseClient(@NonNull Context context) {
         mContext = context;
@@ -25,6 +28,10 @@ public class FirebaseClient {
 
     public DatabaseReference getDatabaseReference() {
         return databaseReference;
+    }
+
+    public StorageReference getStorageReference() {
+        return storageReference;
     }
 
     public String apiInfo(String uuid) {

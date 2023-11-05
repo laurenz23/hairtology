@@ -1,8 +1,16 @@
 package com.project.hairtologyowner.views.fragments.addshop;
 
+import static android.app.Activity.RESULT_OK;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,14 +19,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.google.firebase.storage.StorageReference;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.models.ShopInfo;
 import com.project.hairtologyowner.models.ShopModel;
@@ -30,6 +43,8 @@ public class AddShopFragment extends Fragment {
 
     private AddShopViewModel mViewModel;
     private View mView;
+    private LinearProgressIndicator mProgressIndicator;
+    private Uri mSelectedImage;
     private LinearLayout[] mPageLinearLayoutArray = new LinearLayout[4];
     private EditText mShopNameEditText;
     private EditText mShopDescriptionEditText;
@@ -47,10 +62,24 @@ public class AddShopFragment extends Fragment {
     private Button mPreviousPage3Button;
     private Button mAddServiceButton;
     private Button mSubmitButton;
+    private ImageView mImage1;
+    private ImageView mImage2;
+    private ImageView mImage3;
     private ShopModel mShopModel;
     private ShopInfo mShopInfo;
     private ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
     private AddServiceListAdapter mAddServiceListAdapter;
+    private final ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    if (result.getData() != null) {
+                        mSelectedImage = result.getData().getData();
+                        Glide.with(getContext()).load(mSelectedImage).into(mImage1);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Encountered an error when getting an Image", Toast.LENGTH_LONG).show();
+                }
+            });
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -81,11 +110,29 @@ public class AddShopFragment extends Fragment {
         mServiceDescriptionEditText = mView.findViewById(R.id.serviceDescriptionAddShop);
         mServicePriceEditText = mView.findViewById(R.id.servicePriceAddShop);
 
+        mImage1 = mView.findViewById(R.id.image1AddShop);
+        mImage2 = mView.findViewById(R.id.image2AddShop);
+        mImage3 = mView.findViewById(R.id.image3AddShop);
+
         mAddServiceListAdapter = new AddServiceListAdapter(getContext(), mServiceArrayList);
 
         RecyclerView recyclerView = mView.findViewById(R.id.serviceListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAddServiceListAdapter);
+
+        mImage1.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            mActivityResultLauncher.launch(intent);
+        });
+
+        mImage2.setOnClickListener(view -> {
+            mViewModel.uploadImage(mSelectedImage);
+        });
+
+        mImage3.setOnClickListener(view -> {
+            Log.e(AddShopFragment.class.getSimpleName(), "Image 3");
+        });
 
         mNextPage1Button.setOnClickListener(view -> {
             String shopName = String.valueOf(mShopNameEditText.getText());
@@ -197,6 +244,8 @@ public class AddShopFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mViewModel = new ViewModelProvider(this).get(AddShopViewModel.class);
+        mViewModel.setViewModel(getContext());
+
         mShopInfo = new ShopInfo();
         mShopModel = new ShopModel();
 

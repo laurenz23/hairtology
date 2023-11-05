@@ -4,25 +4,25 @@ import java.util.ArrayList;
 
 public class ShopModel {
 
-    private ShopInfo shopInfo;
-    private ArrayList<ShopService> shopServiceArrayList;
+    private ShopDetail detail;
+    private ArrayList<ShopService> service;
 
     public ShopModel() {}
 
-    public ShopInfo getShopInfo() {
-        return shopInfo;
+    public ShopDetail getShopDetail() {
+        return detail;
     }
 
-    public void setShopInfo(ShopInfo shopInfo) {
-        this.shopInfo = shopInfo;
+    public void setShopDetail(ShopDetail shopDetail) {
+        this.detail = shopDetail;
     }
 
     public ArrayList<ShopService> getShopServiceArrayList() {
-        return shopServiceArrayList;
+        return service;
     }
 
     public void setShopServiceArrayList(ArrayList<ShopService> shopServiceArrayList) {
-        this.shopServiceArrayList = shopServiceArrayList;
+        this.service = shopServiceArrayList;
     }
 
 }

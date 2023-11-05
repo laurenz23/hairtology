@@ -47,14 +47,14 @@ public class FirebaseClient {
     }
 
     public String apiShop() {
-        return "shops";
+        return "shops/";
     }
 
     public String apiShopDetail() {
-        return "detail";
+        return "detail/";
     }
     public String apiShopService() {
-        return "service";
+        return "service/";
     }
 
     public String apiService(String shopId) {
@@ -62,7 +62,7 @@ public class FirebaseClient {
     }
 
     public String apiUsers() {
-        return "users";
+        return "users/";
     }
 
     public String apiOwnerInfo(String uuid) {
@@ -70,7 +70,15 @@ public class FirebaseClient {
     }
 
     public String apiMessage() {
-        return "messages";
+        return "messages/";
+    }
+
+    public String storageShops() {
+        return "shops/";
+    }
+
+    public String storageServices() {
+        return "shops/services/";
     }
 
 }

@@ -1,31 +1,37 @@
 package com.project.hairtologyowner.models;
 
-public class ShopInfo {
+public class ShopDetail {
 
-    private int id;
+    private String uuid;
     private String name;
     private String description;
     private String address;
     private String hour;
     private String price;
+    private String imageId1;
+    private String imageId2;
+    private String imageId3;
 
-    public ShopInfo() {}
+    public ShopDetail() {}
 
-    public ShopInfo(int id, String name, String description, String address, String hour, String price) {
-        this.id = id;
+    public ShopDetail(String uuid, String name, String description, String address, String hour, String price, String imageId1, String imageId2, String imageId3) {
+        this.uuid = uuid;
         this.name = name;
         this.description = description;
         this.address = address;
         this.hour = hour;
         this.price = price;
+        this.imageId1 = imageId1;
+        this.imageId2 = imageId2;
+        this.imageId3 = imageId3;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUuid(String id) {
+        this.uuid = id;
     }
 
-    public int getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
     public String getName() {
@@ -66,6 +72,30 @@ public class ShopInfo {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getImageId1() {
+        return imageId1;
+    }
+
+    public void setImageId1(String imageId1) {
+        this.imageId1 = imageId1;
+    }
+
+    public String getImageId2() {
+        return imageId2;
+    }
+
+    public void setImageId2(String imageId2) {
+        this.imageId2 = imageId2;
+    }
+
+    public String getImageId3() {
+        return imageId3;
+    }
+
+    public void setImageId3(String imageId3) {
+        this.imageId3 = imageId3;
     }
 
 }

@@ -47,11 +47,11 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         ShopModel shop = mShopArrayList.get(position);
         holder.shop = shop;
 
-        if (holder.shop.getShopInfo() != null) {
-            holder.name.setText(shop.getShopInfo().getName());
-            holder.address.setText(shop.getShopInfo().getAddress());
-            holder.schedules.setText(shop.getShopInfo().getHour());
-            holder.price.setText(shop.getShopInfo().getPrice());
+        if (holder.shop.getShopDetail() != null) {
+            holder.name.setText(shop.getShopDetail().getName());
+            holder.address.setText(shop.getShopDetail().getAddress());
+            holder.schedules.setText(shop.getShopDetail().getHour());
+            holder.price.setText(shop.getShopDetail().getPrice());
         }
     }
 

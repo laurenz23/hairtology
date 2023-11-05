@@ -1,7 +1,6 @@
 package com.project.hairtologyowner.views.fragments.shoplist;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -10,7 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyowner.components.client.FirebaseClient;
-import com.project.hairtologyowner.models.ShopInfo;
+import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 
 import java.util.ArrayList;
@@ -41,9 +40,9 @@ public class ShopListViewModel extends ViewModel {
 
                             for (DataSnapshot shopData : shopList.getChildren()) {
                                 if (Objects.equals(shopData.getKey(), "detail")) {
-                                    ShopInfo shopInfo = shopData.getValue(ShopInfo.class);
-                                    if (shopInfo != null) {
-                                        shopModel.setShopInfo(shopInfo);
+                                    ShopDetail shopDetail = shopData.getValue(ShopDetail.class);
+                                    if (shopDetail != null) {
+                                        shopModel.setShopDetail(shopDetail);
                                     }
                                 }
                             }

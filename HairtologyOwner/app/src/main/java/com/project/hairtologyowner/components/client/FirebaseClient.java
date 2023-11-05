@@ -51,14 +51,14 @@ public class FirebaseClient {
     }
 
     public String apiShopDetail() {
-        return "detail/";
+        return "shopDetail/";
     }
     public String apiShopService() {
-        return "service/";
+        return "shopService/";
     }
 
     public String apiService(String shopId) {
-        return "shops/" + shopId + "/service";
+        return "shops/" + shopId + "/shopService";
     }
 
     public String apiUsers() {

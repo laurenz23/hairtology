@@ -39,7 +39,7 @@ public class ShopListViewModel extends ViewModel {
                             ShopModel shopModel = new ShopModel();
 
                             for (DataSnapshot shopData : shopList.getChildren()) {
-                                if (Objects.equals(shopData.getKey(), "detail")) {
+                                if (Objects.equals(shopData.getKey(), "shopDetail")) {
                                     ShopDetail shopDetail = shopData.getValue(ShopDetail.class);
                                     if (shopDetail != null) {
                                         shopModel.setShopDetail(shopDetail);

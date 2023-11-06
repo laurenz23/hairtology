@@ -41,6 +41,7 @@ public class AddShopFragment extends Fragment {
     private AddShopViewModel mViewModel;
     private View mView;
     private LinearLayout[] mPageLinearLayoutArray = new LinearLayout[4];
+    private LinearLayout[] mPageIndicator = new LinearLayout[4];
     private EditText mShopNameEditText;
     private EditText mShopDescriptionEditText;
     private EditText mShopAddressEditText;
@@ -55,6 +56,7 @@ public class AddShopFragment extends Fragment {
     private Button mNextPage3Button;
     private Button mPreviousPage3Button;
     private Button mAddServiceButton;
+    private Button mPreviousPage4Button;
     private Button mSubmitButton;
     private ImageView mImage1;
     private ImageView mImage2;
@@ -90,12 +92,18 @@ public class AddShopFragment extends Fragment {
         mPageLinearLayoutArray[2] = mView.findViewById(R.id.page3AddShop);
         mPageLinearLayoutArray[3] = mView.findViewById(R.id.page4AddShop);
 
+        mPageIndicator[0] = mView.findViewById(R.id.page1IndicatorAddShop);
+        mPageIndicator[1] = mView.findViewById(R.id.page2IndicatorAddShop);
+        mPageIndicator[2] = mView.findViewById(R.id.page3IndicatorAddShop);
+        mPageIndicator[3] = mView.findViewById(R.id.page4IndicatorAddShop);
+
         mNextPage1Button = mView.findViewById(R.id.nextPage1AddShop);
         mNextPage2Button = mView.findViewById(R.id.nextPage2AddShop);
         mPreviousPage2Button = mView.findViewById(R.id.previousPage2AddShop);
         mNextPage3Button = mView.findViewById(R.id.nextPage3AddShop);
         mPreviousPage3Button = mView.findViewById(R.id.previousPage3AddShop);
         mAddServiceButton = mView.findViewById(R.id.addServicePage3AddShop);
+        mPreviousPage4Button = mView.findViewById(R.id.previousPage4AddShop);
         mSubmitButton = mView.findViewById(R.id.submitPage4AddShop);
 
         mShopNameEditText = mView.findViewById(R.id.nameAddShop);
@@ -213,6 +221,7 @@ public class AddShopFragment extends Fragment {
                 return;
             }
 
+            showPageReview();
             setPage(4);
         });
 
@@ -262,6 +271,11 @@ public class AddShopFragment extends Fragment {
             mSelectedImageService = null;
         });
 
+        mPreviousPage4Button.setOnClickListener(view -> {
+            hidePageReview();
+            setPage(3);
+        });
+
         mSubmitButton.setOnClickListener(view -> {
             mViewModel.service.addAll(mServiceArrayList);
 
@@ -272,6 +286,13 @@ public class AddShopFragment extends Fragment {
                     mViewModel.uploadImage(mSelectedImage1, shopDetail.getUuid(), shopDetail.getImageId1());
                     mViewModel.uploadImage(mSelectedImage2, shopDetail.getUuid(), shopDetail.getImageId2());
                     mViewModel.uploadImage(mSelectedImage3, shopDetail.getUuid(), shopDetail.getImageId3());
+
+                    for (int x = 0; x < mAddServiceListAdapter.getItemCount(); x++) {
+                        mViewModel.uploadImage(
+                                mAddServiceListAdapter.getImageUri(x),
+                                mViewModel.detail.getUuid(),
+                                mAddServiceListAdapter.getItem(x).getImageId());
+                    }
                 }
 
                 @Override
@@ -324,6 +345,52 @@ public class AddShopFragment extends Fragment {
         } else {
             Toast.makeText(getContext(), "Encountered an error when getting an Image", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void showPageReview() {
+        for (LinearLayout linearLayout : mPageIndicator) {
+            linearLayout.setVisibility(View.GONE);
+        }
+
+        mImageService.setVisibility(View.GONE);
+        mServiceNameEditText.setVisibility(View.GONE);
+        mServiceDescriptionEditText.setVisibility(View.GONE);
+        mServicePriceEditText.setVisibility(View.GONE);
+
+        mNextPage1Button.setVisibility(View.GONE);
+        mNextPage2Button.setVisibility(View.GONE);
+        mNextPage3Button.setVisibility(View.GONE);
+        mPreviousPage2Button.setVisibility(View.GONE);
+        mPreviousPage3Button.setVisibility(View.GONE);
+        mAddServiceButton.setVisibility(View.GONE);
+
+        for (LinearLayout linearLayout : mPageLinearLayoutArray) {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hidePageReview() {
+        for (LinearLayout linearLayout : mPageIndicator) {
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+
+        mImageService.setVisibility(View.VISIBLE);
+        mServiceNameEditText.setVisibility(View.VISIBLE);
+        mServiceDescriptionEditText.setVisibility(View.VISIBLE);
+        mServicePriceEditText.setVisibility(View.VISIBLE);
+
+        mNextPage1Button.setVisibility(View.VISIBLE);
+        mNextPage2Button.setVisibility(View.VISIBLE);
+        mNextPage3Button.setVisibility(View.VISIBLE);
+        mPreviousPage2Button.setVisibility(View.VISIBLE);
+        mPreviousPage3Button.setVisibility(View.VISIBLE);
+        mAddServiceButton.setVisibility(View.VISIBLE);
+
+        for (LinearLayout linearLayout : mPageLinearLayoutArray) {
+            linearLayout.setVisibility(View.GONE);
+        }
+
+        mPageLinearLayoutArray[2].setVisibility(View.VISIBLE);
     }
 
 }

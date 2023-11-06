@@ -39,6 +39,10 @@ public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAd
         mServiceArrayList = serviceArrayList;
     }
 
+    public Uri getImageUri(int position) {
+        return mUriArrayList.get(position);
+    }
+
     public void addUri(Uri imageUri) {
         mUriArrayList.add(imageUri);
     }
@@ -74,6 +78,10 @@ public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAd
             return 0;
 
         return mServiceArrayList.size();
+    }
+
+    public ShopService getItem(int position) {
+        return mServiceArrayList.get(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

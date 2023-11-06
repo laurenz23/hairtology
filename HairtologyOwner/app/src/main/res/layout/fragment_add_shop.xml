@@ -41,10 +41,11 @@
                 android:id="@+id/page1AddShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/page1IndicatorAddShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -183,6 +184,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/page2IndicatorAddShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -316,10 +318,11 @@
                 android:id="@+id/page3AddShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/page3IndicatorAddShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -485,6 +488,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/page4IndicatorAddShop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -537,17 +541,43 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/submitPage4AddShop"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="70dp"
-                    android:layout_marginEnd="70dp"
-                    android:text="@string/str_submit"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_primary" />
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginBottom="25dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/previousPage4AddShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="70dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_weight="1"
+                        android:text="@string/str_previous"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:background="@drawable/button_primary" />
+
+                    <Button
+                        android:id="@+id/submitPage4AddShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="70dp"
+                        android:layout_weight="1"
+                        android:text="@string/str_submit"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:background="@drawable/button_primary" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

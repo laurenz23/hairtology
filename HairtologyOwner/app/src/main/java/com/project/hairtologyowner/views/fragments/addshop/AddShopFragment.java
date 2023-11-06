@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
+import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
+import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
+import com.project.hairtologyowner.views.fragments.userreservationinfo.UserReservationInfoFragment;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -293,6 +299,19 @@ public class AddShopFragment extends Fragment {
                                 mViewModel.detail.getUuid(),
                                 mAddServiceListAdapter.getItem(x).getImageId());
                     }
+
+
+                    if (getActivity() == null) {
+                        Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                                ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                                AddShopFragment.class
+                        ));
+                        return;
+                    }
+
+                    ((MainActivity) getActivity()).replaceFragment(
+                            new ShopListFragment(),
+                            MainActivity.containerViewId);
                 }
 
                 @Override

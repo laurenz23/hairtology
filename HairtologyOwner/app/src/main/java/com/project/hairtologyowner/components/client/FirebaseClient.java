@@ -77,8 +77,4 @@ public class FirebaseClient {
         return "shops/";
     }
 
-    public String storageServices() {
-        return "shops/services/";
-    }
-
 }

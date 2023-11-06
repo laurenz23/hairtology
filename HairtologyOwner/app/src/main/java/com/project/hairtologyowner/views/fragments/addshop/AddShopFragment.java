@@ -221,8 +221,8 @@ public class AddShopFragment extends Fragment {
                 return;
             }
 
-            showPageReview();
             setPage(4);
+            showPageReview();
         });
 
         mPreviousPage3Button.setOnClickListener(view -> {

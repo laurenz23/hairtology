@@ -32,7 +32,7 @@ public class LoginViewModel extends ViewModel {
         mFirebaseClient.getAuth().signInWithEmailAndPassword(email, password)
             .addOnSuccessListener(authResult -> {
                 FirebaseUser user = mFirebaseClient.getAuth().getCurrentUser();
-                if (user != null) {
+                if (user.isEmailVerified()) {
                     mFirebaseClient.getDatabaseReference()
                         .child(mFirebaseClient.apiOwnerInfo(user.getUid()))
                         .get()
@@ -42,6 +42,10 @@ public class LoginViewModel extends ViewModel {
                             listener.onSuccess(ownerModel);
                         })
                         .addOnFailureListener(e -> listener.onFailed(e.getMessage()));
+                } else {
+                    user.sendEmailVerification().addOnSuccessListener(unused1 -> {
+                        listener.onFailed("Please verify your email");
+                    });
                 }
             })
             .addOnFailureListener(e -> listener.onFailed(e.getMessage()));

@@ -2,6 +2,7 @@ package com.project.hairtologyowner.views.fragments.register;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -17,10 +18,11 @@ public class RegisterViewModel extends ViewModel {
         void onRegisterFailed(Throwable throwable);
     }
 
+    private Context mContext;
     private FirebaseClient mFirebaseClient;
 
     public void setViewModel(@NonNull Application application) {
-        Context mContext = application.getApplicationContext();
+        mContext = application.getApplicationContext();
         mFirebaseClient = new FirebaseClient(mContext);
     }
 
@@ -39,6 +41,10 @@ public class RegisterViewModel extends ViewModel {
                                 .child(mFirebaseClient.apiOwnerInfo(owner.getUid()))
                                 .setValue(ownerModel)
                                 .addOnSuccessListener(unused -> {
+                                    owner.sendEmailVerification().addOnSuccessListener(success -> {
+                                        Toast.makeText(mContext, "Please verify your email", Toast.LENGTH_LONG).show();
+                                    });
+
                                     listener.onRegisterSuccess(ownerModel);
                                 }).addOnFailureListener(listener::onRegisterFailed);
                     }

@@ -53,7 +53,7 @@ public class RegistrationViewModel extends ViewModel {
                                 .child(mFirebaseClient.apiInfo(user.getUid()))
                                 .setValue(userModel)
                                 .addOnSuccessListener(unused -> {
-                                    user.sendEmailVerification().addOnSuccessListener(unused1 -> {
+                                    user.sendEmailVerification().addOnSuccessListener(success -> {
                                         Toast.makeText(mContext, "Please verify your email", Toast.LENGTH_LONG).show();
                                     });
 

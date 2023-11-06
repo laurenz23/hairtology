@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +36,7 @@ import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
+import com.project.hairtologyowner.models.UserReservationModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
 import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
 import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
@@ -330,8 +333,6 @@ public class AddShopFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(AddShopViewModel.class);
         mViewModel.setViewModel(getContext());
-
-        setPage(1);
     }
 
     private void setPage(int pageNum) {

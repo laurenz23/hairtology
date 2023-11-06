@@ -1,17 +1,24 @@
 package com.project.hairtologyowner.views.fragments.addshop;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 
 public class AddShopViewModel extends ViewModel {
@@ -55,5 +62,38 @@ public class AddShopViewModel extends ViewModel {
                     Toast.makeText(mContext, "Encountered an error while uploading an image", Toast.LENGTH_LONG).show();
                 });
     }
+
+    public Bitmap retrieveImage(String shopId, String imageId) {
+        final Bitmap[] bitmap = {null};
+        try {
+            File localFile = File.createTempFile("tempFile", ".jpg");
+            mFirebaseClient.getStorageReference().child(mFirebaseClient.storageShops() + shopId + "/" + imageId)
+                    .getFile(localFile)
+                    .addOnSuccessListener(taskSnapshot -> bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap[0];
+    }
+
+//    public Uri retrieveImage(String shopId, String imageId) {
+//        final Uri[] uri = {null};
+//        try {
+//            File localFile = File.createTempFile("tempFile", ".jpg");
+//            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//            inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//            byte[] bitmapData = bytes.toByteArray();
+//            mFirebaseClient.getStorageReference().child(mFirebaseClient.storageShops() + shopId + "/" + imageId)
+//                    .getFile(localFile)
+//                    .addOnSuccessListener(taskSnapshot -> {
+//                        uri[0] = localFile.getAbsolutePath();
+//                    });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return uri[0];
+//    }
 
 }

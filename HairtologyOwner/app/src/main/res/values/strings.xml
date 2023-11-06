@@ -19,6 +19,7 @@
     <string name="str_delete">Delete</string>
     <string name="str_description">Description</string>
     <string name="str_disable">Disable</string>
+    <string name="str_edit_shop">Edit Shop</string>
     <string name="str_encountered_an_error_disabling_user">Encountered an error while disabling user</string>
     <string name="str_enable">Enable</string>
     <string name="str_email">Email</string>

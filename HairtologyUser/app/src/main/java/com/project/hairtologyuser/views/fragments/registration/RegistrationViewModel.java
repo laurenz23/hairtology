@@ -2,6 +2,7 @@ package com.project.hairtologyuser.views.fragments.registration;
 
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
@@ -28,10 +29,11 @@ public class RegistrationViewModel extends ViewModel {
         void onRegisterFailed(Throwable throwable);
     }
 
+    private Context mContext;
     private FirebaseClient mFirebaseClient;
 
     public void setViewModel(@NonNull Application application) {
-        Context mContext = application.getApplicationContext();
+        mContext = application.getApplicationContext();
         mFirebaseClient = new FirebaseClient(mContext);
     }
 
@@ -51,6 +53,10 @@ public class RegistrationViewModel extends ViewModel {
                                 .child(mFirebaseClient.apiInfo(user.getUid()))
                                 .setValue(userModel)
                                 .addOnSuccessListener(unused -> {
+                                    user.sendEmailVerification().addOnSuccessListener(unused1 -> {
+                                        Toast.makeText(mContext, "Please verify your email", Toast.LENGTH_LONG).show();
+                                    });
+
                                     listener.onRegisterSuccess(userModel);
                                 }).addOnFailureListener(listener::onRegisterFailed);
                     }

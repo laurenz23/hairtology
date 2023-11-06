@@ -122,9 +122,9 @@ public class LoginFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onLoginFailed(Throwable throwable) {
+                public void onLoginFailed(String error) {
                     setAction(Action.RESET);
-                    setErrorMessage(throwable.getMessage());
+                    setErrorMessage(error);
                     displayErrorMessage();
                 }
             });

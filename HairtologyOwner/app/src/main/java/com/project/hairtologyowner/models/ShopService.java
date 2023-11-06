@@ -5,6 +5,7 @@ public class ShopService {
     private String name;
     private String description;
     private String price;
+    private String imageId;
 
     public ShopService() {}
 
@@ -30,6 +31,14 @@ public class ShopService {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
     }
 
 }

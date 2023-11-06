@@ -59,9 +59,11 @@ public class AddShopFragment extends Fragment {
     private ImageView mImage1;
     private ImageView mImage2;
     private ImageView mImage3;
+    private ImageView mImageService;
     private Uri mSelectedImage1;
     private Uri mSelectedImage2;
     private Uri mSelectedImage3;
+    private Uri mSelectedImageService;
     private ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
     private AddServiceListAdapter mAddServiceListAdapter;
 
@@ -73,6 +75,9 @@ public class AddShopFragment extends Fragment {
 
     private final ActivityResultLauncher<Intent> mSelectImageLauncher3 = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> selectImageFromGallery(result, mImage3));
+
+    private final ActivityResultLauncher<Intent> mSelectImageLauncher4 = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> selectImageFromGallery(result, mImageService));
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -106,12 +111,18 @@ public class AddShopFragment extends Fragment {
         mImage1 = mView.findViewById(R.id.image1AddShop);
         mImage2 = mView.findViewById(R.id.image2AddShop);
         mImage3 = mView.findViewById(R.id.image3AddShop);
+        mImageService = mView.findViewById(R.id.imageServiceAddShop);
 
         mAddServiceListAdapter = new AddServiceListAdapter(getContext(), mServiceArrayList);
 
         RecyclerView recyclerView = mView.findViewById(R.id.serviceListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAddServiceListAdapter);
+
+        mAddServiceListAdapter.setListener(position -> {
+            mServiceArrayList.remove(position);
+            mAddServiceListAdapter.notifyDataSetChanged();
+        });
 
         mImage1.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -132,6 +143,12 @@ public class AddShopFragment extends Fragment {
             intent.setType("image/*");
             mSelectImageLauncher3.launch(intent);
             mViewModel.detail.setImageId3(UUID.randomUUID().toString());
+        });
+
+        mImageService.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            mSelectImageLauncher4.launch(intent);
         });
 
         mNextPage1Button.setOnClickListener(view -> {
@@ -208,6 +225,11 @@ public class AddShopFragment extends Fragment {
             String serviceDescription = String.valueOf(mServiceDescriptionEditText.getText());
             String servicePrice = String.valueOf(mServicePriceEditText.getText());
 
+            if (mSelectedImageService == null) {
+                Toast.makeText(getContext(), "Please add an image for your service", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             if (serviceName.equals("")) {
                 Toast.makeText(getContext(), "Please provide the service name", Toast.LENGTH_LONG).show();
                 return;
@@ -227,13 +249,17 @@ public class AddShopFragment extends Fragment {
             serviceData.setName(serviceName);
             serviceData.setDescription(serviceDescription);
             serviceData.setPrice(servicePrice);
+            serviceData.setImageId(UUID.randomUUID().toString());
+
+            mAddServiceListAdapter.addUri(mSelectedImageService);
+            mServiceArrayList.add(serviceData);
+            mAddServiceListAdapter.notifyDataSetChanged();
 
             mServiceNameEditText.setText("");
             mServiceDescriptionEditText.setText("");
             mServicePriceEditText.setText("");
-
-            mServiceArrayList.add(serviceData);
-            mAddServiceListAdapter.notifyDataSetChanged();
+            mImageService.setImageResource(R.drawable.ic_add_image);
+            mSelectedImageService = null;
         });
 
         mSubmitButton.setOnClickListener(view -> {
@@ -284,7 +310,10 @@ public class AddShopFragment extends Fragment {
                 Uri selectedImage = result.getData().getData();
                 Glide.with(getContext()).load(selectedImage).into(imageView);
 
-                if (imageView == mImage3) {
+                if (imageView == mImageService) {
+                    mSelectedImageService = selectedImage;
+                }
+                else if (imageView == mImage3) {
                     mSelectedImage3 = selectedImage;
                 } else if (imageView == mImage2) {
                     mSelectedImage2 = selectedImage;

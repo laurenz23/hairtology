@@ -41,7 +41,7 @@
                 android:id="@+id/page1AddShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -316,7 +316,7 @@
                 android:id="@+id/page3AddShop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -371,6 +371,14 @@
                         android:background="@drawable/background_placeholder_round"/>
 
                 </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageServiceAddShop"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_add_image" />
 
                 <EditText
                     android:id="@+id/serviceNameAddShop"

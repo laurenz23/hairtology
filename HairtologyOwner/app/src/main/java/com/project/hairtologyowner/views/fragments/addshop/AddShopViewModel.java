@@ -65,20 +65,6 @@ public class AddShopViewModel extends ViewModel {
                 });
     }
 
-    public Bitmap retrieveImage(String shopId, String imageId) {
-        final Bitmap[] bitmap = {null};
-        try {
-            File localFile = File.createTempFile("tempFile", ".jpg");
-            mFirebaseClient.getStorageReference().child(mFirebaseClient.storageShops() + shopId + "/" + imageId)
-                    .getFile(localFile)
-                    .addOnSuccessListener(taskSnapshot -> bitmap[0] = BitmapFactory.decodeFile(localFile.getAbsolutePath()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return bitmap[0];
-    }
-
     public String getFileExtension(Uri fileUri) {
         ContentResolver contentResolver = mContext.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();

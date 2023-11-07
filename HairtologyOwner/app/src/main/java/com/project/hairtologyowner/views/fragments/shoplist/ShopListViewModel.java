@@ -59,6 +59,7 @@ public class ShopListViewModel extends ViewModel {
                                 }
                             }
 
+                            shopModel.setShopService(shopServiceArrayList);
                             shopArrayList.add(shopModel);
                         }
 

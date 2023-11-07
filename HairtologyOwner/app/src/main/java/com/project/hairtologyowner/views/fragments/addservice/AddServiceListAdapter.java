@@ -1,19 +1,15 @@
-package com.project.hairtologyowner.views.fragments.addshop;
+package com.project.hairtologyowner.views.fragments.addservice;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +17,6 @@ import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.models.ShopService;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAdapter.ViewHolder> {
 
@@ -67,7 +62,7 @@ public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAd
         holder.nameTextView.setText(service.getName());
         holder.descriptionTextView.setText(service.getDescription());
         holder.priceTextView.setText(service.getPrice());
-        holder.imageView.setImageURI(mUriArrayList.get(position));
+//        holder.imageView.setImageURI(mUriArrayList.get(position));
     }
 
     @Override

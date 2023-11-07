@@ -50,17 +50,17 @@ public class ShopListFragment extends Fragment {
 
         mShopListAdapter = new ShopListAdapter(getContext(), mShopArrayList);
         mShopListAdapter.setOnShopItemListener((position, shop) -> {
-//            if (getActivity() == null) {
-//                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
-//                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-//                        ShopListFragment.class
-//                ));
-//                return;
-//            }
-//
-//            ((MainActivity) getActivity()).replaceFragment(
-//                    AddShopFragment.newInstance(shop),
-//                    MainActivity.containerViewId);
+            if (getActivity() == null) {
+                Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        ShopListFragment.class
+                ));
+                return;
+            }
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    ShopInfoFragment.newInstance(shop),
+                    MainActivity.containerViewId);
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.shopListRecyclerView);

@@ -10,6 +10,7 @@
     <string name="str_add_shop">Add Shop</string>
     <string name="str_available_slots">Available Slots</string>
     <string name="str_back_to_login">Back to login</string>
+    <string name="str_cancel">Cancel</string>
     <string name="str_cancel_reservation">Cancel Reservation</string>
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_contact_number">Contact number</string>
@@ -79,6 +80,7 @@
     <string name="str_shop">Shop</string>
     <string name="str_shops">Shops</string>
     <string name="str_shop_details">Shop Details</string>
+    <string name="str_shop_info">Shop Info</string>
     <string name="str_shop_name">Shop name</string>
     <string name="str_slots">Slots</string>
     <string name="str_submit">Submit</string>

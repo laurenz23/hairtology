@@ -145,21 +145,18 @@ public class AddShopFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             mSelectImageLauncher1.launch(intent);
-            mViewModel.detail.setImageId1(UUID.randomUUID().toString());
         });
 
         mImage2.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             mSelectImageLauncher2.launch(intent);
-            mViewModel.detail.setImageId2(UUID.randomUUID().toString());
         });
 
         mImage3.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
             mSelectImageLauncher3.launch(intent);
-            mViewModel.detail.setImageId3(UUID.randomUUID().toString());
         });
 
         mImageService.setOnClickListener(view -> {
@@ -267,7 +264,7 @@ public class AddShopFragment extends Fragment {
             serviceData.setName(serviceName);
             serviceData.setDescription(serviceDescription);
             serviceData.setPrice(servicePrice);
-            serviceData.setImageId(UUID.randomUUID().toString());
+            serviceData.setImageId(UUID.randomUUID().toString() + "." + mViewModel.getFileExtension(mSelectedImageService));
 
             mAddServiceListAdapter.addUri(mSelectedImageService);
             mServiceArrayList.add(serviceData);
@@ -292,14 +289,14 @@ public class AddShopFragment extends Fragment {
                 @Override
                 public void onSuccess(ShopModel shopModel) {
                     ShopDetail shopDetail = shopModel.getShopDetail();
-                    mViewModel.uploadImage(mSelectedImage1, shopDetail.getUuid(), shopDetail.getImageId1());
-                    mViewModel.uploadImage(mSelectedImage2, shopDetail.getUuid(), shopDetail.getImageId2());
-                    mViewModel.uploadImage(mSelectedImage3, shopDetail.getUuid(), shopDetail.getImageId3());
+                    mViewModel.uploadImage(mSelectedImage1, shopDetail, shopDetail.getImageId1());
+                    mViewModel.uploadImage(mSelectedImage2, shopDetail, shopDetail.getImageId2());
+                    mViewModel.uploadImage(mSelectedImage3, shopDetail, shopDetail.getImageId3());
 
                     for (int x = 0; x < mAddServiceListAdapter.getItemCount(); x++) {
                         mViewModel.uploadImage(
                                 mAddServiceListAdapter.getImageUri(x),
-                                mViewModel.detail.getUuid(),
+                                shopDetail,
                                 mAddServiceListAdapter.getItem(x).getImageId());
                     }
 
@@ -353,13 +350,15 @@ public class AddShopFragment extends Fragment {
 
                 if (imageView == mImageService) {
                     mSelectedImageService = selectedImage;
-                }
-                else if (imageView == mImage3) {
+                } else if (imageView == mImage3) {
                     mSelectedImage3 = selectedImage;
+                    mViewModel.detail.setImageId3(System.currentTimeMillis() + "." + mViewModel.getFileExtension(mSelectedImage3));
                 } else if (imageView == mImage2) {
                     mSelectedImage2 = selectedImage;
+                    mViewModel.detail.setImageId2(System.currentTimeMillis() + "." + mViewModel.getFileExtension(mSelectedImage2));
                 } else {
                     mSelectedImage1 = selectedImage;
+                    mViewModel.detail.setImageId1(System.currentTimeMillis() + "." + mViewModel.getFileExtension(mSelectedImage1));
                 }
             }
         } else {

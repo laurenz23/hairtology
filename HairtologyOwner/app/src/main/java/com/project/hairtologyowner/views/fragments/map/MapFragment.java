@@ -45,8 +45,8 @@ public class MapFragment extends Fragment {
                 shop.setPrice(jsonObject.getString("price"));
                 shop.setHour(jsonObject.getString("hour"));
                 shop.setImageId1(jsonObject.getString("imageId1"));
-                shop.setImageId2(jsonObject.getString("imageId1"));
-                shop.setImageId3(jsonObject.getString("imageId1"));
+                shop.setImageId2(jsonObject.getString("imageId2"));
+                shop.setImageId3(jsonObject.getString("imageId3"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }

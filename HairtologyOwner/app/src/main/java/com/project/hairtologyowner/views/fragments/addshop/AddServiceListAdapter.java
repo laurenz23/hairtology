@@ -64,8 +64,6 @@ public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAd
         ShopService service = mServiceArrayList.get(position);
         holder.position = position;
         holder.service = service;
-        service.setImageId(UUID.randomUUID().toString());
-
         holder.nameTextView.setText(service.getName());
         holder.descriptionTextView.setText(service.getDescription());
         holder.priceTextView.setText(service.getPrice());

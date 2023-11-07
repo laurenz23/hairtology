@@ -1,9 +1,11 @@
 package com.project.hairtologyowner.views.fragments.addshop;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,8 +56,8 @@ public class AddShopViewModel extends ViewModel {
                 });
     }
 
-    public void uploadImage(Uri imageUri, String shopUuId, String imageUuid) {
-        mFirebaseClient.getStorageReference().child(mFirebaseClient.storageShops() + shopUuId + "/" + imageUuid)
+    public void uploadImage(Uri imageUri, ShopDetail shopDetail, String imageUuid) {
+        mFirebaseClient.getStorageReference().child(mFirebaseClient.storageShops() + shopDetail.getUuid() + "/" + imageUuid)
                 .putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
                     Toast.makeText(mContext, "Image uploaded successfully", Toast.LENGTH_LONG).show();
                 }).addOnFailureListener(e -> {
@@ -75,6 +77,12 @@ public class AddShopViewModel extends ViewModel {
         }
 
         return bitmap[0];
+    }
+
+    public String getFileExtension(Uri fileUri) {
+        ContentResolver contentResolver = mContext.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(fileUri));
     }
 
 //    public Uri retrieveImage(String shopId, String imageId) {

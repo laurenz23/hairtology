@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import androidx.annotation.IdRes;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.views.fragments.profile.ProfileFragment;
 import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
 import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
 import com.project.hairtologyowner.views.fragments.userreservationlist.UserReservationListFragment;
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity {
         });
 
         profileImageView.setOnClickListener(v -> {
-            Log.e(MainActivity.class.getSimpleName(), "Profile");
+            replaceFragment(new ProfileFragment(), containerViewId);
         });
 
     }

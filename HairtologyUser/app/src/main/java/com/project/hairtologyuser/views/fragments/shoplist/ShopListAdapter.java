@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.project.hairtologyuser.R;
-import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.views.fragments.shoplistimage.ShopListImageAdapter;
 

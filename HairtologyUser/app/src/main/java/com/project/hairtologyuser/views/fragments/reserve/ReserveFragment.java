@@ -150,7 +150,7 @@ public class ReserveFragment extends Fragment {
         mViewPager.setPadding(25, 0, 25, 0);
         mViewPager.setAdapter(imageAdapter);
 
-        mServiceAdapter = new ServiceListAdapter(view.getContext(), mServiceArrayList);
+        mServiceAdapter = new ServiceListAdapter(view.getContext(), mShopDetail, mServiceArrayList);
 
         RecyclerView recyclerView = view.findViewById(R.id.reserveServiceListItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

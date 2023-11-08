@@ -1,10 +1,12 @@
 package com.project.hairtologyowner.views.fragments.shopinfo;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,11 +19,17 @@ import com.google.firebase.storage.StorageMetadata;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.models.ShopModel;
+import com.project.hairtologyowner.views.fragments.addshop.AddShopViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
 public class ShopInfoViewModel extends ViewModel {
+
+    public interface OnEditShopListener {
+        void onSuccess(ShopModel shopModel);
+        void onError(String errorMessage);
+    }
 
     private Context mContext;
     private FirebaseClient mFirebaseClient;
@@ -36,18 +44,25 @@ public class ShopInfoViewModel extends ViewModel {
         mShop = shop;
     }
 
-    public void retrieveImage() {
-        mFirebaseClient.getStorageReference().getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-            @Override
-            public void onSuccess(StorageMetadata storageMetadata) {
-                storageMetadata.getPath();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Uh-oh, an error occurred!
-            }
-        });
+    public ShopModel getShop() {
+        return mShop;
+    }
+
+    public void deleteShop() {
+
+    }
+
+    public void editShop(ShopInfoViewModel.OnEditShopListener listener) {
+        ShopModel shopModel = new ShopModel();
+        shopModel.setShopDetail(getShop().getShopDetail());
+        shopModel.setShopService(getShop().getShopService());
+
+        mFirebaseClient.getDatabaseReference().child(mFirebaseClient.apiShop() + shopModel.getShopDetail().getUuid())
+                .setValue(shopModel).addOnSuccessListener(unused -> {
+                    listener.onSuccess(shopModel);
+                }).addOnFailureListener(e -> {
+                    listener.onError(e.getMessage());
+                });
     }
 
     public void retrieveImage(ImageView imageView, String shopId, String imageId) {
@@ -55,6 +70,12 @@ public class ShopInfoViewModel extends ViewModel {
             .getDownloadUrl()
             .addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(imageView))
             .addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_image));
+    }
+
+    public String getFileExtension(Uri fileUri) {
+        ContentResolver contentResolver = mContext.getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(contentResolver.getType(fileUri));
     }
 
 }

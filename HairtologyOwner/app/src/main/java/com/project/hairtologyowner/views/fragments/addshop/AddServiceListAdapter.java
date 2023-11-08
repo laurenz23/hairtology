@@ -1,4 +1,4 @@
-package com.project.hairtologyowner.views.fragments.addservice;
+package com.project.hairtologyowner.views.fragments.addshop;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -62,7 +62,7 @@ public class AddServiceListAdapter extends RecyclerView.Adapter<AddServiceListAd
         holder.nameTextView.setText(service.getName());
         holder.descriptionTextView.setText(service.getDescription());
         holder.priceTextView.setText(service.getPrice());
-//        holder.imageView.setImageURI(mUriArrayList.get(position));
+        holder.imageView.setImageURI(mUriArrayList.get(position));
     }
 
     @Override

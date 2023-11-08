@@ -35,7 +35,6 @@ import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
 import com.project.hairtologyowner.views.activities.MainActivity;
-import com.project.hairtologyowner.views.fragments.addservice.AddServiceListAdapter;
 import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
 
 import java.util.ArrayList;
@@ -279,6 +278,11 @@ public class AddShopFragment extends Fragment {
         });
 
         mSubmitButton.setOnClickListener(view -> {
+            if (mServiceArrayList == null || mServiceArrayList.size() <= 0) {
+                Toast.makeText(getContext(), "Please add at least 1 service to your shop", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             mViewModel.service.addAll(mServiceArrayList);
 
             mViewModel.addShop(new AddShopViewModel.OnAddShopListener() {

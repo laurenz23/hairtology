@@ -1,8 +1,14 @@
 package com.project.hairtologyowner.views.fragments.shopinfo;
 
+import static android.app.Activity.RESULT_OK;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -19,12 +25,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
-import com.project.hairtologyowner.views.fragments.addservice.AddServiceListAdapter;
-import com.squareup.picasso.Picasso;
+import com.project.hairtologyowner.views.activities.MainActivity;
+import com.project.hairtologyowner.views.fragments.addshop.AddServiceListAdapter;
+import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
 
 import java.util.ArrayList;
 
@@ -50,6 +60,16 @@ public class ShopInfoFragment extends Fragment {
     private Uri mSelectedImageService;
     private ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
     private AddServiceListAdapter mAddServiceListAdapter;
+
+
+    private final ActivityResultLauncher<Intent> mSelectImageLauncher1 = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> selectImageFromGallery(result, mImage1));
+
+    private final ActivityResultLauncher<Intent> mSelectImageLauncher2 = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> selectImageFromGallery(result, mImage2));
+
+    private final ActivityResultLauncher<Intent> mSelectImageLauncher3 = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> selectImageFromGallery(result, mImage3));
 
     public static ShopInfoFragment newInstance(ShopModel shop) {
         mShop = shop;
@@ -80,6 +100,39 @@ public class ShopInfoFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mAddServiceListAdapter);
 
+        mImage1.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            mSelectImageLauncher1.launch(intent);
+        });
+
+        mImage2.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            mSelectImageLauncher2.launch(intent);
+        });
+
+        mImage3.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            mSelectImageLauncher3.launch(intent);
+        });
+
+        mBackButton.setOnClickListener(view -> backToHomePage());
+
+        mSaveButton.setOnClickListener(view -> mViewModel.editShop(new ShopInfoViewModel.OnEditShopListener() {
+            @Override
+            public void onSuccess(ShopModel shopModel) {
+                backToHomePage();
+                Toast.makeText(getContext(), "Shop details successfully updated!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Toast.makeText(getContext(), "Encountered an error while updating shop details", Toast.LENGTH_LONG).show();
+            }
+        }));
+
         return mView;
     }
 
@@ -103,6 +156,44 @@ public class ShopInfoFragment extends Fragment {
         mViewModel.retrieveImage(mImage1, mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId1());
         mViewModel.retrieveImage(mImage2, mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId2());
         mViewModel.retrieveImage(mImage3, mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId3());
+    }
+
+    private void selectImageFromGallery(ActivityResult result, ImageView imageView) {
+        if (result.getResultCode() == RESULT_OK) {
+            if (result.getData() != null) {
+                Uri selectedImage = result.getData().getData();
+                Glide.with(getContext()).load(selectedImage).into(imageView);
+
+                if (imageView == mImageService) {
+                    mSelectedImageService = selectedImage;
+                } else if (imageView == mImage3) {
+                    mSelectedImage3 = selectedImage;
+                    mViewModel.getShop().getShopDetail().setImageId3(System.currentTimeMillis() + "." + mViewModel.getFileExtension(mSelectedImage3));
+                } else if (imageView == mImage2) {
+                    mSelectedImage2 = selectedImage;
+                    mViewModel.getShop().getShopDetail().setImageId2(System.currentTimeMillis() + "." + mViewModel.getFileExtension(mSelectedImage2));
+                } else {
+                    mSelectedImage1 = selectedImage;
+                    mViewModel.getShop().getShopDetail().setImageId1(System.currentTimeMillis() + "." + mViewModel.getFileExtension(mSelectedImage1));
+                }
+            }
+        } else {
+            Toast.makeText(getContext(), "Encountered an error when getting an Image", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void backToHomePage() {
+        if (getActivity() == null) {
+            Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
+                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                    ShopInfoFragment.class
+            ));
+            return;
+        }
+
+        ((MainActivity) getActivity()).replaceFragment(
+                new ShopListFragment(),
+                MainActivity.containerViewId);
     }
 
 }

@@ -59,7 +59,7 @@ public class ShopInfoFragment extends Fragment {
     private Uri mSelectedImage3;
     private Uri mSelectedImageService;
     private ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
-    private AddServiceListAdapter mAddServiceListAdapter;
+    private ShopInfoServiceListAdapter mAddServiceListAdapter;
 
 
     private final ActivityResultLauncher<Intent> mSelectImageLauncher1 = registerForActivityResult(
@@ -94,7 +94,7 @@ public class ShopInfoFragment extends Fragment {
         mSaveButton = mView.findViewById(R.id.saveShopInfo);
         mBackButton = mView.findViewById(R.id.backShopInfo);
 
-        mAddServiceListAdapter = new AddServiceListAdapter(getContext(), mServiceArrayList);
+        mAddServiceListAdapter = new ShopInfoServiceListAdapter(getContext(), mShop.getShopDetail(), mServiceArrayList);
 
         RecyclerView recyclerView = mView.findViewById(R.id.serviceListRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

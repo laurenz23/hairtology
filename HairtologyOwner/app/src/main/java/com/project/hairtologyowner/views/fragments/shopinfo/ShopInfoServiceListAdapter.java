@@ -14,7 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.hairtologyowner.R;
+import com.project.hairtologyowner.components.client.FirebaseClient;
+import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopService;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,21 +28,16 @@ public class ShopInfoServiceListAdapter extends RecyclerView.Adapter<ShopInfoSer
     }
 
     private Context mContext;
+    private FirebaseClient mFirebaseClient;
+    private ShopDetail mShopDetail;
     private ArrayList<ShopService> mServiceArrayList;
-    private ArrayList<Uri> mUriArrayList = new ArrayList<>();
     private OnServiceItemListener mOnServiceItemListener;
 
-    public ShopInfoServiceListAdapter(Context context, ArrayList<ShopService> serviceArrayList) {
+    public ShopInfoServiceListAdapter(Context context, ShopDetail shopDetail, ArrayList<ShopService> serviceArrayList) {
         mContext = context;
+        mShopDetail = shopDetail;
         mServiceArrayList = serviceArrayList;
-    }
-
-    public Uri getImageUri(int position) {
-        return mUriArrayList.get(position);
-    }
-
-    public void addUri(Uri imageUri) {
-        mUriArrayList.add(imageUri);
+        mFirebaseClient = new FirebaseClient(mContext);
     }
 
     public void setListener(OnServiceItemListener listener) {
@@ -58,11 +56,12 @@ public class ShopInfoServiceListAdapter extends RecyclerView.Adapter<ShopInfoSer
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ShopService service = mServiceArrayList.get(position);
         holder.position = position;
+        holder.firebaseClient = mFirebaseClient;
         holder.service = service;
         holder.nameTextView.setText(service.getName());
         holder.descriptionTextView.setText(service.getDescription());
         holder.priceTextView.setText(service.getPrice());
-//        holder.imageView.setImageURI(mUriArrayList.get(position));
+        holder.retrieveImage(holder.imageView, mShopDetail.getUuid(), service.getImageId());
     }
 
     @Override
@@ -73,13 +72,10 @@ public class ShopInfoServiceListAdapter extends RecyclerView.Adapter<ShopInfoSer
         return mServiceArrayList.size();
     }
 
-    public ShopService getItem(int position) {
-        return mServiceArrayList.get(position);
-    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private int position;
+        private FirebaseClient firebaseClient;
         private ShopService service;
         private TextView nameTextView;
         private TextView descriptionTextView;
@@ -99,6 +95,13 @@ public class ShopInfoServiceListAdapter extends RecyclerView.Adapter<ShopInfoSer
             deleteButton.setOnClickListener(view -> {
                 listener.removedItem(position);
             });
+        }
+
+        public void retrieveImage(ImageView imageView, String shopId, String imageId) {
+            firebaseClient.getStorageReference().child(firebaseClient.storageShops() + shopId + "/" + imageId)
+                    .getDownloadUrl()
+                    .addOnSuccessListener(uri -> Picasso.get().load(uri.toString()).into(imageView))
+                    .addOnFailureListener(exception -> imageView.setImageResource(R.drawable.ic_image));
         }
 
     }

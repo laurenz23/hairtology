@@ -2,7 +2,7 @@ package com.project.hairtologyuser.models;
 
 public class ReservationModel {
 
-    private int shopId;
+    private String shopId;
     private String shopName;
     private String serviceDetail;
     private String time;
@@ -16,7 +16,7 @@ public class ReservationModel {
 
     public ReservationModel() {}
 
-    public ReservationModel(int shopId, String shopName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price, boolean cancelled) {
+    public ReservationModel(String shopId, String shopName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price, boolean cancelled) {
         this.shopId = shopId;
         this.shopName = shopName;
         this.serviceDetail = serviceDetail;
@@ -30,11 +30,11 @@ public class ReservationModel {
         this.cancelled = cancelled;
     }
 
-    public int getShopId() {
+    public String getShopId() {
         return shopId;
     }
 
-    public void setShopId(int shopId) {
+    public void setShopId(String shopId) {
         this.shopId = shopId;
     }
 

@@ -31,8 +31,8 @@ import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.components.utils.StringFormat;
 import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
-import com.project.hairtologyuser.models.ServiceModel;
-import com.project.hairtologyuser.models.ShopModel;
+import com.project.hairtologyuser.models.ShopDetail;
+import com.project.hairtologyuser.models.ShopService;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.map.MapFragment;
 import com.project.hairtologyuser.views.fragments.servicelist.ServiceListAdapter;
@@ -61,7 +61,7 @@ public class ReserveFragment extends Fragment {
     }
 
     private ReserveViewModel mViewModel;
-    private ShopModel mShop;
+    private ShopDetail mShopDetail;
     private LinearLayout mServiceLoadingLinearLayout;
     private LinearLayout mShopLinearLayout;
     private LinearLayout mReserveLinearLayout;
@@ -82,8 +82,8 @@ public class ReserveFragment extends Fragment {
     private Button mCancelButton;
     private Button mSubmitButton;
     private ProgressBar mSubmitProgressBar;
-    private final ArrayList<Integer> mShopImageArrayList = new ArrayList<>();
-    private final ArrayList<ServiceModel> mServiceArrayList = new ArrayList<>();
+    private final ArrayList<String> mShopImageArrayList = new ArrayList<>();
+    private final ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
     private String mTime = "";
     private String mMinute = "";
     private String mMeridian = "";
@@ -121,36 +121,32 @@ public class ReserveFragment extends Fragment {
 
             try {
                 JSONObject jsonObject = new JSONObject(jsonString);
-                mShop = new ShopModel();
-                mShop.setId(jsonObject.getInt("id"));
-                mShop.setName(jsonObject.getString("name"));
-                mShop.setDescription(jsonObject.getString("description"));
-                mShop.setAddress(jsonObject.getString("address"));
-                mShop.setPrice(jsonObject.getString("price"));
-                mShop.setHour(jsonObject.getString("hour"));
+                mShopDetail = new ShopDetail();
+                mShopDetail.setUuid(jsonObject.getString("uuid"));
+                mShopDetail.setName(jsonObject.getString("name"));
+                mShopDetail.setDescription(jsonObject.getString("description"));
+                mShopDetail.setAddress(jsonObject.getString("address"));
+                mShopDetail.setPrice(jsonObject.getString("price"));
+                mShopDetail.setHour(jsonObject.getString("hour"));
+                mShopDetail.setImageId1(jsonObject.getString("imageId1"));
+                mShopDetail.setImageId2(jsonObject.getString("imageId2"));
+                mShopDetail.setImageId3(jsonObject.getString("imageId3"));
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        if (mShop != null) {
-            mShopName.setText(mShop.getName());
-            mShopDescription.setText(mShop.getDescription());
-            mAddress.setText(mShop.getAddress());
-            mHours.setText(mShop.getHour());
-
-            if (mShop.getId() == 1) {
-                mShopImageArrayList.add(R.drawable.image1);
-                mShopImageArrayList.add(R.drawable.image2);
-                mShopImageArrayList.add(R.drawable.image3);
-            } else if (mShop.getId() == 2) {
-                mShopImageArrayList.add(R.drawable.image4);
-                mShopImageArrayList.add(R.drawable.image5);
-                mShopImageArrayList.add(R.drawable.image6);
-            }
+        if (mShopDetail != null) {
+            mShopName.setText(mShopDetail.getName());
+            mShopDescription.setText(mShopDetail.getDescription());
+            mAddress.setText(mShopDetail.getAddress());
+            mHours.setText(mShopDetail.getHour());
+            mShopImageArrayList.add(mShopDetail.getImageId1());
+            mShopImageArrayList.add(mShopDetail.getImageId2());
+            mShopImageArrayList.add(mShopDetail.getImageId3());
         }
 
-        imageAdapter = new ShopListImageAdapter(getContext(), mShopImageArrayList);
+        imageAdapter = new ShopListImageAdapter(getContext(), mShopDetail.getUuid(), mShopImageArrayList);
         mViewPager.setPadding(25, 0, 25, 0);
         mViewPager.setAdapter(imageAdapter);
 
@@ -170,10 +166,10 @@ public class ReserveFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ReserveViewModel.class);
         mViewModel.setViewModel(requireActivity().getApplication());
 
-        mViewModel.service(mShop.getId(), new ReserveViewModel.OnServiceDataListener() {
+        mViewModel.service(mShopDetail.getUuid(), new ReserveViewModel.OnServiceDataListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onSuccess(ArrayList<ServiceModel> serviceList) {
+            public void onSuccess(ArrayList<ShopService> serviceList) {
                 mServiceArrayList.addAll(serviceList);
                 mServiceAdapter.notifyDataSetChanged();
                 mServiceLoadingLinearLayout.setVisibility(View.GONE);
@@ -186,14 +182,14 @@ public class ReserveFragment extends Fragment {
         });
 
         mServiceAdapter.setOnServiceListListener((position, service) -> {
-            mViewModel.setShop(mShop);
+            mViewModel.setShop(mShopDetail);
             mViewModel.setService(service);
             mServiceDetail.setText(service.getDescription());
             displayPage(PageType.RESERVATION);
         });
 
         mFavorite.setOnClickListener(v -> {
-            mViewModel.favorite(mShop.getId(), new ReserveViewModel.OnFavoriteTapListener() {
+            mViewModel.favorite(mShopDetail.getUuid(), new ReserveViewModel.OnFavoriteTapListener() {
                 @Override
                 public void onSuccess() {
                     ToastMessage.display(getContext(), "Successfully added as favorite");
@@ -216,7 +212,7 @@ public class ReserveFragment extends Fragment {
             }
 
             Gson gson = new Gson();
-            String jsonString = gson.toJson(mShop);
+            String jsonString = gson.toJson(mShopDetail);
 
             Bundle bundle = new Bundle();
             bundle.putString("data", jsonString);
@@ -238,8 +234,8 @@ public class ReserveFragment extends Fragment {
         });
 
         mCancelButton.setOnClickListener(v -> {
-            if (mShop != null) {
-                mShopDescription.setText(mShop.getDescription());
+            if (mShopDetail != null) {
+                mShopDescription.setText(mShopDetail.getDescription());
             }
             displayPage(PageType.SHOP);
             setAction(ActionType.RESET);

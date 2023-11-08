@@ -12,7 +12,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyuser.components.client.FirebaseClient;
+import com.project.hairtologyuser.models.ShopDetail;
 import com.project.hairtologyuser.models.ShopModel;
+import com.project.hairtologyuser.models.ShopService;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -21,7 +23,7 @@ public class ShopListViewModel extends ViewModel {
 
     public interface OnShopDataListener {
         void onSuccess(ArrayList<ShopModel> shopList);
-        void onFailed(DatabaseError error);
+        void onFailed(String error);
     }
 
     private FirebaseClient mFirebaseClient;
@@ -36,22 +38,39 @@ public class ShopListViewModel extends ViewModel {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<ShopModel> shopList = new ArrayList<>();
+                        ArrayList<ShopModel> shopArrayList = new ArrayList<>();
+                        for (DataSnapshot shopList : snapshot.getChildren()) {
+                            ShopModel shopModel = new ShopModel();
+                            ArrayList<ShopService> shopServiceArrayList = new ArrayList<>();
+                            for (DataSnapshot shopData : shopList.getChildren()) {
+                                if (Objects.equals(shopData.getKey(), "shopDetail")) {
+                                    Log.e("Service", shopData.toString());
+                                    ShopDetail shopDetail = shopData.getValue(ShopDetail.class);
+                                    if (shopDetail != null) {
+                                        shopModel.setShopDetail(shopDetail);
+                                    }
+                                }
 
-                        for (DataSnapshot data : snapshot.getChildren()) {
-                            for (DataSnapshot d : data.getChildren()) {
-                                if (Objects.equals(d.getKey(), mFirebaseClient.apiShopDetail())) {
-                                    shopList.add(d.getValue(ShopModel.class));
+                                if (Objects.equals(shopData.getKey(), "shopService")) {
+                                    for (DataSnapshot serviceList : shopData.getChildren()) {
+                                        ShopService shopService = serviceList.getValue(ShopService.class);
+                                        if (shopService != null) {
+                                            shopServiceArrayList.add(shopService);
+                                        }
+                                    }
                                 }
                             }
+
+                            shopModel.setShopService(shopServiceArrayList);
+                            shopArrayList.add(shopModel);
                         }
 
-                        listener.onSuccess(shopList);
+                        listener.onSuccess(shopArrayList);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        listener.onFailed(error);
+                        listener.onFailed(error.getMessage());
                     }
                 });
     }

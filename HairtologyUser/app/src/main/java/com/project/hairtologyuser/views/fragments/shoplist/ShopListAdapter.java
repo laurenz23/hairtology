@@ -15,8 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.views.fragments.shoplistimage.ShopListImageAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,10 +31,12 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     private Context mContext;
     private ArrayList<ShopModel> mShopArrayList;
     private OnShopListListener mListener;
+    private FirebaseClient mFirebaseClient;
 
     public ShopListAdapter(Context context, ArrayList<ShopModel> shopArrayList) {
-        this.mContext = context;
-        this.mShopArrayList = shopArrayList;
+        mContext = context;
+        mShopArrayList = shopArrayList;
+        mFirebaseClient = new FirebaseClient(mContext);
     }
 
     public void setOnShopListListener(OnShopListListener listener) {
@@ -49,21 +53,16 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ShopListAdapter.ViewHolder holder, int position) {
         ShopModel shop = mShopArrayList.get(position);
-        holder.shop = shop;
-        holder.name.setText(shop.getName());
-        holder.address.setText(shop.getAddress());
-        holder.hour.setText(shop.getHour());
-        holder.price.setText(shop.getPrice());
 
-        if (shop.getId() == 1) {
-            holder.imageArrayList.add(R.drawable.image1);
-            holder.imageArrayList.add(R.drawable.image2);
-            holder.imageArrayList.add(R.drawable.image3);
-        } else if (shop.getId() == 2) {
-            holder.imageArrayList.add(R.drawable.image4);
-            holder.imageArrayList.add(R.drawable.image5);
-            holder.imageArrayList.add(R.drawable.image6);
-        }
+        holder.shop = shop;
+        holder.name.setText(shop.getShopDetail().getName());
+        holder.address.setText(shop.getShopDetail().getAddress());
+        holder.hour.setText(shop.getShopDetail().getHour());
+        holder.price.setText(shop.getShopDetail().getPrice());
+
+        holder.imageIdArrayList.add(shop.getShopDetail().getImageId1());
+        holder.imageIdArrayList.add(shop.getShopDetail().getImageId2());
+        holder.imageIdArrayList.add(shop.getShopDetail().getImageId3());
 
         holder.imageAdapter.notifyDataSetChanged();
     }
@@ -78,16 +77,16 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ShopModel shop;
-        LinearLayout linearLayout;
-        ShopListImageAdapter imageAdapter;
-        ViewPager viewPager;
-        TextView name;
-        TextView address;
-        TextView hour;
-        TextView price;
-        ImageView favorite;
-        ArrayList<Integer> imageArrayList = new ArrayList<>();
+        private ShopModel shop;
+        private LinearLayout linearLayout;
+        private ShopListImageAdapter imageAdapter;
+        private ViewPager viewPager;
+        private TextView name;
+        private TextView address;
+        private TextView hour;
+        private TextView price;
+        private ImageView favorite;
+        private ArrayList<String> imageIdArrayList = new ArrayList<>();
 
         public ViewHolder(@NonNull View itemView, OnShopListListener listener) {
             super(itemView);
@@ -100,7 +99,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
             price = itemView.findViewById(R.id.shopItemPrice);
             favorite = itemView.findViewById(R.id.shopItemFav);
 
-            imageAdapter = new ShopListImageAdapter(itemView.getContext(), imageArrayList);
+            imageAdapter = new ShopListImageAdapter(itemView.getContext(), shop.getShopDetail().getUuid(), imageIdArrayList);
             viewPager.setPadding(25, 0, 25, 0);
             viewPager.setAdapter(imageAdapter);
 

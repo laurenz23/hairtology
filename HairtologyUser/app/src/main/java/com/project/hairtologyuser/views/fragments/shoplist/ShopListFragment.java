@@ -69,7 +69,7 @@ public class ShopListFragment extends Fragment {
             }
 
             @Override
-            public void onFailed(DatabaseError error) {
+            public void onFailed(String error) {
                 ToastMessage.display(getContext(), "Error: " + error);
                 mShopLoadingLinearLayout.setVisibility(View.GONE);
             }
@@ -123,7 +123,7 @@ public class ShopListFragment extends Fragment {
             filteredArrayList = mExistingShopArrayList;
         } else {
             for (ShopModel shop : mExistingShopArrayList) {
-                if (shop.getName().toLowerCase().contains(searchedShop.toLowerCase())) {
+                if (shop.getShopDetail().getName().toLowerCase().contains(searchedShop.toLowerCase())) {
                     filteredArrayList.add(shop);
                 }
             }

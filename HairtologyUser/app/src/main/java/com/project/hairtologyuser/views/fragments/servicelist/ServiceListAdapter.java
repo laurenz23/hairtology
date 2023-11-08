@@ -11,21 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.hairtologyuser.R;
-import com.project.hairtologyuser.models.ServiceModel;
+import com.project.hairtologyuser.models.ShopService;
 
 import java.util.ArrayList;
 
 public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.ViewHolder> {
 
     public interface OnServiceListListener {
-        void onServiceTap(int position, ServiceModel service);
+        void onServiceTap(int position, ShopService service);
     }
 
     private Context mContext;
-    private ArrayList<ServiceModel> mServiceArrayList;
+    private ArrayList<ShopService> mServiceArrayList;
     private OnServiceListListener mListener;
 
-    public ServiceListAdapter(Context context, ArrayList<ServiceModel> serviceArrayList) {
+    public ServiceListAdapter(Context context, ArrayList<ShopService> serviceArrayList) {
         this.mContext = context;
         this.mServiceArrayList = serviceArrayList;
     }
@@ -43,7 +43,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ServiceListAdapter.ViewHolder holder, int position) {
-        ServiceModel service = mServiceArrayList.get(position);
+        ShopService service = mServiceArrayList.get(position);
         holder.service = service;
         holder.serviceName.setText(service.getName());
         holder.description.setText(service.getDescription());
@@ -60,7 +60,7 @@ public class ServiceListAdapter extends RecyclerView.Adapter<ServiceListAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ServiceModel service;
+        private ShopService service;
         private final TextView serviceName;
         private final TextView description;
         private final TextView price;

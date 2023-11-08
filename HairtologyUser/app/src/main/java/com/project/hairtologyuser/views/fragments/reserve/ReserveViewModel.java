@@ -1,34 +1,32 @@
 package com.project.hairtologyuser.views.fragments.reserve;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
-import android.util.Log;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.components.repository.Session;
-import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
-import com.project.hairtologyuser.models.ServiceModel;
+import com.project.hairtologyuser.models.ShopDetail;
 import com.project.hairtologyuser.models.ShopModel;
+import com.project.hairtologyuser.models.ShopService;
 import com.project.hairtologyuser.models.UserModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ReserveViewModel extends ViewModel {
 
     public interface OnServiceDataListener {
-        void onSuccess(ArrayList<ServiceModel> serviceList);
+        void onSuccess(ArrayList<ShopService> serviceList);
         void onFailed(DatabaseError error);
     }
 
@@ -46,8 +44,8 @@ public class ReserveViewModel extends ViewModel {
     private FirebaseClient mFirebaseClient;
     private Session mSession;
     private MutableLiveData<UserModel> mCurrentUser;
-    private MutableLiveData<ShopModel> mShopLiveData;
-    private MutableLiveData<ServiceModel> mServiceLiveData;
+    private MutableLiveData<ShopDetail> mShopLiveData;
+    private MutableLiveData<ShopService> mServiceLiveData;
 
     public void setViewModel(@NonNull Application application) {
         mFirebaseClient = new FirebaseClient(application);
@@ -61,31 +59,31 @@ public class ReserveViewModel extends ViewModel {
         return mCurrentUser;
     }
 
-    public void setShop(ShopModel shop) {
-        mShopLiveData.setValue(shop);
+    public void setShop(ShopDetail shopDetail) {
+        mShopLiveData.setValue(shopDetail);
     }
 
-    public ShopModel getShop() {
+    public ShopDetail getShop() {
         return mShopLiveData.getValue();
     }
 
-    public void setService(ServiceModel serviceModel) {
+    public void setService(ShopService serviceModel) {
         mServiceLiveData.setValue(serviceModel);
     }
 
-    public ServiceModel getService() {
+    public ShopService getService() {
         return mServiceLiveData.getValue();
     }
 
-    public void service(int shopId, OnServiceDataListener listener) {
+    public void service(String shopUuid, OnServiceDataListener listener) {
         mFirebaseClient.getDatabaseReference()
-            .child(mFirebaseClient.apiService(String.valueOf(shopId)))
+            .child(mFirebaseClient.apiService(String.valueOf(shopUuid)))
             .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    ArrayList<ServiceModel> serviceList = new ArrayList<>();
+                    ArrayList<ShopService> serviceList = new ArrayList<>();
                     for (DataSnapshot data : snapshot.getChildren()) {
-                        serviceList.add(data.getValue(ServiceModel.class));
+                        serviceList.add(data.getValue(ShopService.class));
                     }
 
                     listener.onSuccess(serviceList);
@@ -104,7 +102,7 @@ public class ReserveViewModel extends ViewModel {
         }
 
         ReservationModel reservation = new ReservationModel(
-            getShop().getId(),
+            getShop().getUuid(),
             getShop().getName(),
             getService().getDescription(),
             time,
@@ -144,18 +142,18 @@ public class ReserveViewModel extends ViewModel {
             });
     }
 
-    public void favorite(int shopId, OnFavoriteTapListener listener) {
+    public void favorite(String shopUuId, OnFavoriteTapListener listener) {
         if (getCurrentUser().getValue() == null) {
             return;
         }
 
-        List<Integer> favoriteList = getCurrentUser().getValue().getFavoriteShopId();
+        List<String> favoriteList = getCurrentUser().getValue().getFavoriteShopId();
 
         if (favoriteList == null) {
             favoriteList = new ArrayList<>();
         }
 
-        favoriteList.add(shopId);
+        favoriteList.add(shopUuId);
         addFavoriteShop(getCurrentUser().getValue(), favoriteList, listener);
     }
 

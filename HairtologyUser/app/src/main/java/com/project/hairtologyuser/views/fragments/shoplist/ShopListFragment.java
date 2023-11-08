@@ -41,6 +41,9 @@ public class ShopListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shop_list, container, false);
 
+        mViewModel = new ViewModelProvider(this).get(ShopListViewModel.class);
+        mViewModel.setViewModel(requireActivity().getApplication());
+
         mShopAdapter = new ShopListAdapter(view.getContext(), mShopArrayList);
         mShopLoadingLinearLayout = view.findViewById(R.id.shopLoadingLinearLayout);
         mShopSearchView = view.findViewById(R.id.shopSearchView);
@@ -55,9 +58,7 @@ public class ShopListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ShopListViewModel.class);
 
-        mViewModel.setViewModel(requireActivity().getApplication());
         mViewModel.getShop(new ShopListViewModel.OnShopDataListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -99,7 +100,7 @@ public class ShopListFragment extends Fragment {
             }
 
             Gson gson = new Gson();
-            String jsonString = gson.toJson(shop);
+            String jsonString = gson.toJson(shop.getShopDetail());
 
             Bundle bundle = new Bundle();
             bundle.putString("data", jsonString);

@@ -1,6 +1,5 @@
 package com.project.hairtologyuser.views.fragments.shoplist;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.views.fragments.shoplistimage.ShopListImageAdapter;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -31,12 +29,10 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     private Context mContext;
     private ArrayList<ShopModel> mShopArrayList;
     private OnShopListListener mListener;
-    private FirebaseClient mFirebaseClient;
 
     public ShopListAdapter(Context context, ArrayList<ShopModel> shopArrayList) {
         mContext = context;
         mShopArrayList = shopArrayList;
-        mFirebaseClient = new FirebaseClient(mContext);
     }
 
     public void setOnShopListListener(OnShopListListener listener) {
@@ -55,6 +51,13 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         ShopModel shop = mShopArrayList.get(position);
 
         holder.shop = shop;
+
+        if (shop == null) {
+            Log.e("SHOP", "NULL");
+        } else {
+            Log.e("SHOP", "IS NOT NULL");
+        }
+
         holder.name.setText(shop.getShopDetail().getName());
         holder.address.setText(shop.getShopDetail().getAddress());
         holder.hour.setText(shop.getShopDetail().getHour());
@@ -64,6 +67,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         holder.imageIdArrayList.add(shop.getShopDetail().getImageId2());
         holder.imageIdArrayList.add(shop.getShopDetail().getImageId3());
 
+        holder.displayImage();
         holder.imageAdapter.notifyDataSetChanged();
     }
 
@@ -92,20 +96,22 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
             super(itemView);
 
             linearLayout = itemView.findViewById(R.id.shopItemLinearLayout);
-            viewPager = itemView.findViewById(R.id.shopItemViewPager);
             name = itemView.findViewById(R.id.shopItemName);
             address = itemView.findViewById(R.id.shopItemAddress);
             hour = itemView.findViewById(R.id.shopItemHours);
             price = itemView.findViewById(R.id.shopItemPrice);
             favorite = itemView.findViewById(R.id.shopItemFav);
 
-            imageAdapter = new ShopListImageAdapter(itemView.getContext(), shop.getShopDetail().getUuid(), imageIdArrayList);
-            viewPager.setPadding(25, 0, 25, 0);
-            viewPager.setAdapter(imageAdapter);
-
             linearLayout.setOnClickListener(view -> {
                 listener.onShopTap(getAdapterPosition(), shop);
             });
+        }
+
+        public void displayImage() {
+            viewPager = itemView.findViewById(R.id.shopItemViewPager);
+            imageAdapter = new ShopListImageAdapter(itemView.getContext(), shop.getShopDetail().getUuid(), imageIdArrayList);
+            viewPager.setPadding(25, 0, 25, 0);
+            viewPager.setAdapter(imageAdapter);
         }
     }
 

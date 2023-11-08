@@ -157,7 +157,7 @@ public class ReserveViewModel extends ViewModel {
         addFavoriteShop(getCurrentUser().getValue(), favoriteList, listener);
     }
 
-    private void addFavoriteShop(UserModel user, List<Integer> favoriteList, OnFavoriteTapListener listener) {
+    private void addFavoriteShop(UserModel user, List<String> favoriteList, OnFavoriteTapListener listener) {
         mFirebaseClient.getDatabaseReference()
             .child(mFirebaseClient.apiFavorite(user.getUuid()))
             .setValue(favoriteList)

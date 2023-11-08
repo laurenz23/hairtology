@@ -14,7 +14,10 @@
     <color name="tertiary">#291E1A</color>
     <color name="button_color_primary">@color/primary</color>
     <color name="button_color_secondary">@color/secondary</color>
+    <color name="button_color_success">@color/success</color>
+    <color name="button_color_error">@color/error</color>
     <color name="bg_color_primary">#F9F4F4</color>
     <color name="bg_color_secondary">#FFFFFF</color>
+    <color name="success">#00C548</color>
     <color name="error">#FF4848</color>
 </resources>

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -103,6 +104,7 @@ public class LoginFragment extends Fragment {
             @Override
             public void onFailed(String error) {
                 pageAction(ActionType.RESET);
+                Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
             }
         });
     }

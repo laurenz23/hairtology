@@ -1,21 +1,13 @@
 package com.project.hairtologyuser.models;
 
-public class ServiceModel {
+public class ShopService {
 
     private String name;
-
     private String description;
+    private String price;
+    private String imageId;
 
-    private int price;
-
-    public ServiceModel() {}
-
-    public ServiceModel(String name, String description, int price) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
-
+    public ShopService() {}
 
     public String getName() {
         return name;
@@ -33,11 +25,20 @@ public class ServiceModel {
         this.description = description;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(String price) {
         this.price = price;
     }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
+
 }

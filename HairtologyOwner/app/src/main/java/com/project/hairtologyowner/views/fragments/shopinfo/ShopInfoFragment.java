@@ -24,6 +24,7 @@ import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
 import com.project.hairtologyowner.views.fragments.addservice.AddServiceListAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -99,9 +100,9 @@ public class ShopInfoFragment extends Fragment {
         mServiceArrayList.addAll(mShop.getShopService());
         mAddServiceListAdapter.notifyDataSetChanged();
 
-        mImage1.setImageBitmap(mViewModel.retrieveImage(mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId1()));
-        mImage2.setImageBitmap(mViewModel.retrieveImage(mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId2()));
-        mImage3.setImageBitmap(mViewModel.retrieveImage(mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId3()));
+        mViewModel.retrieveImage(mImage1, mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId1());
+        mViewModel.retrieveImage(mImage2, mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId2());
+        mViewModel.retrieveImage(mImage3, mShop.getShopDetail().getUuid(), mShop.getShopDetail().getImageId3());
     }
 
 }

@@ -46,6 +46,7 @@
     <string name="str_register">Register</string>
     <string name="str_reservation">Reservation</string>
     <string name="str_reservations">Reservations</string>
+    <string name="str_reservation_info">Reservation Info</string>
     <string name="str_reserve">Reserve</string>
     <string name="str_reserve_now">Reserve Now</string>
     <string name="str_save">Save</string>
@@ -68,6 +69,7 @@
     <string name="str_time">Time</string>
     <string name="str_update_password">Update Password</string>
     <string name="str_update_profile">Update Profile</string>
+    <string name="str_view_shop">View Shop</string>
     <string name="str_welcome">"Welcome!"</string>
     <string name="str_welcome_to_hairtology">Welcome to Hairtology!</string>
     <string name="str_you_cancelled_the_reservation">You cancelled this reservation</string>

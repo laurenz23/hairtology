@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    card_view:cardCornerRadius="10dp"
-    card_view:cardElevation="5dp">
+    android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/reservationItemLinearLayout"
+        android:id="@+id/reservationInfoLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="10dp">
 
         <TextView
-            android:id="@+id/shopCancelledTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="@string/str_reservation_info"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/reservationInfoCancelledTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -30,13 +38,13 @@
             tools:ignore="NestedWeights" />
 
         <TextView
-            android:id="@+id/shopNameTextView"
+            android:id="@+id/reservationInfoNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:gravity="center"
-            android:text="@string/str_shop_name"
+            android:text="@string/str_service_name"
             android:textSize="20sp"
             android:textStyle="bold"
             android:background="@drawable/box_secondary2"
@@ -118,16 +126,38 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/cancelReservationButton"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/str_cancel_reservation"
-            android:textColor="@color/secondary"
-            android:textSize="10sp"
-            android:background="@drawable/button_secondary"
-            tools:ignore="SmallSp" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/reservationInfoShopButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:text="@string/str_view_shop"
+                android:textColor="@color/secondary"
+                android:textSize="10sp"
+                android:background="@drawable/button_secondary"
+                tools:ignore="SmallSp" />
+
+            <Button
+                android:id="@+id/reservationInfoCancelButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="5dp"
+                android:text="@string/str_cancel_reservation"
+                android:textColor="@color/secondary"
+                android:textSize="10sp"
+                android:background="@drawable/button_secondary"
+                tools:ignore="SmallSp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

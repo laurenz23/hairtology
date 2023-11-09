@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.userchat.UserChatFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userChatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        tools:listitem="@layout/list_item_user_reservation_layout" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp"
+        android:background="@color/secondary">
+
+        <EditText
+            android:id="@+id/editTextUserChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/sendUserChatFragment"
+            android:layout_centerVertical="true"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="@string/str_type_your_message"
+            android:background="@drawable/inputfield_primary" />
+
+        <ImageView
+            android:id="@+id/sendUserChatFragment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
+            tools:srcCompat="@drawable/ic_send_100" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

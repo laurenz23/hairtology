@@ -1,40 +1,29 @@
 package com.project.hairtologyuser.views.fragments.reservationlist;
 
-import static com.project.hairtologyuser.views.activities.MainActivity.containerViewId;
-
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyuser.R;
-import com.project.hairtologyuser.components.client.FirebaseClient;
-import com.project.hairtologyuser.components.repository.Session;
-import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
-import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
-import com.project.hairtologyuser.views.fragments.reservation.ReservationFragment;
+import com.project.hairtologyuser.views.fragments.reservationinfo.ReservationInfoFragment;
+import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Objects;
 
 public class ReservationListFragment extends BaseFragment {
@@ -58,37 +47,9 @@ public class ReservationListFragment extends BaseFragment {
         mReservationArrayList = new ArrayList<>();
 
         mReservationListAdapter = new ReservationListAdapter(getContext(), mReservationArrayList);
-        mReservationListAdapter.onReservationTapListener(new ReservationListAdapter.OnReservationTapListener() {
-            @Override
-            public void onReservationTap(int position) {
-                Log.e("Working", "Position: " + position);
-            }
-
-            @Override
-            public void onReservationCancel(int position) {
-                ReservationModel reservation = mReservationArrayList.get(position);
-                mViewModel.cancelReservation(position, reservation, new ReservationListViewModel.onReservationCancellation() {
-                    @Override
-                    public void onSuccess(int position) {
-                        if (getActivity() == null) {
-                            ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
-                                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-                                    ReservationListFragment.class
-                            ));
-                            return;
-                        }
-
-                        ((MainActivity) getActivity()).replaceFragment(
-                                new ReservationFragment(),
-                                containerViewId);
-                    }
-
-                    @Override
-                    public void onFailed(Exception exception) {
-                        ToastMessage.display(getContext(), "Error: " + exception.getMessage());
-                    }
-                });
-            }
+        mReservationListAdapter.onReservationTapListener(position -> {
+            ((MainActivity) getActivity())
+                    .replaceFragment(new ReservationInfoFragment(), MainActivity.containerViewId);
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.reservationListItem);

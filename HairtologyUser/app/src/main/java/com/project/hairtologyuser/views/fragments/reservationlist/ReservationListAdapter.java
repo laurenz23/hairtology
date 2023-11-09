@@ -36,7 +36,6 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
     public interface OnReservationTapListener {
         void onReservationTap(int position);
-        void onReservationCancel(int position);
     }
 
     private final Context mContext;
@@ -72,19 +71,11 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         int hour = Integer.parseInt(reservation.getTime());
         int minute = Integer.parseInt(reservation.getMinute());
 
-        if (reservation.getCancelled()) {
-            holder.cancelledTextView.setVisibility(View.VISIBLE);
-            holder.cancelReservation.setVisibility(View.GONE);
-        } else {
-            holder.cancelledTextView.setVisibility(View.GONE);
-            holder.cancelReservation.setVisibility(View.VISIBLE);
-        }
-
         holder.shopNameTextView.setText(reservation.getShopName());
         holder.dayTextView.setText(reservation.getDay());
         holder.timeTextView.setText(StringFormat.time(new Time(hour, minute, 0)));
         holder.monthTextView.setText(new SimpleDateFormat("MMMM").format(date.getMonth()));
-        holder.priceTextView.setText(mContext.getString(R.string.str_symbol_peso) + " " + reservation.getPrice() + ".00");
+        holder.priceTextView.setText(mContext.getString(R.string.str_symbol_peso) + " " + reservation.getPrice());
         holder.detailTextView.setText(reservation.getServiceDetail());
     }
 
@@ -106,35 +97,27 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
         LinearLayout reservationLinearLayout;
         LinearLayout detailLinearLayout;
-        TextView cancelledTextView;
         TextView shopNameTextView;
         TextView timeTextView;
         TextView dayTextView;
         TextView monthTextView;
         TextView priceTextView;
         TextView detailTextView;
-        Button cancelReservation;
 
         public ViewHolder(@NonNull View itemView, OnReservationTapListener listener) {
             super(itemView);
 
             reservationLinearLayout = itemView.findViewById(R.id.reservationItemLinearLayout);
             detailLinearLayout = itemView.findViewById(R.id.detailLinearLayout);
-            cancelledTextView = itemView.findViewById(R.id.shopCancelledTextView);
             shopNameTextView = itemView.findViewById(R.id.shopNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             dayTextView = itemView.findViewById(R.id.dayTextView);
             monthTextView = itemView.findViewById(R.id.monthTextView);
             priceTextView = itemView.findViewById(R.id.priceTextView);
             detailTextView = itemView.findViewById(R.id.detailTextView);
-            cancelReservation = itemView.findViewById(R.id.cancelReservationButton);
 
             reservationLinearLayout.setOnClickListener(view -> {
                 listener.onReservationTap(getAdapterPosition());
-            });
-
-            cancelReservation.setOnClickListener(view -> {
-                listener.onReservationCancel(getAdapterPosition());
             });
         }
     }

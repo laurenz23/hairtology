@@ -21,17 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.project.hairtologyowner.R;
-import com.project.hairtologyowner.models.ChatModel;
+import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.models.ChatModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserChatFragment extends Fragment {
 
-    private static String mUuid;
-    private static String mFirstName;
-    private static String mLastName;
+    private static String mReceiverUuid;
     private UserChatViewModel mViewModel;
     private View mView;
     private EditText mMessageEditText;
@@ -42,10 +40,8 @@ public class UserChatFragment extends Fragment {
     private DatabaseReference mReference;
     private FirebaseUser mUser;
 
-    public static UserChatFragment newInstance(String uuid, String firstName, String lastName) {
-        mUuid = uuid;
-        mFirstName = firstName;
-        mLastName = lastName;
+    public static UserChatFragment newInstance(String receiverUuid) {
+        mReceiverUuid = receiverUuid;
         return new UserChatFragment();
     }
 
@@ -68,12 +64,12 @@ public class UserChatFragment extends Fragment {
             mImageView.setOnClickListener(view -> {
                 String message = String.valueOf(mMessageEditText.getText());
                 if (!message.isEmpty()) {
-                    onSendMessage(mUser.getUid(), mUuid, message);
+                    onSendMessage(mUser.getUid(), mReceiverUuid, message);
                     mMessageEditText.setText("");
                 }
             });
 
-            onReadMessage(mUser.getUid(), mUuid);
+            onReadMessage(mUser.getUid(), mReceiverUuid);
         }
 
         return mView;

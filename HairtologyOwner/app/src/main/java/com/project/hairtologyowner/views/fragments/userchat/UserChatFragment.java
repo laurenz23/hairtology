@@ -32,8 +32,6 @@ import java.util.HashMap;
 public class UserChatFragment extends Fragment {
 
     private static String mUuid;
-    private static String mFirstName;
-    private static String mLastName;
     private UserChatViewModel mViewModel;
     private View mView;
     private EditText mMessageEditText;
@@ -44,10 +42,8 @@ public class UserChatFragment extends Fragment {
     private DatabaseReference mReference;
     private FirebaseUser mUser;
 
-    public static UserChatFragment newInstance(String uuid, String firstName, String lastName) {
+    public static UserChatFragment newInstance(String uuid) {
         mUuid = uuid;
-        mFirstName = firstName;
-        mLastName = lastName;
         return new UserChatFragment();
     }
 
@@ -75,7 +71,7 @@ public class UserChatFragment extends Fragment {
                 }
             });
 
-            onReadMessage(mUser.getUid(), mUuid);
+            onReadMessage(mUuid, mUser.getUid());
         }
 
         return mView;

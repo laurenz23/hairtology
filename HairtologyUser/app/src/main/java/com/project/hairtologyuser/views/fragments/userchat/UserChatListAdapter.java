@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.project.hairtologyowner.R;
-import com.project.hairtologyowner.models.ChatModel;
+import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.models.ChatModel;
 
 import java.util.ArrayList;
 

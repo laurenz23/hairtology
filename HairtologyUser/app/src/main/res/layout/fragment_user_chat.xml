@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/secondary"
     tools:context=".views.fragments.userchat.UserChatFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userChatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        tools:listitem="@layout/list_item_user_reservation_layout" />
+        android:padding="10dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

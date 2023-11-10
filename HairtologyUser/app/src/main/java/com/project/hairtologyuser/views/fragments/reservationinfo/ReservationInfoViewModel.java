@@ -28,6 +28,10 @@ public class ReservationInfoViewModel extends ViewModel {
         mFirebaseClient = new FirebaseClient(application);
     }
 
+    public UserModel getCurrentUser() {
+        return mSession.getCurrentUser();
+    }
+
     public void cancelReservation(int position, ReservationModel reservation, ReservationInfoViewModel.onReservationCancellation listener) {
         UserModel currentUser = mSession.getCurrentUser();
         if (currentUser == null)

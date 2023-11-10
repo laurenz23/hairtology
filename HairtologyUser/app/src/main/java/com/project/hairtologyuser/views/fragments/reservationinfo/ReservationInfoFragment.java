@@ -13,10 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.views.activities.MainActivity;
+import com.project.hairtologyuser.views.fragments.userchat.UserChatFragment;
 
 public class ReservationInfoFragment extends Fragment {
 
+    private final int mContainerViewId = R.id.onUserReservationInfoFragment;
     private ReservationInfoViewModel mViewModel;
+    private View mView;
 
     public static ReservationInfoFragment newInstance() {
         return new ReservationInfoFragment();
@@ -25,7 +29,9 @@ public class ReservationInfoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reservation_info, container, false);
+        mView = inflater.inflate(R.layout.fragment_reservation_info, container, false);
+
+        return mView;
     }
 
     @Override
@@ -33,6 +39,10 @@ public class ReservationInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ReservationInfoViewModel.class);
         mViewModel.setViewModel(getActivity().getApplication());
+
+        ((MainActivity) getActivity()).replaceFragment(
+                UserChatFragment.newInstance("c7cec3cf-0e6b-4c75-856c-04cf2e2d1639"),
+                mContainerViewId);
     }
 
 

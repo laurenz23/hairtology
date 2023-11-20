@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ReserveViewModel extends ViewModel {
 
@@ -102,8 +103,10 @@ public class ReserveViewModel extends ViewModel {
         }
 
         ReservationModel reservation = new ReservationModel(
+            UUID.randomUUID().toString(),
             getShop().getUuid(),
             getShop().getName(),
+            getService().getName(),
             getService().getDescription(),
             time,
             minute,

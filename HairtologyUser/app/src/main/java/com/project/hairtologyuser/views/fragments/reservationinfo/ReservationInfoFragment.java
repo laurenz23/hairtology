@@ -70,7 +70,7 @@ public class ReservationInfoFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ReservationInfoViewModel.class);
         mViewModel.setViewModel(getActivity().getApplication());
 
-        mServiceNameTextView.setText("");
+        mServiceNameTextView.setText(mReservation.getServiceName());
         mPriceTextView.setText(mReservation.getPrice());
         mDayTextView.setText(mReservation.getDay());
         mTimeTextView.setText(mReservation.getTime());

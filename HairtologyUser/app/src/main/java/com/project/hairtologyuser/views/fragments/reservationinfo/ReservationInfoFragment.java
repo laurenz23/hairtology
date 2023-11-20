@@ -78,7 +78,7 @@ public class ReservationInfoFragment extends Fragment {
         mDetailTextView.setText(mReservation.getServiceDetail());
 
         ((MainActivity) getActivity()).replaceFragment(
-                UserChatFragment.newInstance(mReservation.getShopId()),
+                UserChatFragment.newInstance(mReservation.getUuid()),
                 mContainerViewId);
     }
 

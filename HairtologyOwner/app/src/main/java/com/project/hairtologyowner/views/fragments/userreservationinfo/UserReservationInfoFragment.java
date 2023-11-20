@@ -77,7 +77,7 @@ public class UserReservationInfoFragment extends Fragment {
         mMessageImageView.setOnClickListener(view -> {
             mFragmentContainerView.removeAllViewsInLayout();
             ((MainActivity) getActivity()).replaceFragment(
-                    UserChatFragment.newInstance(mReservation.getShopId(), mUserUuid),
+                    UserChatFragment.newInstance(mReservation.getUuid(), mUserUuid),
                     mContainerViewId);
         });
 

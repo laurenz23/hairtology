@@ -32,7 +32,7 @@ import java.util.HashMap;
 
 public class UserChatFragment extends Fragment {
 
-    private static String mShopUuid;
+    private static String mReservationUuid;
     private static String mUuid;
     private UserChatViewModel mViewModel;
     private View mView;
@@ -43,8 +43,8 @@ public class UserChatFragment extends Fragment {
     private ArrayList<ChatModel> mChatArrayList;
     private DatabaseReference mReference;
 
-    public static UserChatFragment newInstance(String shopUuid, String uuid) {
-        mShopUuid = shopUuid;
+    public static UserChatFragment newInstance(String reservationUuid, String uuid) {
+        mReservationUuid = reservationUuid;
         mUuid = uuid;
         return new UserChatFragment();
     }
@@ -65,12 +65,12 @@ public class UserChatFragment extends Fragment {
         mImageView.setOnClickListener(view -> {
             String message = String.valueOf(mMessageEditText.getText());
             if (!message.isEmpty()) {
-                onSendMessage(mShopUuid, mUuid, message);
+                onSendMessage(mReservationUuid, mUuid, message);
                 mMessageEditText.setText("");
             }
         });
 
-        onReadMessage(mUuid, mShopUuid);
+        onReadMessage(mUuid, mReservationUuid);
 
         return mView;
     }
@@ -111,7 +111,7 @@ public class UserChatFragment extends Fragment {
                             mChatArrayList.add(chat);
                         }
 
-                        mUserChatListAdapter = new UserChatListAdapter(getContext(), mChatArrayList, mShopUuid);
+                        mUserChatListAdapter = new UserChatListAdapter(getContext(), mChatArrayList, mReservationUuid);
                         mRecyclerView.setAdapter(mUserChatListAdapter);
                     }
                 }

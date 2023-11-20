@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.components.utils.ToastMessage;
+import com.project.hairtologyowner.models.ReservationModel;
 import com.project.hairtologyowner.models.UserModel;
 import com.project.hairtologyowner.models.UserReservationModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
@@ -35,7 +36,10 @@ import java.util.Objects;
 public class UserReservationInfoFragment extends Fragment {
 
     private final int mContainerViewId = R.id.onUserReservationInfoFragment;
-    private static UserReservationModel mUserReservation;
+    private static String mUserUuid;
+    private static String mFirstName;
+    private static String mLastName;
+    private static ReservationModel mReservation;
     private UserReservationInfoViewModel mViewModel;
     private View mView;
     private FragmentContainerView mFragmentContainerView;
@@ -44,8 +48,11 @@ public class UserReservationInfoFragment extends Fragment {
     private ImageView mMessageImageView;
     private ImageView mUserInfoImageView;
 
-    public static UserReservationInfoFragment newInstance(UserReservationModel userReservation) {
-        mUserReservation = userReservation;
+    public static UserReservationInfoFragment newInstance(String userUuid, String firstName, String lastName, ReservationModel reservation) {
+        mUserUuid = userUuid;
+        mFirstName = firstName;
+        mLastName = lastName;
+        mReservation = reservation;
         return new UserReservationInfoFragment();
     }
 
@@ -63,19 +70,19 @@ public class UserReservationInfoFragment extends Fragment {
         mReservationImageView.setOnClickListener(view -> {
             mFragmentContainerView.removeAllViewsInLayout();
             ((MainActivity) getActivity()).replaceFragment(
-                    ReservationListFragment.newInstance(mUserReservation.getUserUuid()),
+                    ReservationListFragment.newInstance(mUserUuid),
                     mContainerViewId);
         });
 
         mMessageImageView.setOnClickListener(view -> {
             mFragmentContainerView.removeAllViewsInLayout();
             ((MainActivity) getActivity()).replaceFragment(
-                    UserChatFragment.newInstance(mUserReservation.getUserUuid()),
+                    UserChatFragment.newInstance(mReservation.getShopId(), mUserUuid),
                     mContainerViewId);
         });
 
         mUserInfoImageView.setOnClickListener(view -> {
-            mViewModel.viewUserInfo(mUserReservation.getUserUuid(), new UserReservationInfoViewModel.OnViewUserInfoListener() {
+            mViewModel.viewUserInfo(mUserUuid, new UserReservationInfoViewModel.OnViewUserInfoListener() {
                 @Override
                 public void onSuccess(UserModel user) {
                     if (getActivity() == null) {
@@ -111,10 +118,10 @@ public class UserReservationInfoFragment extends Fragment {
 
         mFragmentContainerView.removeAllViewsInLayout();
         ((MainActivity) getActivity()).replaceFragment(
-                ReservationListFragment.newInstance(mUserReservation.getUserUuid()),
+                ReservationListFragment.newInstance(mUserUuid),
                 mContainerViewId);
 
-        mNameTextView.setText(mUserReservation.getUserFirstName() + " " + mUserReservation.getUserLastName());
+        mNameTextView.setText(mFirstName + " " + mLastName);
     }
 
 }

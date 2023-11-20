@@ -60,7 +60,7 @@ public class UserChatListAdapter extends RecyclerView.Adapter<UserChatListAdapte
     public int getItemViewType(int position) {
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (mChatArrayList.get(position).equals(mUser.getUid())) {
+        if (mChatArrayList.get(position).getReceiver().equals(mUser.getUid())) {
             return MSG_TYPE_RIGHT;
         } else {
             return MSG_TYPE_LEFT;

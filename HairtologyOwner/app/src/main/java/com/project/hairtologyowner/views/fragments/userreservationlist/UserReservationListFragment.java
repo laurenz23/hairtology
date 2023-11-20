@@ -55,7 +55,11 @@ public class UserReservationListFragment extends Fragment {
             }
 
             ((MainActivity) getActivity()).replaceFragment(
-                    UserReservationInfoFragment.newInstance(userReservation),
+                    UserReservationInfoFragment.newInstance(
+                            userReservation.getUserUuid(),
+                            userReservation.getUserFirstName(),
+                            userReservation.getUserLastName(),
+                            userReservation.getReservationList().get(position)),
                     MainActivity.containerViewId);
         });
 

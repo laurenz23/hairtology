@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 
 public class UserChatFragment extends Fragment {
 
+    private static String mShopUuid;
     private static String mUuid;
     private UserChatViewModel mViewModel;
     private View mView;
@@ -40,9 +42,9 @@ public class UserChatFragment extends Fragment {
     private UserChatListAdapter mUserChatListAdapter;
     private ArrayList<ChatModel> mChatArrayList;
     private DatabaseReference mReference;
-    private FirebaseUser mUser;
 
-    public static UserChatFragment newInstance(String uuid) {
+    public static UserChatFragment newInstance(String shopUuid, String uuid) {
+        mShopUuid = shopUuid;
         mUuid = uuid;
         return new UserChatFragment();
     }
@@ -60,19 +62,15 @@ public class UserChatFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mUserChatListAdapter);
 
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+        mImageView.setOnClickListener(view -> {
+            String message = String.valueOf(mMessageEditText.getText());
+            if (!message.isEmpty()) {
+                onSendMessage(mShopUuid, mUuid, message);
+                mMessageEditText.setText("");
+            }
+        });
 
-        if (mUser != null) {
-            mImageView.setOnClickListener(view -> {
-                String message = String.valueOf(mMessageEditText.getText());
-                if (!message.isEmpty()) {
-                    onSendMessage(mUser.getUid(), mUuid, message);
-                    mMessageEditText.setText("");
-                }
-            });
-
-            onReadMessage(mUuid, mUser.getUid());
-        }
+        onReadMessage(mUuid, mShopUuid);
 
         return mView;
     }
@@ -106,12 +104,14 @@ public class UserChatFragment extends Fragment {
                     ChatModel chat = dataSnapshot.getValue(ChatModel.class);
 
                     if (chat != null) {
+                        Log.e(UserChatFragment.class.getSimpleName(), "UserId: " + userId + ", MyId: " + myId);
+                        Log.e(UserChatFragment.class.getSimpleName(), "Sender: " + chat.getSender() + ", Receiver: " + chat.getReceiver());
                         if (chat.getReceiver().equals(myId) && chat.getSender().equals(userId) ||
                             chat.getReceiver().equals(userId) && chat.getSender().equals(myId)) {
                             mChatArrayList.add(chat);
                         }
 
-                        mUserChatListAdapter = new UserChatListAdapter(getContext(), mChatArrayList);
+                        mUserChatListAdapter = new UserChatListAdapter(getContext(), mChatArrayList, mShopUuid);
                         mRecyclerView.setAdapter(mUserChatListAdapter);
                     }
                 }

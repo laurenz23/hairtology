@@ -23,11 +23,12 @@ public class UserChatListAdapter extends RecyclerView.Adapter<UserChatListAdapte
     public static final int MSG_TYPE_RIGHT = 1;
     private Context mContext;
     private ArrayList<ChatModel> mChatArrayList;
-    private FirebaseUser mUser;
+    private String mShopUuid;
 
-    public UserChatListAdapter(Context context, ArrayList<ChatModel> chatArrayList) {
+    public UserChatListAdapter(Context context, ArrayList<ChatModel> chatArrayList, String shopUuid) {
         mContext = context;
         mChatArrayList = chatArrayList;
+        mShopUuid = shopUuid;
     }
 
     @NonNull
@@ -58,9 +59,7 @@ public class UserChatListAdapter extends RecyclerView.Adapter<UserChatListAdapte
     }
 
     public int getItemViewType(int position) {
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (mChatArrayList.get(position).equals(mUser.getUid())) {
+        if (mChatArrayList.get(position).getReceiver().equals(mShopUuid)) {
             return MSG_TYPE_RIGHT;
         } else {
             return MSG_TYPE_LEFT;

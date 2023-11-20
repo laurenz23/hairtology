@@ -105,9 +105,6 @@ public class UserChatFragment extends Fragment {
                     ChatModel chat = dataSnapshot.getValue(ChatModel.class);
 
                     if (chat != null) {
-                        Log.e(UserChatFragment.class.getSimpleName(), "Chat's =================");
-                        Log.e(UserChatFragment.class.getSimpleName(), "Sender: " + chat.getSender());
-                        Log.e(UserChatFragment.class.getSimpleName(), "Receiver: " + chat.getReceiver());
 
                         if (chat.getReceiver().equals(myId) && chat.getSender().equals(userId) ||
                             chat.getReceiver().equals(userId) && chat.getSender().equals(myId)) {

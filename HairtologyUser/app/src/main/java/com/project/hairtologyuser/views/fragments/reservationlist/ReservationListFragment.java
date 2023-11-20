@@ -49,7 +49,9 @@ public class ReservationListFragment extends BaseFragment {
         mReservationListAdapter = new ReservationListAdapter(getContext(), mReservationArrayList);
         mReservationListAdapter.onReservationTapListener(position -> {
             ((MainActivity) getActivity())
-                    .replaceFragment(new ReservationInfoFragment(), MainActivity.containerViewId);
+                    .replaceFragment(
+                            ReservationInfoFragment.newInstance(mReservationArrayList.get(position)),
+                            MainActivity.containerViewId);
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.reservationListItem);

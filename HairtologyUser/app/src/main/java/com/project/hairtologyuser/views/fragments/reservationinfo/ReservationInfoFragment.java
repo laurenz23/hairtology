@@ -15,9 +15,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.components.utils.StringFormat;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.userchat.UserChatFragment;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ReservationInfoFragment extends Fragment {
 
@@ -70,11 +76,19 @@ public class ReservationInfoFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ReservationInfoViewModel.class);
         mViewModel.setViewModel(getActivity().getApplication());
 
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+
+        Date date = new Date(year, Integer.parseInt(mReservation.getMonth()), Integer.parseInt(mReservation.getDay()));
+
+        int hour = Integer.parseInt(mReservation.getTime());
+        int minute = Integer.parseInt(mReservation.getMinute());
+
         mServiceNameTextView.setText(mReservation.getServiceName());
-        mPriceTextView.setText(mReservation.getPrice());
+        mPriceTextView.setText(getString(R.string.str_symbol_peso) + " " + mReservation.getPrice());
         mDayTextView.setText(mReservation.getDay());
-        mTimeTextView.setText(mReservation.getTime());
-        mMonthTextView.setText(mReservation.getMonth());
+        mTimeTextView.setText(StringFormat.time(new Time(hour, minute, 0)));
+        mMonthTextView.setText(new SimpleDateFormat("MMMM").format(date.getMonth()));
         mDetailTextView.setText(mReservation.getServiceDetail());
 
         ((MainActivity) getActivity()).replaceFragment(

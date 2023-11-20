@@ -2,8 +2,10 @@ package com.project.hairtologyowner.models;
 
 public class ReservationModel {
 
+    private String uuid;
     private String shopId;
     private String shopName;
+    private String serviceName;
     private String serviceDetail;
     private String time;
     private String minute;
@@ -16,9 +18,11 @@ public class ReservationModel {
 
     public ReservationModel() {}
 
-    public ReservationModel(String shopId, String shopName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price, boolean cancelled) {
+    public ReservationModel(String uuid, String shopId, String shopName, String serviceName, String serviceDetail, String time, String minute, String meridian, String day, String month, String year, String price, boolean cancelled) {
+        this.uuid = uuid;
         this.shopId = shopId;
         this.shopName = shopName;
+        this.serviceName = serviceName;
         this.serviceDetail = serviceDetail;
         this.time = time;
         this.minute = minute;
@@ -28,6 +32,14 @@ public class ReservationModel {
         this.year = year;
         this.price = price;
         this.cancelled = cancelled;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getShopId() {
@@ -44,6 +56,14 @@ public class ReservationModel {
 
     public void setShopName(String shopName) {
         this.shopName = shopName;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public String getServiceDetail() {

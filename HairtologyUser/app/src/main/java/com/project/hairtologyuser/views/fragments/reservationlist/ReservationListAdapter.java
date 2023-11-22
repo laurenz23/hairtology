@@ -71,7 +71,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         int hour = Integer.parseInt(reservation.getTime());
         int minute = Integer.parseInt(reservation.getMinute());
 
-        holder.shopNameTextView.setText(reservation.getShopName());
+        holder.shopNameTextView.setText(reservation.getServiceName());
         holder.dayTextView.setText(reservation.getDay());
         holder.timeTextView.setText(StringFormat.time(new Time(hour, minute, 0)));
         holder.monthTextView.setText(new SimpleDateFormat("MMMM").format(date.getMonth()));
@@ -109,7 +109,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
             reservationLinearLayout = itemView.findViewById(R.id.reservationItemLinearLayout);
             detailLinearLayout = itemView.findViewById(R.id.detailLinearLayout);
-            shopNameTextView = itemView.findViewById(R.id.shopNameTextView);
+            shopNameTextView = itemView.findViewById(R.id.serviceNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             dayTextView = itemView.findViewById(R.id.dayTextView);
             monthTextView = itemView.findViewById(R.id.monthTextView);

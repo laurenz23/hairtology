@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ReservationStatus;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
 import com.project.hairtologyuser.views.fragments.reservationinfo.ReservationInfoFragment;
@@ -48,13 +49,12 @@ public class ReservationListFragment extends BaseFragment {
 
         mReservationListAdapter = new ReservationListAdapter(getContext(), mReservationArrayList);
         mReservationListAdapter.onReservationTapListener(position -> {
-            if (mReservationArrayList.get(position).getCancelled())
-                return;
-
-            ((MainActivity) getActivity())
-                    .replaceFragment(
-                            ReservationInfoFragment.newInstance(position, mReservationArrayList.get(position)),
-                            MainActivity.containerViewId);
+            if (mReservationArrayList.get(position).getStatus() == ReservationStatus.ON_GOING) {
+                ((MainActivity) getActivity())
+                        .replaceFragment(
+                                ReservationInfoFragment.newInstance(position, mReservationArrayList.get(position)),
+                                MainActivity.containerViewId);
+            }
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.reservationListItem);

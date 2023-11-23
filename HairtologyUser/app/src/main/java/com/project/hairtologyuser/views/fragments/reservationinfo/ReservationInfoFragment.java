@@ -23,6 +23,7 @@ import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.components.utils.StringFormat;
 import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ReservationStatus;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
 import com.project.hairtologyuser.views.fragments.shop.ShopFragment;

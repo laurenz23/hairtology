@@ -14,6 +14,7 @@ import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ReservationStatus;
 import com.project.hairtologyuser.models.ShopDetail;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.models.ShopService;
@@ -115,7 +116,7 @@ public class ReserveViewModel extends ViewModel {
             month,
             year,
             String.valueOf(getService().getPrice()),
-            false
+            ReservationStatus.ON_GOING
         );
 
         mFirebaseClient.getDatabaseReference()

@@ -48,7 +48,6 @@ public class RegisterFragment extends Fragment {
     private Button mBackButton;
     private ProgressBar mRegistrationProgressBar;
     private LinearLayout mErrorLinearLayout;
-
     private final List<String> mErrorMessageList = new ArrayList<>();
 
     @Override

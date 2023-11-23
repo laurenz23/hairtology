@@ -23,6 +23,7 @@ import com.project.hairtologyuser.components.client.FirebaseClient;
 import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.components.utils.StringFormat;
 import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ReservationStatus;
 import com.project.hairtologyuser.models.UserModel;
 
 import java.sql.Time;
@@ -78,8 +79,10 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         holder.priceTextView.setText(mContext.getString(R.string.str_symbol_peso) + " " + reservation.getPrice());
         holder.detailTextView.setText(reservation.getServiceDetail());
 
-        if (reservation.getCancelled()) {
-            holder.cancelledTextView.setVisibility(View.VISIBLE);
+        if (reservation.getStatus() == ReservationStatus.USER_CANCELLED) {
+            holder.cancelledUserTextView.setVisibility(View.VISIBLE);
+        } else if (reservation.getStatus() == ReservationStatus.OWNER_CANCELLED) {
+            holder.cancelledOwnerTextView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -101,7 +104,8 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
         LinearLayout reservationLinearLayout;
         LinearLayout detailLinearLayout;
-        TextView cancelledTextView;
+        TextView cancelledOwnerTextView;
+        TextView cancelledUserTextView;
         TextView shopNameTextView;
         TextView timeTextView;
         TextView dayTextView;
@@ -114,7 +118,8 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
             reservationLinearLayout = itemView.findViewById(R.id.reservationItemLinearLayout);
             detailLinearLayout = itemView.findViewById(R.id.detailLinearLayout);
-            cancelledTextView = itemView.findViewById(R.id.cancelledTextView);
+            cancelledOwnerTextView = itemView.findViewById(R.id.cancelledOwnerTextView);
+            cancelledUserTextView = itemView.findViewById(R.id.cancelledUserTextView);
             shopNameTextView = itemView.findViewById(R.id.serviceNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             dayTextView = itemView.findViewById(R.id.dayTextView);

@@ -34,6 +34,7 @@
     <string name="str_month">Month</string>
     <string name="str_new_password">New Password</string>
     <string name="str_notes">Notes</string>
+    <string name="str_owner_cancelled_the_reservation">Owner cancelled this reservation</string>
     <string name="str_password">Password</string>
     <string name="str_password_did_not_match">Password did not match</string>
     <string name="str_please_enter_first_name">Please enter your first name</string>

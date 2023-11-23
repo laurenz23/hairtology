@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.StringFormat;
 import com.project.hairtologyowner.models.ReservationModel;
+import com.project.hairtologyowner.models.ReservationStatus;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -62,12 +63,12 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         int hour = Integer.parseInt(reservation.getTime());
         int minute = Integer.parseInt(reservation.getMinute());
 
-        if (reservation.getCancelled()) {
-            holder.cancelledTextView.setVisibility(View.VISIBLE);
+        if (reservation.getStatus() == ReservationStatus.OWNER_CANCELLED) {
+            holder.cancelledOwnerTextView.setVisibility(View.VISIBLE);
             holder.cancelReservation.setVisibility(View.GONE);
-        } else {
-            holder.cancelledTextView.setVisibility(View.GONE);
-            holder.cancelReservation.setVisibility(View.VISIBLE);
+        } else if (reservation.getStatus() == ReservationStatus.USER_CANCELLED) {
+            holder.cancelledUserTextView.setVisibility(View.VISIBLE);
+            holder.cancelReservation.setVisibility(View.GONE);
         }
 
         holder.shopNameTextView.setText(reservation.getShopName());
@@ -96,7 +97,8 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
         LinearLayout reservationLinearLayout;
         LinearLayout detailLinearLayout;
-        TextView cancelledTextView;
+        TextView cancelledOwnerTextView;
+        TextView cancelledUserTextView;
         TextView shopNameTextView;
         TextView timeTextView;
         TextView dayTextView;
@@ -110,7 +112,8 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
             reservationLinearLayout = itemView.findViewById(R.id.reservationItemLinearLayout);
             detailLinearLayout = itemView.findViewById(R.id.detailLinearLayout);
-            cancelledTextView = itemView.findViewById(R.id.shopCancelledTextView);
+            cancelledOwnerTextView = itemView.findViewById(R.id.cancelledOwnerTextView);
+            cancelledUserTextView = itemView.findViewById(R.id.cancelledUserTextView);
             shopNameTextView = itemView.findViewById(R.id.shopNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             dayTextView = itemView.findViewById(R.id.dayTextView);

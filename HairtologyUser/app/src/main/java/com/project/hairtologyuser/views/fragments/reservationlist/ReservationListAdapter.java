@@ -77,6 +77,10 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
         holder.monthTextView.setText(new SimpleDateFormat("MMMM").format(date.getMonth()));
         holder.priceTextView.setText(mContext.getString(R.string.str_symbol_peso) + " " + reservation.getPrice());
         holder.detailTextView.setText(reservation.getServiceDetail());
+
+        if (reservation.getCancelled()) {
+            holder.cancelledTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -97,6 +101,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
         LinearLayout reservationLinearLayout;
         LinearLayout detailLinearLayout;
+        TextView cancelledTextView;
         TextView shopNameTextView;
         TextView timeTextView;
         TextView dayTextView;
@@ -109,6 +114,7 @@ public class ReservationListAdapter extends RecyclerView.Adapter<ReservationList
 
             reservationLinearLayout = itemView.findViewById(R.id.reservationItemLinearLayout);
             detailLinearLayout = itemView.findViewById(R.id.detailLinearLayout);
+            cancelledTextView = itemView.findViewById(R.id.cancelledTextView);
             shopNameTextView = itemView.findViewById(R.id.serviceNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             dayTextView = itemView.findViewById(R.id.dayTextView);

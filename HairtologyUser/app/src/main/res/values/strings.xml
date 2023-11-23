@@ -8,6 +8,7 @@
     <string name="str_am">AM</string>
     <string name="str_available_slots">Available Slots</string>
     <string name="str_back_to_login">Back to login</string>
+    <string name="str_cancel">Cancel</string>
     <string name="str_cancel_reservation">Cancel Reservation</string>
     <string name="str_confirm_password">Confirm password</string>
     <string name="str_contact_number">Contact number</string>
@@ -42,8 +43,10 @@
     <string name="str_please_enter_email">Please enter your email</string>
     <string name="str_please_enter_password">Please enter your password</string>
     <string name="str_please_confirm_password">Please confirm your password</string>
+    <string name="str_please_leave_a_review">Please leave a review for this shop to improved their services.</string>
     <string name="str_pm">PM</string>
     <string name="str_profile">Profile</string>
+    <string name="str_rate_shop">Rate Shop</string>
     <string name="str_register">Register</string>
     <string name="str_reservation">Reservation</string>
     <string name="str_reservations">Reservations</string>
@@ -75,6 +78,7 @@
     <string name="str_view_shop">View Shop</string>
     <string name="str_welcome">"Welcome!"</string>
     <string name="str_welcome_to_hairtology">Welcome to Hairtology!</string>
+    <string name="str_write_your_review">Write your review...</string>
     <string name="str_you_cancelled_the_reservation">You cancelled this reservation</string>
     <string name="str_you_dont_have_reservation_yet">You don\'t have reservation yet</string>
     <string name="str_your_go_to_app">Your go-to app for all things hair.</string>

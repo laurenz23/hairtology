@@ -159,6 +159,17 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/reservationInfoReviewButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/str_shop_review"
+            android:textColor="@color/secondary"
+            android:textSize="10sp"
+            android:background="@drawable/button_secondary"
+            tools:ignore="SmallSp" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/onUserReservationInfoFragment"
             android:name="com.project.hairtologyuser.views.fragments.userchat.UserChatFragment"

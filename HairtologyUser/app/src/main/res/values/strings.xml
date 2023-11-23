@@ -64,6 +64,7 @@
     <string name="str_shop">Shop</string>
     <string name="str_shops">Shops</string>
     <string name="str_shop_name">Shop name</string>
+    <string name="str_shop_review">Please review your experience on this shop</string>
     <string name="str_slots">Slots</string>
     <string name="str_submit">Submit</string>
     <string name="str_successfully_reserved">Successfully Reserved</string>

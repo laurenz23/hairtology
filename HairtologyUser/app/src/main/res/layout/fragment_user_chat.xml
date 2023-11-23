@@ -41,7 +41,7 @@
             android:layout_gravity="center"
             android:layout_alignParentEnd="true"
             android:padding="10dp"
-            tools:srcCompat="@drawable/ic_send_100" />
+            android:src="@drawable/ic_send_100" />
 
     </RelativeLayout>
 

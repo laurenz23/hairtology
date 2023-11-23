@@ -28,6 +28,7 @@ import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
 import com.project.hairtologyuser.views.fragments.shop.ShopFragment;
 import com.project.hairtologyuser.views.fragments.shoplist.ShopListFragment;
+import com.project.hairtologyuser.views.fragments.shopreview.ShopReviewFragment;
 import com.project.hairtologyuser.views.fragments.userchat.UserChatFragment;
 
 import java.sql.Time;
@@ -50,6 +51,7 @@ public class ReservationInfoFragment extends Fragment {
     private TextView mDetailTextView;
     private Button mViewShopButton;
     private Button mCancelReservationButton;
+    private Button mReservationInfoReviewButton;
 
     public static ReservationInfoFragment newInstance(int position, ReservationModel reservation) {
         mPosition = position;
@@ -70,33 +72,11 @@ public class ReservationInfoFragment extends Fragment {
         mDetailTextView = mView.findViewById(R.id.detailTextView);
         mViewShopButton = mView.findViewById(R.id.reservationInfoShopButton);
         mCancelReservationButton = mView.findViewById(R.id.reservationInfoCancelButton);
+        mReservationInfoReviewButton = mView.findViewById(R.id.reservationInfoReviewButton);
 
-        mViewShopButton.setOnClickListener(view -> {
-            if (getActivity() == null) {
-                ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
-                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-                        ReservationInfoFragment.class
-                ));
-                return;
-            }
-
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(mViewModel.getShop().getShopDetail());
-
-            Bundle bundle = new Bundle();
-            bundle.putString("data", jsonString);
-
-            Fragment fragment = new ReserveFragment();
-            fragment.setArguments(bundle);
-
-            ((MainActivity) getActivity()).replaceFragment(
-                    fragment,
-                    containerViewId);
-        });
-
-        mCancelReservationButton.setOnClickListener(view -> {
-            onCancelReservation();
-        });
+        mViewShopButton.setOnClickListener(view -> onViewShop());
+        mCancelReservationButton.setOnClickListener(view -> onCancelReservation());
+        mReservationInfoReviewButton.setOnClickListener(view -> onReviewShop());
 
         return mView;
     }
@@ -129,6 +109,28 @@ public class ReservationInfoFragment extends Fragment {
                 mContainerViewId);
     }
 
+    private void onViewShop() {
+        if (getActivity() == null) {
+            ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                    ReservationInfoFragment.class
+            ));
+            return;
+        }
+
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(mViewModel.getShop().getShopDetail());
+
+        Bundle bundle = new Bundle();
+        bundle.putString("data", jsonString);
+
+        Fragment fragment = new ReserveFragment();
+        fragment.setArguments(bundle);
+
+        ((MainActivity) getActivity()).replaceFragment(
+                fragment,
+                containerViewId);
+    }
 
     private void onCancelReservation() {
         mViewModel.cancelReservation(mPosition, mReservation, new ReservationInfoViewModel.onReservationCancellation() {
@@ -152,6 +154,20 @@ public class ReservationInfoFragment extends Fragment {
                 ToastMessage.display(getContext(), "Error: " + exception.getMessage());
             }
         });
+    }
+
+    private void onReviewShop() {
+        if (getActivity() == null) {
+            ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                    ReservationInfoFragment.class
+            ));
+            return;
+        }
+
+        ((MainActivity) getActivity()).replaceFragment(
+                ShopReviewFragment.newInstance(mViewModel.getShop()),
+                containerViewId);
     }
 
 }

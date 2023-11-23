@@ -1,7 +1,11 @@
 package com.project.hairtologyuser.views.fragments.shopreview;
 
+import static com.project.hairtologyuser.views.activities.MainActivity.containerViewId;
+
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,12 +21,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.components.utils.ErrorUtil;
+import com.project.hairtologyuser.components.utils.ToastMessage;
+import com.project.hairtologyuser.models.ReservationModel;
+import com.project.hairtologyuser.models.ShopModel;
+import com.project.hairtologyuser.views.activities.MainActivity;
+import com.project.hairtologyuser.views.fragments.reservationinfo.ReservationInfoFragment;
+import com.project.hairtologyuser.views.fragments.shop.ShopFragment;
 
 public class ShopReviewFragment extends Fragment {
 
-    private static String mUserUuid;
-    private static String mFirstName;
-    private static String mLastName;
+    private static ShopModel mShop;
     private ShopReviewViewModel mViewModel;
     private View mView;
     private TextView mShopNameTextView;
@@ -36,10 +45,8 @@ public class ShopReviewFragment extends Fragment {
     private Button mSubmitButton;
     private int mStarRating = 0;
 
-    public static ShopReviewFragment newInstance(String userUuid, String firstName, String lastName) {
-        mUserUuid = userUuid;
-        mFirstName = firstName;
-        mLastName = lastName;
+    public static ShopReviewFragment newInstance(ShopModel shop) {
+        mShop = shop;
         return new ShopReviewFragment();
     }
 
@@ -65,11 +72,40 @@ public class ShopReviewFragment extends Fragment {
         mStar5ImageView.setOnClickListener(view -> setStar(5));
 
         mCancelButton.setOnClickListener(view -> {
-            
+            if (getActivity() == null) {
+                ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        ShopReviewFragment.class
+                ));
+                return;
+            }
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    new ShopFragment(),
+                    containerViewId);
         });
 
         mSubmitButton.setOnClickListener(view -> {
+            if (mStarRating > 0) {
+                mViewModel.submitReview(mStarRating, String.valueOf(mReviewEditText.getText()));
+            } else {
+                new AlertDialog.Builder(getContext())
+                    .setMessage("Are you sure you want to submit a poor rating?")
 
+                    // Specifying a listener allows you to take an action before dismissing the dialog.
+                    // The dialog is automatically dismissed when a dialog button is clicked.
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            mViewModel.submitReview(mStarRating, String.valueOf(mReviewEditText.getText()));
+                        }
+                    })
+
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setCancelable(false)
+                    .show();
+            }
         });
 
         return mView;
@@ -79,6 +115,8 @@ public class ShopReviewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ShopReviewViewModel.class);
+        mViewModel.setModel(getContext());
+        mViewModel.setShop(mShop);
     }
 
     public void setStar(int star) {

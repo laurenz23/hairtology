@@ -1,6 +1,5 @@
 package com.project.hairtologyowner.views.fragments.login;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +22,6 @@ import com.project.hairtologyowner.models.OwnerModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
 import com.project.hairtologyowner.views.activities.OnBoardingActivity;
 import com.project.hairtologyowner.views.fragments.register.RegisterFragment;
-
-import java.util.Objects;
 
 public class LoginFragment extends Fragment {
 

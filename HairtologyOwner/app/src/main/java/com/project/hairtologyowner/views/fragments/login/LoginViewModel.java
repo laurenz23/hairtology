@@ -5,13 +5,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.components.repository.Session;
 import com.project.hairtologyowner.models.OwnerModel;
-
-import java.util.Objects;
 
 public class LoginViewModel extends ViewModel {
 

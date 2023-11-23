@@ -15,21 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.project.hairtologyowner.BuildConfig;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.components.utils.ToastMessage;
-import com.project.hairtologyowner.models.ReservationModel;
 import com.project.hairtologyowner.models.UserReservationModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
-import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
-import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
 import com.project.hairtologyowner.views.fragments.userreservationinfo.UserReservationInfoFragment;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class UserReservationListFragment extends Fragment {
     private UserReservationListViewModel mViewModel;

@@ -11,7 +11,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.components.repository.Session;
 import com.project.hairtologyowner.models.ReservationModel;
-import com.project.hairtologyowner.models.UserModel;
 
 import java.util.ArrayList;
 

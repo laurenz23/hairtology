@@ -1,7 +1,6 @@
 package com.project.hairtologyowner.views.fragments.userreservationinfo;
 
 import androidx.fragment.app.FragmentContainerView;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -21,17 +20,12 @@ import android.widget.Toast;
 
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ErrorUtil;
-import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ReservationModel;
 import com.project.hairtologyowner.models.UserModel;
-import com.project.hairtologyowner.models.UserReservationModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
 import com.project.hairtologyowner.views.fragments.reservationlist.ReservationListFragment;
 import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
-import com.project.hairtologyowner.views.fragments.useraccountlist.UserAccountListFragment;
 import com.project.hairtologyowner.views.fragments.userchat.UserChatFragment;
-
-import java.util.Objects;
 
 public class UserReservationInfoFragment extends Fragment {
 

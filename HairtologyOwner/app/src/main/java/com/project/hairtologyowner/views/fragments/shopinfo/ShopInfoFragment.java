@@ -33,7 +33,6 @@ import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
 import com.project.hairtologyowner.views.activities.MainActivity;
-import com.project.hairtologyowner.views.fragments.addshop.AddServiceListAdapter;
 import com.project.hairtologyowner.views.fragments.shoplist.ShopListFragment;
 
 import java.util.ArrayList;

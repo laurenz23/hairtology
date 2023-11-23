@@ -13,16 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.project.hairtologyowner.R;
-import com.project.hairtologyowner.components.app.AppConfig;
-import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.UserModel;
 
 public class UserAccountInfoFragment extends Fragment {

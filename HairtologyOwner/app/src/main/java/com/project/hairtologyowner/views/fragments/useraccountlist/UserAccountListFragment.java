@@ -19,9 +19,6 @@ import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.UserModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
-import com.project.hairtologyowner.views.activities.OnBoardingActivity;
-import com.project.hairtologyowner.views.fragments.login.LoginFragment;
-import com.project.hairtologyowner.views.fragments.register.RegisterFragment;
 import com.project.hairtologyowner.views.fragments.useraccountinfo.UserAccountInfoFragment;
 
 import java.util.ArrayList;

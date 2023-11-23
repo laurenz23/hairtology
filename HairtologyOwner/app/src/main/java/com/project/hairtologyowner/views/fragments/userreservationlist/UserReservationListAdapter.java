@@ -2,7 +2,6 @@ package com.project.hairtologyowner.views.fragments.userreservationlist;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import com.project.hairtologyowner.models.ReservationModel;
 import com.project.hairtologyowner.models.UserReservationModel;
 
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 

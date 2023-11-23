@@ -20,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ToastMessage;
 import com.project.hairtologyowner.models.ReservationModel;
-import com.project.hairtologyowner.models.UserModel;
 
 import java.util.ArrayList;
 import java.util.Objects;

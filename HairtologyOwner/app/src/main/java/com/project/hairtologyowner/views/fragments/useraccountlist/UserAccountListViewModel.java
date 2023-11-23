@@ -1,7 +1,6 @@
 package com.project.hairtologyowner.views.fragments.useraccountlist;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;

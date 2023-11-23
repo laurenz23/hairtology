@@ -2,8 +2,6 @@ package com.project.hairtologyowner.views.fragments.addshop;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
@@ -11,16 +9,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 
 public class AddShopViewModel extends ViewModel {

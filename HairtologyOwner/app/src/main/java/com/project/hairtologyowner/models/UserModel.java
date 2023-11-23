@@ -9,7 +9,7 @@ public class UserModel {
     private String lastName;
     private String email;
     private Boolean isAccountDisabled;
-    private List<Integer> favoriteShopList;
+    private List<String> favoriteShopList;
 
     public String getUuid() {
         return uuid;
@@ -51,11 +51,11 @@ public class UserModel {
         isAccountDisabled = accountDisabled;
     }
 
-    public List<Integer> getFavoriteShopId() {
+    public List<String> getFavoriteShopId() {
         return favoriteShopList;
     }
 
-    public void setFavoriteShopId(List<Integer> favoriteShopList) {
+    public void setFavoriteShopId(List<String> favoriteShopList) {
         this.favoriteShopList = favoriteShopList;
     }
 

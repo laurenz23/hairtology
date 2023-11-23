@@ -23,7 +23,6 @@ import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ErrorUtil;
 import com.project.hairtologyowner.databinding.FragmentRegisterBinding;
 import com.project.hairtologyowner.models.OwnerModel;
-import com.project.hairtologyowner.models.UserModel;
 import com.project.hairtologyowner.views.activities.OnBoardingActivity;
 import com.project.hairtologyowner.views.fragments.login.LoginFragment;
 

@@ -111,7 +111,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editTextUserChat"
+            android:id="@+id/shopReviewMessageTextView"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="20dp"
@@ -130,7 +130,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/reservationInfoShopButton"
+                android:id="@+id/shopReviewCancelButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -143,7 +143,7 @@
                 tools:ignore="SmallSp" />
 
             <Button
-                android:id="@+id/reservationInfoCancelButton"
+                android:id="@+id/shopReviewSubmitButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

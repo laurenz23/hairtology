@@ -60,7 +60,7 @@ public class ReservationListFragment extends Fragment {
             @Override
             public void onReservationCancel(int position) {
                 ReservationModel reservation = mReservationArrayList.get(position);
-                mViewModel.cancelReservation(position, reservation, new ReservationListViewModel.onReservationCancellation() {
+                mViewModel.cancelReservation(mUserUuid, position, reservation, new ReservationListViewModel.onReservationCancellation() {
                     @Override
                     public void onSuccess(int position) {
                         ToastMessage.display(getContext(), getString(R.string.str_successfully_cancelled_reservation));

@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.components.repository.Session;
 import com.project.hairtologyowner.models.ReservationModel;
+import com.project.hairtologyowner.models.ReservationStatus;
 
 import java.util.ArrayList;
 
@@ -56,26 +57,21 @@ public class ReservationListViewModel extends ViewModel {
                 });
     }
 
-    public void cancelReservation(int position, ReservationModel reservation, onReservationCancellation listener) {
-//        UserModel currentUser = mSession.getCurrentUser();
-//        if (currentUser == null)
-//            return;
-//
-//        reservation.setCancelled(true);
-//
-//        mFirebaseClient.getDatabaseReference()
-//            .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
-//            .child(String.valueOf(position))
-//            .removeValue()
-//            .addOnSuccessListener(s -> {
-//                mFirebaseClient.getDatabaseReference()
-//                    .child(mFirebaseClient.apiReservation(currentUser.getUuid()))
-//                    .child(String.valueOf(position))
-//                    .setValue(reservation)
-//                    .addOnSuccessListener(success -> {
-//                        listener.onSuccess(position);
-//                    }).addOnFailureListener(listener::onFailed);
-//            }).addOnFailureListener(listener::onFailed);
+    public void cancelReservation(String userUuid, int position, ReservationModel reservation, onReservationCancellation listener) {
+        reservation.setStatus(ReservationStatus.OWNER_CANCELLED);
+        mFirebaseClient.getDatabaseReference()
+                .child(mFirebaseClient.apiReservation(userUuid))
+                .child(String.valueOf(position))
+                .removeValue()
+                .addOnSuccessListener(s -> {
+                    mFirebaseClient.getDatabaseReference()
+                            .child(mFirebaseClient.apiReservation(userUuid))
+                            .child(String.valueOf(position))
+                            .setValue(reservation)
+                            .addOnSuccessListener(success -> {
+                                listener.onSuccess(position);
+                            }).addOnFailureListener(listener::onFailed);
+                }).addOnFailureListener(listener::onFailed);
 
     }
 

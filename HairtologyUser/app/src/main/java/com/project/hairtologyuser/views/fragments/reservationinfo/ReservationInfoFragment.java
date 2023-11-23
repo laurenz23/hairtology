@@ -1,5 +1,7 @@
 package com.project.hairtologyuser.views.fragments.reservationinfo;
 
+import static com.project.hairtologyuser.views.activities.MainActivity.containerViewId;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -23,6 +25,7 @@ import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
+import com.project.hairtologyuser.views.fragments.shop.ShopFragment;
 import com.project.hairtologyuser.views.fragments.shoplist.ShopListFragment;
 import com.project.hairtologyuser.views.fragments.userchat.UserChatFragment;
 
@@ -34,6 +37,7 @@ import java.util.Date;
 public class ReservationInfoFragment extends Fragment {
 
     private final int mContainerViewId = R.id.onUserReservationInfoFragment;
+    private static int mPosition;
     private static ReservationModel mReservation;
     private ReservationInfoViewModel mViewModel;
     private View mView;
@@ -46,7 +50,8 @@ public class ReservationInfoFragment extends Fragment {
     private Button mViewShopButton;
     private Button mCancelReservationButton;
 
-    public static ReservationInfoFragment newInstance(ReservationModel reservation) {
+    public static ReservationInfoFragment newInstance(int position, ReservationModel reservation) {
+        mPosition = position;
         mReservation = reservation;
         return new ReservationInfoFragment();
     }
@@ -85,7 +90,7 @@ public class ReservationInfoFragment extends Fragment {
 
             ((MainActivity) getActivity()).replaceFragment(
                     fragment,
-                    MainActivity.containerViewId);
+                    containerViewId);
         });
 
         mCancelReservationButton.setOnClickListener(view -> {
@@ -125,28 +130,27 @@ public class ReservationInfoFragment extends Fragment {
 
 
     private void onCancelReservation() {
-//        ReservationModel reservation = mReservationArrayList.get(position);
-//        mViewModel.cancelReservation(position, reservation, new ReservationListViewModel.onReservationCancellation() {
-//            @Override
-//            public void onSuccess(int position) {
-//                if (getActivity() == null) {
-//                    ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
-//                            ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-//                            ReservationListFragment.class
-//                    ));
-//                    return;
-//                }
-//
-//                ((MainActivity) getActivity()).replaceFragment(
-//                        new ReservationFragment(),
-//                        containerViewId);
-//            }
-//
-//            @Override
-//            public void onFailed(Exception exception) {
-//                ToastMessage.display(getContext(), "Error: " + exception.getMessage());
-//            }
-//        });
+        mViewModel.cancelReservation(mPosition, mReservation, new ReservationInfoViewModel.onReservationCancellation() {
+            @Override
+            public void onSuccess(int position) {
+                if (getActivity() == null) {
+                    ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                            ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                            ReservationInfoFragment.class
+                    ));
+                    return;
+                }
+
+                ((MainActivity) getActivity()).replaceFragment(
+                        new ShopFragment(),
+                        containerViewId);
+            }
+
+            @Override
+            public void onFailed(Exception exception) {
+                ToastMessage.display(getContext(), "Error: " + exception.getMessage());
+            }
+        });
     }
 
 }

@@ -50,7 +50,7 @@ public class ReservationListFragment extends BaseFragment {
         mReservationListAdapter.onReservationTapListener(position -> {
             ((MainActivity) getActivity())
                     .replaceFragment(
-                            ReservationInfoFragment.newInstance(mReservationArrayList.get(position)),
+                            ReservationInfoFragment.newInstance(position, mReservationArrayList.get(position)),
                             MainActivity.containerViewId);
         });
 

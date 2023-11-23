@@ -1,11 +1,9 @@
 package com.project.hairtologyuser.views.fragments.shoplist;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.database.DataSnapshot;

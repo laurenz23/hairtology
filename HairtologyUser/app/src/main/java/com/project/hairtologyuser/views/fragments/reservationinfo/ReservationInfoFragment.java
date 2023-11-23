@@ -2,6 +2,7 @@ package com.project.hairtologyuser.views.fragments.reservationinfo;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,10 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.project.hairtologyuser.R;
+import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.components.utils.StringFormat;
+import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
+import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
+import com.project.hairtologyuser.views.fragments.shoplist.ShopListFragment;
 import com.project.hairtologyuser.views.fragments.userchat.UserChatFragment;
 
 import java.sql.Time;
@@ -60,7 +66,26 @@ public class ReservationInfoFragment extends Fragment {
         mCancelReservationButton = mView.findViewById(R.id.reservationInfoCancelButton);
 
         mViewShopButton.setOnClickListener(view -> {
+            if (getActivity() == null) {
+                ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        ReservationInfoFragment.class
+                ));
+                return;
+            }
 
+            Gson gson = new Gson();
+            String jsonString = gson.toJson(mViewModel.getShop().getShopDetail());
+
+            Bundle bundle = new Bundle();
+            bundle.putString("data", jsonString);
+
+            Fragment fragment = new ReserveFragment();
+            fragment.setArguments(bundle);
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    fragment,
+                    MainActivity.containerViewId);
         });
 
         mCancelReservationButton.setOnClickListener(view -> {
@@ -70,11 +95,13 @@ public class ReservationInfoFragment extends Fragment {
         return mView;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ReservationInfoViewModel.class);
         mViewModel.setViewModel(getActivity().getApplication());
+        mViewModel.retrieveShop(mReservation.getShopId());
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -89,7 +116,7 @@ public class ReservationInfoFragment extends Fragment {
         mDayTextView.setText(mReservation.getDay());
         mTimeTextView.setText(StringFormat.time(new Time(hour, minute, 0)));
         mMonthTextView.setText(new SimpleDateFormat("MMMM").format(date.getMonth()));
-        mDetailTextView.setText(mReservation.getServiceDetail());
+        mDetailTextView.setText(mReservation.getServiceDetail() + " @ " + mReservation.getShopName());
 
         ((MainActivity) getActivity()).replaceFragment(
                 UserChatFragment.newInstance(mReservation.getUuid()),

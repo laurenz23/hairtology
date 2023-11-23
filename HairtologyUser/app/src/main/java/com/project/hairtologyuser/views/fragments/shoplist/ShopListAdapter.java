@@ -50,13 +50,6 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         ShopModel shop = mShopArrayList.get(position);
 
         holder.shop = shop;
-
-        if (shop == null) {
-            Log.e("SHOP", "NULL");
-        } else {
-            Log.e("SHOP", "IS NOT NULL");
-        }
-
         holder.name.setText(shop.getShopDetail().getName());
         holder.address.setText(shop.getShopDetail().getAddress());
         holder.hour.setText(shop.getShopDetail().getHour());

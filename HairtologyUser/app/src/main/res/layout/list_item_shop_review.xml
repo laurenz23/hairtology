@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="center_vertical"
-            android:text="@string/str_address"
+            android:text="@string/str_feedback"
             android:textColor="@color/primary"/>
 
     </LinearLayout>

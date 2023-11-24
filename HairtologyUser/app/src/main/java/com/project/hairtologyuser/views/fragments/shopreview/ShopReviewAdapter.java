@@ -41,6 +41,36 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ShopReviewAdapter.ViewHolder holder, int position) {
         ShopReview review = mReviewArrayList.get(position);
+        holder.name.setText(review.getFirstName());
+        holder.feedback.setText(review.getFeedback());
+
+        int rating = review.getStars();
+
+        holder.reviewStar1.setImageResource(R.drawable.ic_star_outline_24);
+        holder.reviewStar2.setImageResource(R.drawable.ic_star_outline_24);
+        holder.reviewStar3.setImageResource(R.drawable.ic_star_outline_24);
+        holder.reviewStar4.setImageResource(R.drawable.ic_star_outline_24);
+        holder.reviewStar5.setImageResource(R.drawable.ic_star_outline_24);
+
+        if (rating >= 5) {
+            holder.reviewStar5.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (rating >= 4) {
+            holder.reviewStar4.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (rating >= 3) {
+            holder.reviewStar3.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (rating >= 2) {
+            holder.reviewStar2.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (rating >= 1) {
+            holder.reviewStar1.setImageResource(R.drawable.ic_star_24);
+        }
     }
 
     @Override
@@ -53,15 +83,24 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private ShopReview review;
         private TextView name;
         private TextView feedback;
+        private ImageView reviewStar1;
+        private ImageView reviewStar2;
+        private ImageView reviewStar3;
+        private ImageView reviewStar4;
+        private ImageView reviewStar5;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.shopReviewItemName);
             feedback = itemView.findViewById(R.id.shopReviewItemFeedback);
+            reviewStar1 = itemView.findViewById(R.id.shopReviewItemStar1);
+            reviewStar2 = itemView.findViewById(R.id.shopReviewItemStar2);
+            reviewStar3 = itemView.findViewById(R.id.shopReviewItemStar3);
+            reviewStar4 = itemView.findViewById(R.id.shopReviewItemStar4);
+            reviewStar5 = itemView.findViewById(R.id.shopReviewItemStar5);
         }
     }
 

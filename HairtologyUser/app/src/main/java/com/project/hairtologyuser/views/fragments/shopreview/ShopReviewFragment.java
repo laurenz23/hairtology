@@ -22,10 +22,9 @@ import java.util.ArrayList;
 
 public class ShopReviewFragment extends Fragment {
 
-    private static ArrayList<ShopReview> mShopReviewArrayList;
+    private static ArrayList<ShopReview> mShopReviewArrayList = new ArrayList<>();
     private ShopReviewViewModel mViewModel;
     private ShopReviewAdapter mShopReviewAdapter;
-    private ArrayList<ShopReview> mReviewArrayList = new ArrayList<>();
     private View mView;
 
     public static ShopReviewFragment newInstance(ArrayList<ShopReview> shopReviewArrayList) {
@@ -38,7 +37,7 @@ public class ShopReviewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_shop_review, container, false);
 
-        mShopReviewAdapter = new ShopReviewAdapter(getContext(), mReviewArrayList);
+        mShopReviewAdapter = new ShopReviewAdapter(getContext(), mShopReviewArrayList);
         RecyclerView recyclerView = mView.findViewById(R.id.reviewListItem);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(mShopReviewAdapter);
@@ -50,12 +49,6 @@ public class ShopReviewFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(ShopReviewViewModel.class);
-
-        if (mShopReviewArrayList != null) {
-            for (ShopReview shopReview : mShopReviewArrayList) {
-                Log.e(ShopReviewFragment.class.getSimpleName(), shopReview.getEmail());
-            }
-        }
     }
 
 }

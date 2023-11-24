@@ -6,6 +6,7 @@ public class ShopModel {
 
     private ShopDetail detail;
     private ArrayList<ShopService> service;
+    private ArrayList<ShopReview> review;
 
     public ShopModel() {}
 
@@ -23,6 +24,14 @@ public class ShopModel {
 
     public void setShopService(ArrayList<ShopService> shopServiceArrayList) {
         this.service = shopServiceArrayList;
+    }
+
+    public ArrayList<ShopReview> getReview() {
+        return review;
+    }
+
+    public void setReviews(ArrayList<ShopReview> reviewArrayList) {
+        this.review = reviewArrayList;
     }
 
 }

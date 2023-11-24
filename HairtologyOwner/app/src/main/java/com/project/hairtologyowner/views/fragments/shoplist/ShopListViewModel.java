@@ -12,6 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyowner.components.client.FirebaseClient;
 import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
+import com.project.hairtologyowner.models.ShopReview;
 import com.project.hairtologyowner.models.ShopService;
 
 import java.util.ArrayList;
@@ -40,9 +41,9 @@ public class ShopListViewModel extends ViewModel {
                         for (DataSnapshot shopList : snapshot.getChildren()) {
                             ShopModel shopModel = new ShopModel();
                             ArrayList<ShopService> shopServiceArrayList = new ArrayList<>();
+                            ArrayList<ShopReview> shopReviewArrayList = new ArrayList<>();
                             for (DataSnapshot shopData : shopList.getChildren()) {
                                 if (Objects.equals(shopData.getKey(), "shopDetail")) {
-                                    Log.e("Service", shopData.toString());
                                     ShopDetail shopDetail = shopData.getValue(ShopDetail.class);
                                     if (shopDetail != null) {
                                         shopModel.setShopDetail(shopDetail);
@@ -57,9 +58,19 @@ public class ShopListViewModel extends ViewModel {
                                         }
                                     }
                                 }
+
+                                if (Objects.equals(shopData.getKey(), "shopReview")) {
+                                    for (DataSnapshot reviewList : shopData.getChildren()) {
+                                        ShopReview shopReview = reviewList.getValue(ShopReview.class);
+                                        if (shopReview != null) {
+                                            shopReviewArrayList.add(shopReview);
+                                        }
+                                    }
+                                }
                             }
 
                             shopModel.setShopService(shopServiceArrayList);
+                            shopModel.setReviews(shopReviewArrayList);
                             shopArrayList.add(shopModel);
                         }
 

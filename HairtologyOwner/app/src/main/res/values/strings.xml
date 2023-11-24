@@ -25,6 +25,7 @@
     <string name="str_enable">Enable</string>
     <string name="str_email">Email</string>
     <string name="str_error">Error</string>
+    <string name="str_feedback">Feedback</string>
     <string name="str_first_name">First name</string>
     <string name="str_getting_your_reservations">Getting your reservations</string>
     <string name="str_hairtology">Hairtology</string>
@@ -60,6 +61,7 @@
     <string name="str_price">Price</string>
     <string name="str_price_range">Price range. Ex: 100.00 – 200.00</string>
     <string name="str_profile">Profile</string>
+    <string name="str_reviews">Reviews</string>
     <string name="str_register">Register</string>
     <string name="str_reservation">Reservation</string>
     <string name="str_reservation_cancelled">Reservation Cancelled</string>

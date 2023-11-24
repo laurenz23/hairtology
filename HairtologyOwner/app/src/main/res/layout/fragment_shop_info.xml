@@ -167,71 +167,6 @@
                 android:textColor="@color/primary"
                 android:textStyle="bold"/>
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imageServiceAddShop"-->
-<!--                android:layout_width="150dp"-->
-<!--                android:layout_height="150dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:src="@drawable/ic_add_image" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/serviceNameAddShop"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="70dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginEnd="70dp"-->
-<!--                android:background="@drawable/inputfield_primary"-->
-<!--                android:ems="10"-->
-<!--                android:hint="@string/str_service_name"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingTop="10dp"-->
-<!--                android:paddingRight="20dp"-->
-<!--                android:paddingBottom="10dp" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/serviceDescriptionAddShop"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="70dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginEnd="70dp"-->
-<!--                android:background="@drawable/inputfield_primary"-->
-<!--                android:ems="10"-->
-<!--                android:hint="@string/str_description"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingTop="10dp"-->
-<!--                android:paddingRight="20dp"-->
-<!--                android:paddingBottom="10dp" />-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/servicePriceAddShop"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="70dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginEnd="70dp"-->
-<!--                android:background="@drawable/inputfield_primary"-->
-<!--                android:ems="10"-->
-<!--                android:hint="@string/str_price"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingTop="10dp"-->
-<!--                android:paddingRight="20dp"-->
-<!--                android:paddingBottom="10dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/addServicePage3AddShop"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:text="@string/str_add_service"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="16sp"-->
-<!--                android:background="@drawable/button_primary" />-->
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/serviceListRecyclerView"
                 android:layout_width="match_parent"
@@ -240,32 +175,40 @@
                 android:padding="5dp"
                 tools:listitem="@layout/list_item_service_layout" />
 
-            <Button
-                android:id="@+id/saveShopInfo"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="70dp"
-                android:text="@string/str_save"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:background="@drawable/button_primary" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/backShopInfo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="70dp"
-                android:layout_marginBottom="50dp"
-                android:text="@string/str_cancel"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:background="@drawable/button_primary" />
+                <Button
+                    android:id="@+id/saveShopInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/str_save"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:background="@drawable/button_primary" />
+
+                <Button
+                    android:id="@+id/backShopInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="50dp"
+                    android:text="@string/str_cancel"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:background="@drawable/button_primary" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

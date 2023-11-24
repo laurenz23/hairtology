@@ -84,11 +84,6 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
             price = itemView.findViewById(R.id.itemShopPrice);
 
             shopNextImageView.setOnClickListener(v -> {
-                if (shop == null) {
-                    Log.e(ShopListAdapter.class.getSimpleName(), "Shop is null");
-                } else {
-                    Log.e(ShopListAdapter.class.getSimpleName(), "Shop is not null");
-                }
                 listener.onTap(getAdapterPosition(), shop);
             });
         }

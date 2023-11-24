@@ -25,9 +25,14 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         void onTap(int position, ShopModel shop);
     }
 
+    public interface OnShopItemReadReviewListener {
+        void onTap(ArrayList<ShopReview> shopReviewArrayList);
+    }
+
     private Context mContext;
     private ArrayList<ShopModel> mShopArrayList;
     private ShopListAdapter.OnShopItemListener mListener;
+    private ShopListAdapter.OnShopItemReadReviewListener mReadReviewListener;
 
     public ShopListAdapter(Context context, ArrayList<ShopModel> shopArrayList) {
         mContext = context;
@@ -38,11 +43,15 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         mListener = listener;
     }
 
+    public void setOnShopReadReviewListener(OnShopItemReadReviewListener listener) {
+        mReadReviewListener = listener;
+    }
+
     @NonNull
     @Override
     public ShopListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.list_item_shop_layout, parent, false);
-        return new ViewHolder(view, mListener);
+        return new ViewHolder(view, mListener, mReadReviewListener);
     }
 
     @SuppressLint("SetTextI18n")
@@ -129,6 +138,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ShopModel shop;
+        private LinearLayout readReviewLinearLayout;
         private ImageView shopNextImageView;
         private TextView name;
         private TextView address;
@@ -141,9 +151,10 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         private ImageView reviewStar4;
         private ImageView reviewStar5;
 
-        public ViewHolder(@NonNull View itemView, OnShopItemListener listener) {
+        public ViewHolder(@NonNull View itemView, OnShopItemListener listener, OnShopItemReadReviewListener readReviewListener) {
             super(itemView);
 
+            readReviewLinearLayout = itemView.findViewById(R.id.itemShopReadReviewLinearLayout);
             shopNextImageView = itemView.findViewById(R.id.itemShopImageView);
             name = itemView.findViewById(R.id.itemShopName);
             address = itemView.findViewById(R.id.itemShopAddress);
@@ -158,6 +169,10 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
 
             shopNextImageView.setOnClickListener(v -> {
                 listener.onTap(getAdapterPosition(), shop);
+            });
+
+            readReviewLinearLayout.setOnClickListener(v -> {
+                readReviewListener.onTap(shop.getReview());
             });
         }
     }

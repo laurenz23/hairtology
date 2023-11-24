@@ -1,5 +1,7 @@
 package com.project.hairtologyowner.views.fragments.shoplist;
 
+import static com.project.hairtologyowner.views.activities.MainActivity.containerViewId;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -24,6 +26,7 @@ import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.views.activities.MainActivity;
 import com.project.hairtologyowner.views.fragments.addshop.AddShopFragment;
 import com.project.hairtologyowner.views.fragments.shopinfo.ShopInfoFragment;
+import com.project.hairtologyowner.views.fragments.shopreview.ShopReviewFragment;
 
 import java.util.ArrayList;
 
@@ -49,6 +52,7 @@ public class ShopListFragment extends Fragment {
         mViewModel.viewModel(requireActivity().getApplication());
 
         mShopListAdapter = new ShopListAdapter(getContext(), mShopArrayList);
+
         mShopListAdapter.setOnShopItemListener((position, shop) -> {
             if (getActivity() == null) {
                 Log.e(getClass().getSimpleName(), ErrorUtil.getErrorMessage(
@@ -60,7 +64,21 @@ public class ShopListFragment extends Fragment {
 
             ((MainActivity) getActivity()).replaceFragment(
                     ShopInfoFragment.newInstance(shop),
-                    MainActivity.containerViewId);
+                    containerViewId);
+        });
+
+        mShopListAdapter.setOnShopReadReviewListener(reviewArrayList -> {
+            if (getActivity() == null) {
+                ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                        ShopListFragment.class
+                ));
+                return;
+            }
+
+            ((MainActivity) getActivity()).replaceFragment(
+                    ShopReviewFragment.newInstance(reviewArrayList),
+                    containerViewId);
         });
 
         RecyclerView recyclerView = view.findViewById(R.id.shopListRecyclerView);
@@ -78,7 +96,7 @@ public class ShopListFragment extends Fragment {
 
             ((MainActivity) getActivity()).replaceFragment(
                     new AddShopFragment(),
-                    MainActivity.containerViewId);
+                    containerViewId);
         });
 
         return view;

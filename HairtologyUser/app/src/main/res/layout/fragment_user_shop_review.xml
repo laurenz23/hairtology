@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".views.fragments.usershopreview.UserShopReviewFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@color/primary"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="@string/str_rate_shop"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/shopReviewLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <TextView
+            android:id="@+id/reservationInfoCancelledTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="@string/str_you_cancelled_the_reservation"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:background="@drawable/box_error"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/shopReviewNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text="@string/str_shop_name"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:background="@drawable/box_secondary2"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="@string/str_please_leave_a_review"
+            android:textSize="15sp"
+            android:textColor="@color/primary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/box_secondary2">
+
+            <ImageView
+                android:id="@+id/shopReviewStar1ImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_star_outline_50" />
+
+            <ImageView
+                android:id="@+id/shopReviewStar2ImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_star_outline_50" />
+
+            <ImageView
+                android:id="@+id/shopReviewStar3ImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_star_outline_50" />
+
+            <ImageView
+                android:id="@+id/shopReviewStar4ImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_star_outline_50" />
+
+            <ImageView
+                android:id="@+id/shopReviewStar5ImageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_star_outline_50" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/shopReviewMessageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:ems="10"
+            android:inputType="textEmailAddress"
+            android:hint="@string/str_write_your_review"
+            android:background="@drawable/inputfield_primary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/shopReviewCancelButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:text="@string/str_cancel"
+                android:textColor="@color/secondary"
+                android:textSize="10sp"
+                android:background="@drawable/button_secondary"
+                tools:ignore="SmallSp" />
+
+            <Button
+                android:id="@+id/shopReviewSubmitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="5dp"
+                android:text="@string/str_submit"
+                android:textColor="@color/secondary"
+                android:textSize="10sp"
+                android:background="@drawable/button_secondary"
+                tools:ignore="SmallSp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

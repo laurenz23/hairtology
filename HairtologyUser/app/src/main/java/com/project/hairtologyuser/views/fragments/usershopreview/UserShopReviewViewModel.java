@@ -31,7 +31,7 @@ public class UserShopReviewViewModel extends ViewModel {
         String lastName = mSession.getCurrentUser().getLastName();
         ShopReview shopReview = new ShopReview(stars, feedback, email, firstName, lastName);
         mFirebaseClient.getDatabaseReference()
-                .child(mFirebaseClient.apiShopReview(mShop.getShopDetail().getUuid()))
+                .child(mFirebaseClient.apiShopReview(mShop.getShopDetail().getUuid()) + "/" + email)
                 .setValue(shopReview)
                 .addOnSuccessListener(unused -> {
                     Log.e(UserShopReviewViewModel.class.getSimpleName(), "Successfully submitted your review");

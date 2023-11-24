@@ -51,7 +51,7 @@ public class UserShopReviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_shop_review, container, false);
+        mView = inflater.inflate(R.layout.fragment_user_shop_review, container, false);
 
         mShopNameTextView = mView.findViewById(R.id.shopReviewNameTextView);
         mStar1ImageView = mView.findViewById(R.id.shopReviewStar1ImageView);

@@ -164,7 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/str_shop_review"
+            android:text="@string/str_leave_a_review_for_the_shop"
             android:textColor="@color/secondary"
             android:textSize="10sp"
             android:background="@drawable/button_secondary"

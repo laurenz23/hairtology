@@ -28,6 +28,7 @@
     <string name="str_invalid_password">Password must be >5 characters</string>
     <string name="str_last_name">Last name</string>
     <string name="str_lets_get_started">Let\'s get started!</string>
+    <string name="str_leave_a_review_for_the_shop">Leave a review for the shop</string>
     <string name="str_loading_all_shops">Loading all shops</string>
     <string name="str_login">Login</string>
     <string name="str_login_failed">"Login failed"</string>
@@ -48,6 +49,7 @@
     <string name="str_please_leave_a_review">Please leave a review for this shop to improved their services.</string>
     <string name="str_pm">PM</string>
     <string name="str_profile">Profile</string>
+    <string name="str_rating">Rating</string>
     <string name="str_rate_shop">Rate Shop</string>
     <string name="str_reviews">Reviews</string>
     <string name="str_read_review">Read Review</string>
@@ -71,7 +73,6 @@
     <string name="str_shop">Shop</string>
     <string name="str_shops">Shops</string>
     <string name="str_shop_name">Shop name</string>
-    <string name="str_shop_review">Please review your experience on this shop</string>
     <string name="str_slots">Slots</string>
     <string name="str_submit">Submit</string>
     <string name="str_successfully_reserved">Successfully Reserved</string>

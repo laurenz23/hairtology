@@ -114,6 +114,69 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/shopItemStar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_star_outline_24" />
+
+            <ImageView
+                android:id="@+id/shopItemStar2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_star_outline_24" />
+
+            <ImageView
+                android:id="@+id/shopItemStar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_star_outline_24" />
+
+            <ImageView
+                android:id="@+id/shopItemStar4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_star_outline_24" />
+
+            <ImageView
+                android:id="@+id/shopItemStar5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_star_outline_24" />
+
+            <TextView
+                android:id="@+id/shopItemRatingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:text="@string/str_rating"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -65,6 +65,7 @@ public class ReserveFragment extends Fragment {
     private LinearLayout mServiceLoadingLinearLayout;
     private LinearLayout mShopLinearLayout;
     private LinearLayout mReserveLinearLayout;
+    private LinearLayout mReadReviewLinearLayout;
     private CardView mDateCardView;
     private CardView mTimeCardView;
     private ShopListImageAdapter imageAdapter;
@@ -79,6 +80,11 @@ public class ReserveFragment extends Fragment {
     private TextView mSelectedTimeTextView;
     private ImageView mFavorite;
     private ImageView mMap;
+    private ImageView mStar1ImageView;
+    private ImageView mStar2ImageView;
+    private ImageView mStar3ImageView;
+    private ImageView mStar4ImageView;
+    private ImageView mStar5ImageView;
     private Button mCancelButton;
     private Button mSubmitButton;
     private ProgressBar mSubmitProgressBar;
@@ -99,6 +105,7 @@ public class ReserveFragment extends Fragment {
         mServiceLoadingLinearLayout = view.findViewById(R.id.serviceLoadingLinearLayout);
         mShopLinearLayout = view.findViewById(R.id.reserveShopLinearLayout);
         mReserveLinearLayout = view.findViewById(R.id.reserveLinearLayout);
+        mReadReviewLinearLayout = view.findViewById(R.id.reserveReadReviewLinearLayout);
         mDateCardView = view.findViewById(R.id.reserveDateCardView);
         mTimeCardView = view.findViewById(R.id.reserveTimeCardView);
         mViewPager = view.findViewById(R.id.reserveViewPager);
@@ -114,6 +121,11 @@ public class ReserveFragment extends Fragment {
         mCancelButton = view.findViewById(R.id.reserveCancelButton);
         mSubmitButton = view.findViewById(R.id.reserveSubmitButton);
         mSubmitProgressBar = view.findViewById(R.id.reserveSubmitProgressBar);
+        mStar1ImageView = view.findViewById(R.id.reserveStar1ImageView);
+        mStar2ImageView = view.findViewById(R.id.reserveStar2ImageView);
+        mStar3ImageView = view.findViewById(R.id.reserveStar3ImageView);
+        mStar4ImageView = view.findViewById(R.id.reserveStar4ImageView);
+        mStar5ImageView = view.findViewById(R.id.reserveStar5ImageView);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -201,6 +213,8 @@ public class ReserveFragment extends Fragment {
                 }
             });
         });
+
+        mReadReviewLinearLayout.setOnClickListener(v -> onReadReview());
 
         mMap.setOnClickListener(v -> {
             if (getActivity() == null) {
@@ -328,6 +342,10 @@ public class ReserveFragment extends Fragment {
             mSelectedTimeTextView.setText(StringFormat.time(time));
         }, hour, 0, false);
         dialog.show();
+    }
+
+    private void onReadReview() {
+
     }
 
     private void setAction(ActionType actionType) {

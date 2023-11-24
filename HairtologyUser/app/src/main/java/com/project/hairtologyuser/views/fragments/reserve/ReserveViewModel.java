@@ -1,6 +1,7 @@
 package com.project.hairtologyuser.views.fragments.reserve;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.models.ReservationStatus;
 import com.project.hairtologyuser.models.ShopDetail;
 import com.project.hairtologyuser.models.ShopModel;
+import com.project.hairtologyuser.models.ShopReview;
 import com.project.hairtologyuser.models.ShopService;
 import com.project.hairtologyuser.models.UserModel;
 import com.squareup.picasso.Picasso;
@@ -48,6 +50,7 @@ public class ReserveViewModel extends ViewModel {
     private MutableLiveData<UserModel> mCurrentUser;
     private MutableLiveData<ShopDetail> mShopLiveData;
     private MutableLiveData<ShopService> mServiceLiveData;
+    private ArrayList<ShopReview> mShopReviewArrayList = new ArrayList<>();
 
     public void setViewModel(@NonNull Application application) {
         mFirebaseClient = new FirebaseClient(application);
@@ -75,6 +78,44 @@ public class ReserveViewModel extends ViewModel {
 
     public ShopService getService() {
         return mServiceLiveData.getValue();
+    }
+
+    public void setReviewArrayList(ArrayList<ShopReview> reviewArrayList) {
+        mShopReviewArrayList = reviewArrayList;
+    }
+
+    public ArrayList<ShopReview> getReviewArrayList() {
+        return mShopReviewArrayList;
+    }
+
+    public double getRating() {
+        int star1Respondent = 0;
+        int star2Respondent = 0;
+        int star3Respondent = 0;
+        int star4Respondent = 0;
+        int star5Respondent = 0;
+        int totalRespondent;
+        int totalScore;
+        double rating = 0.0;
+
+        if (getReviewArrayList() != null) {
+            for (ShopReview review : mShopReviewArrayList) {
+                if (review.getStars() >= 5) { star5Respondent++; }
+                else if (review.getStars() == 4) { star4Respondent++; }
+                else if (review.getStars() == 3) { star3Respondent++; }
+                else if (review.getStars() == 2) { star2Respondent++; }
+                else if (review.getStars() == 1) { star1Respondent++; }
+            }
+
+            totalRespondent = star5Respondent + star4Respondent + star3Respondent + star2Respondent + star1Respondent;
+            totalScore = (star5Respondent * 5) + (star4Respondent * 4) + (star3Respondent * 3) + (star2Respondent * 2) + star1Respondent;
+            rating = (double) totalScore / totalRespondent;
+            Log.e(ReserveViewModel.class.getSimpleName(), "Total Respondent: " + totalRespondent);
+            Log.e(ReserveViewModel.class.getSimpleName(), "Total Score: " + totalScore);
+            Log.e(ReserveViewModel.class.getSimpleName(), "Rating: " + rating);
+        }
+
+        return rating;
     }
 
     public void service(String shopUuid, OnServiceDataListener listener) {

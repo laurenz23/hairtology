@@ -24,7 +24,6 @@ public class ShopReviewAdapter extends RecyclerView.Adapter<ShopReviewAdapter.Vi
 
     private Context mContext;
     private ArrayList<ShopReview> mReviewArrayList;
-    private ShopListAdapter.OnShopListListener mListener;
 
     public ShopReviewAdapter(Context context, ArrayList<ShopReview> reviewArrayList) {
         mContext = context;

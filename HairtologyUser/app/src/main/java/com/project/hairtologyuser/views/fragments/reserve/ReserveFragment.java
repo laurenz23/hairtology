@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,7 @@ public class ReserveFragment extends Fragment {
     private TextView mServiceDetail;
     private TextView mSelectedDateTextView;
     private TextView mSelectedTimeTextView;
+    private TextView mRatingReviewTextView;
     private ImageView mFavorite;
     private ImageView mMap;
     private ImageView mStar1ImageView;
@@ -125,6 +127,7 @@ public class ReserveFragment extends Fragment {
         mServiceDetail = view.findViewById(R.id.reserveServiceDetail);
         mSelectedDateTextView = view.findViewById(R.id.reserveDateTextView);
         mSelectedTimeTextView = view.findViewById(R.id.reserveTimeTextView);
+        mRatingReviewTextView = view.findViewById(R.id.reserveReviewTextView);
         mFavorite = view.findViewById(R.id.reserveFavoriteImageView);
         mMap = view.findViewById(R.id.reserveMapImageView);
         mCancelButton = view.findViewById(R.id.reserveCancelButton);
@@ -164,6 +167,7 @@ public class ReserveFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this).get(ReserveViewModel.class);
         mViewModel.setViewModel(requireActivity().getApplication());
+        mViewModel.setReviewArrayList(mShop.getReview());
 
         mViewModel.service(mShopDetail.getUuid(), new ReserveViewModel.OnServiceDataListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -286,6 +290,7 @@ public class ReserveFragment extends Fragment {
         });
 
         mServiceLoadingLinearLayout.setVisibility(View.GONE);
+        setRating(mViewModel.getRating());
     }
 
     private void displayPage(PageType pageType) {
@@ -356,6 +361,38 @@ public class ReserveFragment extends Fragment {
             mSubmitButton.setVisibility(View.VISIBLE);
             mSubmitButton.setClickable(true);
             mCancelButton.setClickable(true);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void setRating(double ratingScore) {
+        Log.e(ReserveFragment.class.getSimpleName(), "" + ratingScore);
+        mRatingReviewTextView.setText(ratingScore + " Read Review");
+
+        mStar1ImageView.setImageResource(R.drawable.ic_star_outline_24);
+        mStar2ImageView.setImageResource(R.drawable.ic_star_outline_24);
+        mStar3ImageView.setImageResource(R.drawable.ic_star_outline_24);
+        mStar4ImageView.setImageResource(R.drawable.ic_star_outline_24);
+        mStar5ImageView.setImageResource(R.drawable.ic_star_outline_24);
+
+        if (ratingScore >= 5) {
+            mStar5ImageView.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (ratingScore >= 4) {
+            mStar4ImageView.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (ratingScore >= 3) {
+            mStar3ImageView.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (ratingScore >= 2) {
+            mStar2ImageView.setImageResource(R.drawable.ic_star_24);
+        }
+
+        if (ratingScore >= 1) {
+            mStar1ImageView.setImageResource(R.drawable.ic_star_24);
         }
     }
 

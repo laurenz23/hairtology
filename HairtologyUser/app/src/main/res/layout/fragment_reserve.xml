@@ -186,7 +186,7 @@
                         android:paddingStart="10dp"
                         android:paddingEnd="10dp"
                         android:text="@string/str_read_review"
-                        android:textSize="15sp"
+                        android:textSize="10sp"
                         android:textStyle="bold"
                         android:textColor="@color/primary"/>
 
@@ -247,7 +247,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reserveServiceListItem"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     tools:listitem="@layout/list_item_shop_service_layout" />
 
             </LinearLayout>

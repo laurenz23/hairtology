@@ -99,17 +99,8 @@ public class ShopListFragment extends Fragment {
                 return;
             }
 
-            Gson gson = new Gson();
-            String jsonString = gson.toJson(shop.getShopDetail());
-
-            Bundle bundle = new Bundle();
-            bundle.putString("data", jsonString);
-
-            Fragment fragment = new ReserveFragment();
-            fragment.setArguments(bundle);
-
             ((MainActivity) getActivity()).replaceFragment(
-                    fragment,
+                    ReserveFragment.newInstance(shop),
                     MainActivity.containerViewId);
         });
 

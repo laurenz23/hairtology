@@ -26,12 +26,13 @@ public class UserShopReviewViewModel extends ViewModel {
     }
 
     public void submitReview(int stars, String feedback) {
+        String userId = mSession.getCurrentUser().getUuid();
         String email = mSession.getCurrentUser().getEmail();
         String firstName = mSession.getCurrentUser().getFirstName();
         String lastName = mSession.getCurrentUser().getLastName();
-        ShopReview shopReview = new ShopReview(stars, feedback, email, firstName, lastName);
+        ShopReview shopReview = new ShopReview(stars, feedback, userId, email, firstName, lastName);
         mFirebaseClient.getDatabaseReference()
-                .child(mFirebaseClient.apiShopReview(mShop.getShopDetail().getUuid()) + "/" + email)
+                .child(mFirebaseClient.apiShopReview(mShop.getShopDetail().getUuid()) + "/" + userId)
                 .setValue(shopReview)
                 .addOnSuccessListener(unused -> {
                     Log.e(UserShopReviewViewModel.class.getSimpleName(), "Successfully submitted your review");

@@ -32,12 +32,15 @@ import com.project.hairtologyuser.components.utils.StringFormat;
 import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.models.ShopDetail;
+import com.project.hairtologyuser.models.ShopModel;
+import com.project.hairtologyuser.models.ShopReview;
 import com.project.hairtologyuser.models.ShopService;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.map.MapFragment;
 import com.project.hairtologyuser.views.fragments.servicelist.ServiceListAdapter;
 import com.project.hairtologyuser.views.fragments.shop.ShopFragment;
 import com.project.hairtologyuser.views.fragments.shoplistimage.ShopListImageAdapter;
+import com.project.hairtologyuser.views.fragments.shopreview.ShopReviewFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +63,7 @@ public class ReserveFragment extends Fragment {
         SUBMIT
     }
 
+    private static ShopModel mShop;
     private ReserveViewModel mViewModel;
     private ShopDetail mShopDetail;
     private LinearLayout mServiceLoadingLinearLayout;
@@ -97,6 +101,11 @@ public class ReserveFragment extends Fragment {
     private String mMonth = "";
     private String mYear = "";
 
+    public static ReserveFragment newInstance(ShopModel shop) {
+        mShop = shop;
+        return new ReserveFragment();
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -127,36 +136,14 @@ public class ReserveFragment extends Fragment {
         mStar4ImageView = view.findViewById(R.id.reserveStar4ImageView);
         mStar5ImageView = view.findViewById(R.id.reserveStar5ImageView);
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            String jsonString = bundle.getString("data");
-
-            try {
-                JSONObject jsonObject = new JSONObject(jsonString);
-                mShopDetail = new ShopDetail();
-                mShopDetail.setUuid(jsonObject.getString("uuid"));
-                mShopDetail.setName(jsonObject.getString("name"));
-                mShopDetail.setDescription(jsonObject.getString("description"));
-                mShopDetail.setAddress(jsonObject.getString("address"));
-                mShopDetail.setPrice(jsonObject.getString("price"));
-                mShopDetail.setHour(jsonObject.getString("hour"));
-                mShopDetail.setImageId1(jsonObject.getString("imageId1"));
-                mShopDetail.setImageId2(jsonObject.getString("imageId2"));
-                mShopDetail.setImageId3(jsonObject.getString("imageId3"));
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        if (mShopDetail != null) {
-            mShopName.setText(mShopDetail.getName());
-            mShopDescription.setText(mShopDetail.getDescription());
-            mAddress.setText(mShopDetail.getAddress());
-            mHours.setText(mShopDetail.getHour());
-            mShopImageArrayList.add(mShopDetail.getImageId1());
-            mShopImageArrayList.add(mShopDetail.getImageId2());
-            mShopImageArrayList.add(mShopDetail.getImageId3());
-        }
+        mShopDetail = mShop.getShopDetail();
+        mShopName.setText(mShopDetail.getName());
+        mShopDescription.setText(mShopDetail.getDescription());
+        mAddress.setText(mShopDetail.getAddress());
+        mHours.setText(mShopDetail.getHour());
+        mShopImageArrayList.add(mShopDetail.getImageId1());
+        mShopImageArrayList.add(mShopDetail.getImageId2());
+        mShopImageArrayList.add(mShopDetail.getImageId3());
 
         imageAdapter = new ShopListImageAdapter(getContext(), mShopDetail.getUuid(), mShopImageArrayList);
         mViewPager.setPadding(25, 0, 25, 0);
@@ -345,7 +332,17 @@ public class ReserveFragment extends Fragment {
     }
 
     private void onReadReview() {
+        if (getActivity() == null) {
+            ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                    ReserveFragment.class
+            ));
+            return;
+        }
 
+        ((MainActivity) getActivity()).replaceFragment(
+                ShopReviewFragment.newInstance(mShop.getReview()),
+                containerViewId);
     }
 
     private void setAction(ActionType actionType) {

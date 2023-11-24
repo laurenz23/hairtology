@@ -20,7 +20,7 @@
         android:textColor="@color/primary" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/shopListItem"
+        android:id="@+id/reviewListItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/list_item_shop_review" />

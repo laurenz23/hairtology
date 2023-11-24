@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".views.fragments.shopreview.ShopReviewFragment">
+    tools:context=".views.fragments.usershopreview.UserShopReviewFragment">
 
     <TextView
         android:layout_width="match_parent"

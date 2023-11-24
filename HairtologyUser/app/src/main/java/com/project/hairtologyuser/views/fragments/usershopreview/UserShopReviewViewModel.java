@@ -1,4 +1,4 @@
-package com.project.hairtologyuser.views.fragments.shopreview;
+package com.project.hairtologyuser.views.fragments.usershopreview;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,7 +10,7 @@ import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.models.ShopReview;
 
-public class ShopReviewViewModel extends ViewModel {
+public class UserShopReviewViewModel extends ViewModel {
 
     private Session mSession;
     private FirebaseClient mFirebaseClient;
@@ -34,9 +34,9 @@ public class ShopReviewViewModel extends ViewModel {
                 .child(mFirebaseClient.apiShopReview(mShop.getShopDetail().getUuid()))
                 .setValue(shopReview)
                 .addOnSuccessListener(unused -> {
-                    Log.e(ShopReviewViewModel.class.getSimpleName(), "Successfully submitted your review");
+                    Log.e(UserShopReviewViewModel.class.getSimpleName(), "Successfully submitted your review");
                 }).addOnFailureListener(e -> {
-                    Log.e(ShopReviewViewModel.class.getSimpleName(), "Encountered an error: " + e.getMessage());
+                    Log.e(UserShopReviewViewModel.class.getSimpleName(), "Encountered an error: " + e.getMessage());
                 });
     }
 

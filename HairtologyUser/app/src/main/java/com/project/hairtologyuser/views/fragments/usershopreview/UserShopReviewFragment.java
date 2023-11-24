@@ -1,4 +1,4 @@
-package com.project.hairtologyuser.views.fragments.shopreview;
+package com.project.hairtologyuser.views.fragments.usershopreview;
 
 import static com.project.hairtologyuser.views.activities.MainActivity.containerViewId;
 
@@ -23,16 +23,14 @@ import android.widget.TextView;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.components.utils.ToastMessage;
-import com.project.hairtologyuser.models.ReservationModel;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
-import com.project.hairtologyuser.views.fragments.reservationinfo.ReservationInfoFragment;
 import com.project.hairtologyuser.views.fragments.shop.ShopFragment;
 
-public class ShopReviewFragment extends Fragment {
+public class UserShopReviewFragment extends Fragment {
 
     private static ShopModel mShop;
-    private ShopReviewViewModel mViewModel;
+    private UserShopReviewViewModel mViewModel;
     private View mView;
     private TextView mShopNameTextView;
     private ImageView mStar1ImageView;
@@ -45,9 +43,9 @@ public class ShopReviewFragment extends Fragment {
     private Button mSubmitButton;
     private int mStarRating = 0;
 
-    public static ShopReviewFragment newInstance(ShopModel shop) {
+    public static UserShopReviewFragment newInstance(ShopModel shop) {
         mShop = shop;
-        return new ShopReviewFragment();
+        return new UserShopReviewFragment();
     }
 
     @Override
@@ -71,23 +69,12 @@ public class ShopReviewFragment extends Fragment {
         mStar4ImageView.setOnClickListener(view -> setStar(4));
         mStar5ImageView.setOnClickListener(view -> setStar(5));
 
-        mCancelButton.setOnClickListener(view -> {
-            if (getActivity() == null) {
-                ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
-                        ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
-                        ShopReviewFragment.class
-                ));
-                return;
-            }
-
-            ((MainActivity) getActivity()).replaceFragment(
-                    new ShopFragment(),
-                    containerViewId);
-        });
+        mCancelButton.setOnClickListener(view -> returnToMain());
 
         mSubmitButton.setOnClickListener(view -> {
             if (mStarRating > 0) {
                 mViewModel.submitReview(mStarRating, String.valueOf(mReviewEditText.getText()));
+                returnToMain();
             } else {
                 new AlertDialog.Builder(getContext())
                     .setMessage("Are you sure you want to submit a poor rating?")
@@ -97,6 +84,7 @@ public class ShopReviewFragment extends Fragment {
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             mViewModel.submitReview(mStarRating, String.valueOf(mReviewEditText.getText()));
+                            returnToMain();
                         }
                     })
 
@@ -114,13 +102,13 @@ public class ShopReviewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ShopReviewViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(UserShopReviewViewModel.class);
         mViewModel.setModel(getContext());
         mViewModel.setShop(mShop);
         mShopNameTextView.setText(mShop.getShopDetail().getName());
     }
 
-    public void setStar(int star) {
+    private void setStar(int star) {
         mStarRating = star;
 
         mStar1ImageView.setImageResource(R.drawable.ic_star_outline_50);
@@ -148,6 +136,20 @@ public class ShopReviewFragment extends Fragment {
         if (star >= 1) {
             mStar1ImageView.setImageResource(R.drawable.ic_star_50);
         }
+    }
+
+    private void returnToMain() {
+        if (getActivity() == null) {
+            ToastMessage.display(getContext(), ErrorUtil.getErrorMessage(
+                    ErrorUtil.ErrorCode.NO_ACTIVITY_TO_START,
+                    UserShopReviewFragment.class
+            ));
+            return;
+        }
+
+        ((MainActivity) getActivity()).replaceFragment(
+                new ShopFragment(),
+                containerViewId);
     }
 
 }

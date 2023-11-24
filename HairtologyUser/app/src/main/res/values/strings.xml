@@ -33,6 +33,7 @@
     <string name="str_logout">Logout</string>
     <string name="str_map">Map</string>
     <string name="str_month">Month</string>
+    <string name="str_name">Name</string>
     <string name="str_new_password">New Password</string>
     <string name="str_notes">Notes</string>
     <string name="str_owner_cancelled_the_reservation">Owner cancelled this reservation</string>

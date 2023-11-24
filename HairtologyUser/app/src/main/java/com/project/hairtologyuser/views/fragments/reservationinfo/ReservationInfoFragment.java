@@ -23,12 +23,10 @@ import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.components.utils.StringFormat;
 import com.project.hairtologyuser.components.utils.ToastMessage;
 import com.project.hairtologyuser.models.ReservationModel;
-import com.project.hairtologyuser.models.ReservationStatus;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.fragments.reserve.ReserveFragment;
 import com.project.hairtologyuser.views.fragments.shop.ShopFragment;
-import com.project.hairtologyuser.views.fragments.shoplist.ShopListFragment;
-import com.project.hairtologyuser.views.fragments.shopreview.ShopReviewFragment;
+import com.project.hairtologyuser.views.fragments.usershopreview.UserShopReviewFragment;
 import com.project.hairtologyuser.views.fragments.userchat.UserChatFragment;
 
 import java.sql.Time;
@@ -166,7 +164,7 @@ public class ReservationInfoFragment extends Fragment {
         }
 
         ((MainActivity) getActivity()).replaceFragment(
-                ShopReviewFragment.newInstance(mViewModel.getShop()),
+                UserShopReviewFragment.newInstance(mViewModel.getShop()),
                 containerViewId);
     }
 

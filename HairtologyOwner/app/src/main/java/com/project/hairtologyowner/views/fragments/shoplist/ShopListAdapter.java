@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -67,7 +68,7 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ShopModel shop;
-        private LinearLayout shopLinearLayout;
+        private ImageView shopNextImageView;
         private TextView name;
         private TextView address;
         private TextView schedules;
@@ -76,13 +77,13 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
         public ViewHolder(@NonNull View itemView, OnShopItemListener listener) {
             super(itemView);
 
-            shopLinearLayout = itemView.findViewById(R.id.itemShopLinearLayout);
+            shopNextImageView = itemView.findViewById(R.id.itemShopImageView);
             name = itemView.findViewById(R.id.itemShopName);
             address = itemView.findViewById(R.id.itemShopAddress);
             schedules = itemView.findViewById(R.id.itemShopSchedules);
             price = itemView.findViewById(R.id.itemShopPrice);
 
-            shopLinearLayout.setOnClickListener(v -> {
+            shopNextImageView.setOnClickListener(v -> {
                 if (shop == null) {
                     Log.e(ShopListAdapter.class.getSimpleName(), "Shop is null");
                 } else {

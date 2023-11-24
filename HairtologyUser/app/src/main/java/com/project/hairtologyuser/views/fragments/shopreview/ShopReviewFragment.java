@@ -117,6 +117,7 @@ public class ShopReviewFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ShopReviewViewModel.class);
         mViewModel.setModel(getContext());
         mViewModel.setShop(mShop);
+        mShopNameTextView.setText(mShop.getShopDetail().getName());
     }
 
     public void setStar(int star) {

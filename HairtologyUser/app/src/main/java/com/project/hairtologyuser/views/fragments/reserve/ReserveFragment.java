@@ -366,8 +366,11 @@ public class ReserveFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void setRating(double ratingScore) {
-        Log.e(ReserveFragment.class.getSimpleName(), "" + ratingScore);
-        mRatingReviewTextView.setText(ratingScore + " Read Review");
+        if (Double.isNaN(ratingScore)) {
+            mRatingReviewTextView.setText("0.0 Read Review");
+        } else {
+            mRatingReviewTextView.setText(ratingScore + " Read Review");
+        }
 
         mStar1ImageView.setImageResource(R.drawable.ic_star_outline_24);
         mStar2ImageView.setImageResource(R.drawable.ic_star_outline_24);

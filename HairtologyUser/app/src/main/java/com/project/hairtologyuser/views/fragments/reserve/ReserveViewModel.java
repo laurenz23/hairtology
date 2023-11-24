@@ -110,9 +110,6 @@ public class ReserveViewModel extends ViewModel {
             totalRespondent = star5Respondent + star4Respondent + star3Respondent + star2Respondent + star1Respondent;
             totalScore = (star5Respondent * 5) + (star4Respondent * 4) + (star3Respondent * 3) + (star2Respondent * 2) + star1Respondent;
             rating = (double) totalScore / totalRespondent;
-            Log.e(ReserveViewModel.class.getSimpleName(), "Total Respondent: " + totalRespondent);
-            Log.e(ReserveViewModel.class.getSimpleName(), "Total Score: " + totalScore);
-            Log.e(ReserveViewModel.class.getSimpleName(), "Rating: " + rating);
         }
 
         return rating;

@@ -56,6 +56,7 @@
     <string name="str_please_enter_email">Please enter your email</string>
     <string name="str_please_enter_password">Please enter your password</string>
     <string name="str_please_confirm_password">Please confirm your password</string>
+    <string name="str_please_select_your_country">Please select your country</string>
     <string name="str_pm">PM</string>
     <string name="str_previous">Previous</string>
     <string name="str_price">Price</string>
@@ -73,6 +74,7 @@
     <string name="str_save">Save</string>
     <string name="str_schedules">Schedules</string>
     <string name="str_search_shop">Search shop</string>
+    <string name="str_select_country">Select Country</string>
     <string name="str_select_date">Select date</string>
     <string name="str_selected_date">Selected date</string>
     <string name="str_select_time">Select time</string>

@@ -12,15 +12,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
 import com.project.hairtologyuser.databinding.FragmentRegistrationBinding;
+import com.project.hairtologyuser.models.CountryDetails;
 import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
 import com.project.hairtologyuser.views.fragments.base.BaseFragment;
@@ -48,6 +53,9 @@ public class RegistrationFragment extends BaseFragment {
     private Button mBackButton;
     private ProgressBar mRegistrationProgressBar;
     private LinearLayout mErrorLinearLayout;
+    private String mSelectedCountry;
+    private AutoCompleteTextView mCountryAutoCompleteTextView;
+    private ArrayAdapter<String> mCountryArrayAdapter;
 
     private final List<String> mErrorMessageList = new ArrayList<>();
 
@@ -68,6 +76,13 @@ public class RegistrationFragment extends BaseFragment {
         mRegistrationProgressBar = mBinding.saveProgressBar;
         mErrorTextView = mBinding.errorTextView;
         mErrorLinearLayout = mBinding.errorLinearLayout;
+        mCountryAutoCompleteTextView = mView.findViewById(R.id.autoCompleteCountry);
+        mCountryArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item_country, CountryDetails.country);
+
+        mCountryAutoCompleteTextView.setAdapter(mCountryArrayAdapter);
+        mCountryAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+            mSelectedCountry = adapterView.getItemAtPosition(i).toString();
+        });
 
         mBinding.saveButton.setOnClickListener(v -> {
             onSaveTap();
@@ -115,9 +130,9 @@ public class RegistrationFragment extends BaseFragment {
         String password = String.valueOf(mPasswordEditText.getText());
         String confirmPassword = String.valueOf(mConfirmPasswordEditText.getText());
 
-        if (validateFields(firstName, lastName, email, password, confirmPassword)) {
+        if (validateFields(firstName, lastName, email, password, confirmPassword, mSelectedCountry)) {
 
-            mViewModel.register(firstName, lastName, email, password,
+            mViewModel.register(firstName, lastName, email, password, mSelectedCountry,
                     new RegistrationViewModel.onRegisterListener() {
                 @Override
                 public void onRegisterSuccess(UserModel user) {
@@ -148,7 +163,7 @@ public class RegistrationFragment extends BaseFragment {
         }
     }
 
-    private boolean validateFields(String firstName, String lastName, String email, String password, String confirmPassword) {
+    private boolean validateFields(String firstName, String lastName, String email, String password, String confirmPassword, String selectedCountry) {
         boolean isValidationPass = true;
 
         if (firstName.isEmpty()) {
@@ -177,6 +192,11 @@ public class RegistrationFragment extends BaseFragment {
                 setErrorMessage(getString(R.string.str_password_did_not_match));
                 isValidationPass = false;
             }
+        }
+
+        if (mSelectedCountry == null || mSelectedCountry.isEmpty()) {
+            setErrorMessage(getString(R.string.str_please_select_your_country));
+            isValidationPass = false;
         }
 
         displayErrorMessage();

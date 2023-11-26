@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.project.hairtologyowner.R;
 import com.project.hairtologyowner.components.utils.ErrorUtil;
+import com.project.hairtologyowner.models.CountryDetails;
 import com.project.hairtologyowner.models.ShopDetail;
 import com.project.hairtologyowner.models.ShopModel;
 import com.project.hairtologyowner.models.ShopService;
@@ -72,6 +75,9 @@ public class AddShopFragment extends Fragment {
     private Uri mSelectedImageService;
     private ArrayList<ShopService> mServiceArrayList = new ArrayList<>();
     private AddServiceListAdapter mAddServiceListAdapter;
+    private String mSelectedCountry;
+    private AutoCompleteTextView mCountryAutoCompleteTextView;
+    private ArrayAdapter<String> mCountryArrayAdapter;
 
     private final ActivityResultLauncher<Intent> mSelectImageLauncher1 = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> selectImageFromGallery(result, mImage1));
@@ -124,6 +130,14 @@ public class AddShopFragment extends Fragment {
         mImage2 = mView.findViewById(R.id.image2AddShop);
         mImage3 = mView.findViewById(R.id.image3AddShop);
         mImageService = mView.findViewById(R.id.imageServiceAddShop);
+
+        mCountryAutoCompleteTextView = mView.findViewById(R.id.autoCompleteCountry);
+        mCountryArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item_country, CountryDetails.country);
+
+        mCountryAutoCompleteTextView.setAdapter(mCountryArrayAdapter);
+        mCountryAutoCompleteTextView.setOnItemClickListener((adapterView, view, i, l) -> {
+            mSelectedCountry = adapterView.getItemAtPosition(i).toString();
+        });
 
         mAddServiceListAdapter = new AddServiceListAdapter(getContext(), mServiceArrayList);
 
@@ -205,9 +219,15 @@ public class AddShopFragment extends Fragment {
                 return;
             }
 
+            if (mSelectedCountry == null || mSelectedCountry.equals("")) {
+                Toast.makeText(getContext(), "Please select the country for your shop", Toast.LENGTH_LONG).show();
+                return;
+            }
+
             mViewModel.detail.setAddress(shopAddress);
             mViewModel.detail.setHour(shopOpenHours);
             mViewModel.detail.setPrice(shopPriceRange);
+            mViewModel.detail.setCountry(mSelectedCountry);
 
             setPage(3);
         });

@@ -8,6 +8,7 @@ public class UserModel {
     private String firstName;
     private String lastName;
     private String email;
+    private String country;
     private Boolean isAccountDisabled;
     private List<String> favoriteShopList;
 
@@ -41,6 +42,14 @@ public class UserModel {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Boolean getAccountDisabled() {

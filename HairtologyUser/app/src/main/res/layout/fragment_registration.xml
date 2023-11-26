@@ -127,6 +127,26 @@
                     android:hint="@string/str_confirm_password"
                     android:background="@drawable/inputfield_primary"/>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="70dp"
+                    android:layout_marginEnd="70dp"
+                    android:hint="@string/str_select_country"
+                    android:textColorHint="@color/gray"
+                    android:background="@drawable/inputfield_primary"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp"
+                        android:inputType="none"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <LinearLayout
                     android:id="@+id/errorLinearLayout"
                     android:layout_width="match_parent"
@@ -185,8 +205,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
                 <Button
                     android:id="@+id/backButton"

@@ -15,11 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.project.hairtologyuser.R;
 import com.project.hairtologyuser.components.utils.ErrorUtil;
+import com.project.hairtologyuser.models.CountryDetails;
 import com.project.hairtologyuser.models.UserModel;
 import com.project.hairtologyuser.views.activities.MainActivity;
 import com.project.hairtologyuser.views.activities.OnBoardingActivity;
@@ -35,9 +40,12 @@ public class ProfileFragment extends Fragment {
     private EditText mCurrentPasswordEditText;
     private EditText mNewPasswordEditText;
     private EditText mConfirmPasswordEditText;
-
     private ConstraintLayout mProfileConstraintLayout;
     private ConstraintLayout mPasswordConstraintLayout;
+    private TextInputLayout mCountryTextInputLayout;
+    private AutoCompleteTextView mCountryAutoComplete;
+    private ArrayAdapter<String> mCountryArrayAdapter;
+    private String mSelectedCountry;
 
     @SuppressLint("CutPasteId")
     @Override
@@ -52,10 +60,13 @@ public class ProfileFragment extends Fragment {
         mCurrentPasswordEditText = mView.findViewById(R.id.currentPasswordEditText);
         mNewPasswordEditText = mView.findViewById(R.id.newPasswordEditText);
         mConfirmPasswordEditText = mView.findViewById(R.id.confirmPasswordEditText);
+        mCountryTextInputLayout = mView.findViewById(R.id.countryTextInputLayout);
+        mCountryAutoComplete = mView.findViewById(R.id.autoCompleteCountry);
 
         Button firstNameEditButton = mView.findViewById(R.id.firstNameEditButton);
         Button lastNameEditButton = mView.findViewById(R.id.lastNameEditButton);
         Button emailEditButton = mView.findViewById(R.id.emailEditButton);
+        Button countryEditButton = mView.findViewById(R.id.countryEditButton);
         Button updateProfileButton = mView.findViewById(R.id.updateProfileButton);
         Button updatePasswordButton = mView.findViewById(R.id.updatePasswordButton);
         Button saveButton = mView.findViewById(R.id.saveButton);
@@ -64,9 +75,17 @@ public class ProfileFragment extends Fragment {
         mProfileConstraintLayout = mView.findViewById(R.id.profileConstraintLayout);
         mPasswordConstraintLayout = mView.findViewById(R.id.passwordConstraintLayout);
 
+        mCountryArrayAdapter = new ArrayAdapter<>(getContext(), R.layout.list_item_country, CountryDetails.country);
+
+        mCountryAutoComplete.setAdapter(mCountryArrayAdapter);
+        mCountryAutoComplete.setOnItemClickListener((adapterView, view, i, l) -> {
+            mSelectedCountry = adapterView.getItemAtPosition(i).toString();
+        });
+
         mFirstNameEditText.setEnabled(false);
         mLastNameEditText.setEnabled(false);
         mEmailEditText.setEnabled(false);
+        mCountryAutoComplete.setEnabled(false);
 
         firstNameEditButton.setOnClickListener(v -> {
             mFirstNameEditText.setEnabled(true);
@@ -80,10 +99,16 @@ public class ProfileFragment extends Fragment {
             mEmailEditText.setEnabled(true);
         });
 
+        countryEditButton.setOnClickListener(v -> {
+            mCountryAutoComplete.setEnabled(true);
+            mCountryAutoComplete.setAdapter(mCountryArrayAdapter);
+        });
+
         updateProfileButton.setOnClickListener(v -> {
             mFirstNameEditText.setText(mViewModel.getCurrentUser().getFirstName());
             mLastNameEditText.setText(mViewModel.getCurrentUser().getLastName());
             mEmailEditText.setText(mViewModel.getCurrentUser().getEmail());
+            mCountryAutoComplete.setText(mViewModel.getCurrentUser().getCountry());
             mPasswordConstraintLayout.setVisibility(View.INVISIBLE);
             mProfileConstraintLayout.setVisibility(View.VISIBLE);
         });
@@ -92,6 +117,7 @@ public class ProfileFragment extends Fragment {
             mFirstNameEditText.setEnabled(false);
             mLastNameEditText.setEnabled(false);
             mEmailEditText.setEnabled(false);
+            mCountryAutoComplete.setEnabled(false);
             mPasswordConstraintLayout.setVisibility(View.VISIBLE);
             mProfileConstraintLayout.setVisibility(View.INVISIBLE);
         });
@@ -116,6 +142,7 @@ public class ProfileFragment extends Fragment {
         mFirstNameEditText.setText(mViewModel.getCurrentUser().getFirstName());
         mLastNameEditText.setText(mViewModel.getCurrentUser().getLastName());
         mEmailEditText.setText(mViewModel.getCurrentUser().getEmail());
+        mCountryAutoComplete.setText(mViewModel.getCurrentUser().getCountry());
     }
 
     public void onSaveProfile() {
@@ -123,7 +150,7 @@ public class ProfileFragment extends Fragment {
         String lastName = String.valueOf(mLastNameEditText.getText());
         String email = String.valueOf(mEmailEditText.getText());
 
-        mViewModel.updateProfile(firstName, lastName, email, new ProfileViewModel.onUpdateProfileListener() {
+        mViewModel.updateProfile(firstName, lastName, email, mSelectedCountry, new ProfileViewModel.onUpdateProfileListener() {
             @Override
             public void onSuccess(UserModel user) {
                 if (getActivity() == null) {

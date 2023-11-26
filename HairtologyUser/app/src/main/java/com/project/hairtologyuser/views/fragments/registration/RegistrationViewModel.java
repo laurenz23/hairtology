@@ -37,7 +37,7 @@ public class RegistrationViewModel extends ViewModel {
         mFirebaseClient = new FirebaseClient(mContext);
     }
 
-    public void register(String firstName, String lastName, String email, String password, onRegisterListener listener) {
+    public void register(String firstName, String lastName, String email, String password, String country, onRegisterListener listener) {
         mFirebaseClient.getAuth().createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser user = mFirebaseClient.getAuth().getCurrentUser();
@@ -47,6 +47,7 @@ public class RegistrationViewModel extends ViewModel {
                         userModel.setFirstName(firstName);
                         userModel.setLastName(lastName);
                         userModel.setEmail(email);
+                        userModel.setCountry(country);
                         userModel.setAccountDisabled(false);
 
                         mFirebaseClient.getDatabaseReference()

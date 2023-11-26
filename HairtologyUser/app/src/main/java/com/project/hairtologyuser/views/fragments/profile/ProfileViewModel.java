@@ -31,11 +31,12 @@ public class ProfileViewModel extends ViewModel {
         return mSession.getCurrentUser();
     }
 
-    public void updateProfile(String firstName, String lastName, String email, onUpdateProfileListener listener) {
+    public void updateProfile(String firstName, String lastName, String email, String country, onUpdateProfileListener listener) {
         UserModel user = mSession.getCurrentUser();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
+        user.setCountry(country);
 
         mFirebaseClient.getDatabaseReference()
                 .child(mFirebaseClient.apiInfo(user.getUuid()))

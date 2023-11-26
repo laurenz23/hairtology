@@ -52,51 +52,53 @@ public class ShopListAdapter extends RecyclerView.Adapter<ShopListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ShopListAdapter.ViewHolder holder, int position) {
         ShopModel shop = mShopArrayList.get(position);
 
-        holder.shop = shop;
-        holder.name.setText(shop.getShopDetail().getName());
-        holder.address.setText(shop.getShopDetail().getAddress());
-        holder.hour.setText(shop.getShopDetail().getHour());
-        holder.price.setText(shop.getShopDetail().getPrice());
+        if (shop != null) {
+            holder.shop = shop;
+            holder.name.setText(shop.getShopDetail().getName());
+            holder.address.setText(shop.getShopDetail().getAddress());
+            holder.hour.setText(shop.getShopDetail().getHour());
+            holder.price.setText(shop.getShopDetail().getPrice());
 
-        holder.imageIdArrayList.add(shop.getShopDetail().getImageId1());
-        holder.imageIdArrayList.add(shop.getShopDetail().getImageId2());
-        holder.imageIdArrayList.add(shop.getShopDetail().getImageId3());
+            holder.imageIdArrayList.add(shop.getShopDetail().getImageId1());
+            holder.imageIdArrayList.add(shop.getShopDetail().getImageId2());
+            holder.imageIdArrayList.add(shop.getShopDetail().getImageId3());
 
-        holder.displayImage();
-        holder.imageAdapter.notifyDataSetChanged();
+            holder.displayImage();
+            holder.imageAdapter.notifyDataSetChanged();
 
-        double ratingScore = getRating(shop.getReview());
+            double ratingScore = getRating(shop.getReview());
 
-        if (Double.isNaN(ratingScore)) {
-            holder.rating.setText("0.0");
-        } else {
-            holder.rating.setText(String.valueOf(ratingScore));
-        }
+            if (Double.isNaN(ratingScore)) {
+                holder.rating.setText("0.0");
+            } else {
+                holder.rating.setText(String.valueOf(ratingScore));
+            }
 
-        holder.star5.setImageResource(R.drawable.ic_star_outline_24);
-        holder.star4.setImageResource(R.drawable.ic_star_outline_24);
-        holder.star3.setImageResource(R.drawable.ic_star_outline_24);
-        holder.star2.setImageResource(R.drawable.ic_star_outline_24);
-        holder.star1.setImageResource(R.drawable.ic_star_outline_24);
+            holder.star5.setImageResource(R.drawable.ic_star_outline_24);
+            holder.star4.setImageResource(R.drawable.ic_star_outline_24);
+            holder.star3.setImageResource(R.drawable.ic_star_outline_24);
+            holder.star2.setImageResource(R.drawable.ic_star_outline_24);
+            holder.star1.setImageResource(R.drawable.ic_star_outline_24);
 
-        if (ratingScore >= 5) {
-            holder.star5.setImageResource(R.drawable.ic_star_24);
-        }
+            if (ratingScore >= 5) {
+                holder.star5.setImageResource(R.drawable.ic_star_24);
+            }
 
-        if (ratingScore >= 4) {
-            holder.star4.setImageResource(R.drawable.ic_star_24);
-        }
+            if (ratingScore >= 4) {
+                holder.star4.setImageResource(R.drawable.ic_star_24);
+            }
 
-        if (ratingScore >= 3) {
-            holder.star3.setImageResource(R.drawable.ic_star_24);
-        }
+            if (ratingScore >= 3) {
+                holder.star3.setImageResource(R.drawable.ic_star_24);
+            }
 
-        if (ratingScore >= 2) {
-            holder.star2.setImageResource(R.drawable.ic_star_24);
-        }
+            if (ratingScore >= 2) {
+                holder.star2.setImageResource(R.drawable.ic_star_24);
+            }
 
-        if (ratingScore >= 1) {
-            holder.star1.setImageResource(R.drawable.ic_star_24);
+            if (ratingScore >= 1) {
+                holder.star1.setImageResource(R.drawable.ic_star_24);
+            }
         }
     }
 

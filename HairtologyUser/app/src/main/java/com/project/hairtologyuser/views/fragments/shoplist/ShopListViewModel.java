@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.project.hairtologyuser.components.client.FirebaseClient;
+import com.project.hairtologyuser.components.repository.Session;
 import com.project.hairtologyuser.models.ShopDetail;
 import com.project.hairtologyuser.models.ShopModel;
 import com.project.hairtologyuser.models.ShopReview;
@@ -27,9 +28,11 @@ public class ShopListViewModel extends ViewModel {
     }
 
     private FirebaseClient mFirebaseClient;
+    private Session mSession;
 
     public void setViewModel(@NonNull Application application) {
         mFirebaseClient = new FirebaseClient(application);
+        mSession = new Session(application.getApplicationContext());
     }
 
     public void getShop(OnShopDataListener listener) {
@@ -41,12 +44,18 @@ public class ShopListViewModel extends ViewModel {
                         ArrayList<ShopModel> shopArrayList = new ArrayList<>();
                         for (DataSnapshot shopList : snapshot.getChildren()) {
                             ShopModel shopModel = new ShopModel();
+                            ShopDetail shopDetail = null;
                             ArrayList<ShopService> shopServiceArrayList = new ArrayList<>();
                             ArrayList<ShopReview> shopReviewArrayList = new ArrayList<>();
                             for (DataSnapshot shopData : shopList.getChildren()) {
                                 if (Objects.equals(shopData.getKey(), "shopDetail")) {
-                                    ShopDetail shopDetail = shopData.getValue(ShopDetail.class);
+                                    shopDetail = shopData.getValue(ShopDetail.class);
                                     if (shopDetail != null) {
+                                        if (!shopDetail.getCountry().equals(mSession.getCurrentUser().getCountry())) {
+                                            shopDetail = null;
+                                            break;
+                                        }
+
                                         shopModel.setShopDetail(shopDetail);
                                     }
                                 }
@@ -70,9 +79,11 @@ public class ShopListViewModel extends ViewModel {
                                 }
                             }
 
-                            shopModel.setShopService(shopServiceArrayList);
-                            shopModel.setReviews(shopReviewArrayList);
-                            shopArrayList.add(shopModel);
+                            if (shopDetail != null) {
+                                shopModel.setShopService(shopServiceArrayList);
+                                shopModel.setReviews(shopReviewArrayList);
+                                shopArrayList.add(shopModel);
+                            }
                         }
 
                         listener.onSuccess(shopArrayList);
